@@ -1,0 +1,22 @@
+doctype html
+html(lang='en')
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+        meta(id="sharethumb" ,property="og:image", content="")
+        script.
+            window.PointerEvent = undefined
+        block head
+            link(rel="stylesheet" href="/static/fonts/font-awesome-4.7.0/css/font-awesome.min.css")
+            link(rel="stylesheet" href="/static/assets/mint-ui-2.2.13/lib/style.min.css")
+    body
+        block content
+            div#app
+
+
+        block scripts
+            script(src="/static/assets/vue-2.5.17/dist/vue.min.js")
+            script(src="/static/assets/axios-0.18.0/dist/axios.min.js")
+            script(src="/static/assets/mint-ui-2.2.13/lib/index.js")
+            script(src="/static/assets/vue-router-3.0.1/dist/vue-router.min.js")

@@ -1,0 +1,21 @@
+// 通用样式文件
+@import "./common/reset.scss";           // 重置浏览器样式
+@import "./common/scroll-bar.scss";      // 修改浏览器滚动条的样式
+
+.mt-media-box__desc {
+  color              : #999;
+  font-size          : 13px;
+  line-height        : 1.2;
+  overflow           : hidden;
+  text-overflow      : ellipsis;
+  display            : -webkit-box;
+
+  -webkit-line-clamp : 2;
+  word-break         : break-all;
+  word-wrap          : break-word;
+
+/* autoprefixer: off */
+
+  -webkit-box-orient: vertical;
+}
+/* autoprefixer: on */

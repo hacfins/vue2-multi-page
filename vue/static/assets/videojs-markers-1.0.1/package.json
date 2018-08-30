@@ -1,0 +1,53 @@
+{
+  "_from": "videojs-markers",
+  "_id": "videojs-markers@1.0.1",
+  "_inBundle": false,
+  "_integrity": "sha1-1/jYBCU/1YeBMnH42zCKIrn33zQ=",
+  "_location": "/videojs-markers",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "videojs-markers",
+    "name": "videojs-markers",
+    "escapedName": "videojs-markers",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/videojs-markers/-/videojs-markers-1.0.1.tgz",
+  "_shasum": "d7f8d804253fd587813271f8db308a22b9f7df34",
+  "_spec": "videojs-markers",
+  "_where": "D:\\Hacfin\\Code\\Github\\vue-web\\vue",
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "video marker breaks plugin for video.js",
+  "devDependencies": {
+    "babel-plugin-syntax-trailing-function-commas": "6.13.0",
+    "babel-plugin-transform-es2015-modules-umd": "^6.24.1",
+    "babel-plugin-transform-flow-strip-types": "6.14.0",
+    "babel-preset-es2015": "6.16.0",
+    "flow": "0.2.3",
+    "grunt": "^0.4.5",
+    "grunt-babel": "6.0.0",
+    "grunt-contrib-clean": "latest",
+    "grunt-contrib-concat": "latest",
+    "grunt-contrib-cssmin": "latest",
+    "grunt-contrib-less": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-watch": "latest"
+  },
+  "main": "dist/videojs-markers.js",
+  "name": "videojs-markers",
+  "peerDependencies": {
+    "video.js": ">=4"
+  },
+  "scripts": {
+    "flow": "flow; test $? -eq 0 -o $? -eq 2"
+  },
+  "version": "1.0.1"
+}

@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+   <title>Video.js Markers Example</title>
+
+   <style>
+      p {
+         background-color: #eee;
+         border: thin solid #777;
+         padding: 10px;
+      }
+      .video-js{
+         float:left;
+      }
+      .event-list {
+         float:left;
+         border: black;
+         margin-left: 5px;
+         width: 200px;
+
+      }
+   </style>
+   <link href="http://vjs.zencdn.net/4.3/video-js.css" rel="stylesheet">
+   <link href="../dist/videojs.markers.css" rel="stylesheet">
+
+</head>
+<body>
+
+  <p>This is a demo of video-markers plugin for videojs. This demo shows how we can block video seeking only when certain conditions are met. </p>
+
+  <div>
+     <video id="test_video" controls preload="none" class="video-js vjs-default-skin" width="640" height="264">
+         <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+         <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm">
+     </video>
+     <div class='event-list'>
+        <div><b>Events: </b></div>
+     </div>
+  </div>
+</body>
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script src="http://vjs.zencdn.net/4.3/video.js"></script>
+<script src='../dist/videojs-markers.js'></script>
+
+<script>
+   // initialize video.js
+   var player = videojs('test_video');
+
+   var allowedMarkerIndex = -1;
+   var prevTime = 0;
+   //load the marker plugin
+   player.markers({
+      markerTip:{
+         display: false,
+         text: function(marker) {
+            return "This is a break: " + marker.text;
+         }
+      },
+      breakOverlay:{
+         display: true,
+         displayTime: 3,
+         text: function(marker) {
+            return "This is an break overlay: " + marker.text;
+         }
+      },
+      markers: [
+         {
+            time: 9.5,
+            text: "this"
+         },
+         {
+            time: 16,
+            text: "is"
+         },
+         {
+            time: 23.6,
+            text: "so"
+         },
+         {
+            time: 28,
+            text: "cool"
+         },
+         {
+            time: 36,
+            text: ":)"
+         }
+      ],
+      onMarkerReached: function(marker, newMarkerIndex) {
+         $('.event-list').append("<div>marker reached: " + marker.text + "</div>");
+
+         // prevent seeking if user has not seen the marker.
+         if (newMarkerIndex > allowedMarkerIndex) {
+           // allow natural video play withou user actively seeking. Only allowing
+           // viewing one marker at a time.
+           if (
+             newMarkerIndex == allowedMarkerIndex + 1 &&
+             player.currentTime() - prevTime < 0.5 /* time update threshold */
+           ) {
+             allowedMarker++;
+           } else {
+             // reset to previous play time
+             player.currentTime(prevTime);
+           }
+         }
+      },
+      onMarkerClick: function(marker){
+         $('.event-list').append("<div>marker clicked: " + marker.text + "</div>");
+
+      },
+      onTimeUpdateAfterMarkerUpdate: function() {
+        prevTime = player.currentTime();
+      },
+   });
+</script>
+</html>

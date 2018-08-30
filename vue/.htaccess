@@ -1,0 +1,18 @@
+#[1]rewrite - 重写URL
+<IfModule mod_rewrite.c>
+  Options +FollowSymlinks
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !^/m/
+  RewriteCond %{REQUEST_URI} !^$/
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule "^([^/]*)/?(.*)$" "/index/$1.html"
+  RewriteCond %{REQUEST_URI} !^/m/
+  RewriteCond %{REQUEST_URI} ^/$
+  RewriteRule "^$" "/index/index.html"
+
+  RewriteCond %{REQUEST_URI} ^/m/
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule "^m/([^/]*)/?(.*)$" "/phone/$1.html"
+</IfModule>

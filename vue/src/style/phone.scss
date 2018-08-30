@@ -1,0 +1,7 @@
+// 通用样式文件
+@import "./common/reset.scss";           // 重置浏览器样式
+
+//解决三星手机下拉会自动刷新的问题
+body{
+  overflow:hidden;
+}
