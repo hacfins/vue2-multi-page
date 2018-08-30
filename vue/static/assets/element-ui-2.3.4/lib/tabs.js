@@ -61,7 +61,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 268);
+/******/ 	return __webpack_require__(__webpack_require__.s = 232);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -183,15 +183,7 @@ module.exports = require("element-ui/lib/utils/resize-event");
 
 /***/ }),
 
-/***/ 268:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(269);
-
-
-/***/ }),
-
-/***/ 269:
+/***/ 232:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -199,7 +191,7 @@ module.exports = __webpack_require__(269);
 
 exports.__esModule = true;
 
-var _tabs = __webpack_require__(270);
+var _tabs = __webpack_require__(233);
 
 var _tabs2 = _interopRequireDefault(_tabs);
 
@@ -214,12 +206,12 @@ exports.default = _tabs2.default;
 
 /***/ }),
 
-/***/ 270:
+/***/ 233:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tabs_vue__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tabs_vue__ = __webpack_require__(234);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tabs_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tabs_vue__);
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -248,7 +240,7 @@ var Component = normalizeComponent(
 
 /***/ }),
 
-/***/ 271:
+/***/ 234:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -256,7 +248,7 @@ var Component = normalizeComponent(
 
 exports.__esModule = true;
 
-var _tabNav = __webpack_require__(272);
+var _tabNav = __webpack_require__(235);
 
 var _tabNav2 = _interopRequireDefault(_tabNav);
 
@@ -279,7 +271,9 @@ exports.default = {
     tabPosition: {
       type: String,
       default: 'top'
-    }
+    },
+    beforeLeave: Function,
+    stretch: Boolean
   },
 
   provide: function provide() {
@@ -330,13 +324,29 @@ exports.default = {
       this.$emit('tab-add');
     },
     setCurrentName: function setCurrentName(value) {
-      this.currentName = value;
-      this.$emit('input', value);
+      var _this2 = this;
+
+      var changeCurrentName = function changeCurrentName() {
+        _this2.currentName = value;
+        _this2.$emit('input', value);
+      };
+      if (this.currentName !== value && this.beforeLeave) {
+        var before = this.beforeLeave(value, this.currentName);
+        if (before && before.then) {
+          before.then(function () {
+            changeCurrentName();
+
+            _this2.$refs.nav && _this2.$refs.nav.removeFocus();
+          });
+        } else if (before !== false) {
+          changeCurrentName();
+        }
+      } else {
+        changeCurrentName();
+      }
     },
     addPanes: function addPanes(item) {
-      var index = this.$slots.default.filter(function (item) {
-        return item.elm.nodeType === 1 && /\bel-tab-pane\b/.test(item.elm.className);
-      }).indexOf(item.$vnode);
+      var index = this.$slots.default.indexOf(item.$vnode);
       this.panes.splice(index, 0, item);
     },
     removePanes: function removePanes(item) {
@@ -358,7 +368,8 @@ exports.default = {
         panes = this.panes,
         editable = this.editable,
         addable = this.addable,
-        tabPosition = this.tabPosition;
+        tabPosition = this.tabPosition,
+        stretch = this.stretch;
 
 
     var newButton = editable || addable ? h(
@@ -391,7 +402,8 @@ exports.default = {
         onTabRemove: handleTabRemove,
         editable: editable,
         type: type,
-        panes: panes
+        panes: panes,
+        stretch: stretch
       },
       ref: 'nav'
     };
@@ -428,12 +440,12 @@ exports.default = {
 
 /***/ }),
 
-/***/ 272:
+/***/ 235:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tab_nav_vue__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tab_nav_vue__ = __webpack_require__(236);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tab_nav_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tab_nav_vue__);
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -462,7 +474,7 @@ var Component = normalizeComponent(
 
 /***/ }),
 
-/***/ 273:
+/***/ 236:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -470,7 +482,7 @@ var Component = normalizeComponent(
 
 exports.__esModule = true;
 
-var _tabBar = __webpack_require__(274);
+var _tabBar = __webpack_require__(237);
 
 var _tabBar2 = _interopRequireDefault(_tabBar);
 
@@ -506,7 +518,8 @@ exports.default = {
       type: Function,
       default: noop
     },
-    type: String
+    type: String,
+    stretch: Boolean
   },
 
   data: function data() {
@@ -672,6 +685,7 @@ exports.default = {
     var type = this.type,
         panes = this.panes,
         editable = this.editable,
+        stretch = this.stretch,
         onTabClick = this.onTabClick,
         onTabRemove = this.onTabRemove,
         navStyle = this.navStyle,
@@ -769,7 +783,12 @@ exports.default = {
         { 'class': ['el-tabs__nav-scroll'], ref: 'navScroll' },
         [h(
           'div',
-          { 'class': 'el-tabs__nav', ref: 'nav', style: navStyle, attrs: { role: 'tablist' },
+          {
+            'class': ['el-tabs__nav', 'is-' + this.rootTabs.tabPosition, stretch && ['top', 'bottom'].indexOf(this.rootTabs.tabPosition) !== -1 ? 'is-stretch' : ''],
+            ref: 'nav',
+            style: navStyle,
+            attrs: { role: 'tablist'
+            },
             on: {
               'keydown': changeTab
             }
@@ -801,14 +820,14 @@ exports.default = {
 
 /***/ }),
 
-/***/ 274:
+/***/ 237:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tab_bar_vue__ = __webpack_require__(275);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tab_bar_vue__ = __webpack_require__(238);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tab_bar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tab_bar_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_9a42dc98_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_tab_bar_vue__ = __webpack_require__(276);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_969dc580_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_tab_bar_vue__ = __webpack_require__(239);
 var normalizeComponent = __webpack_require__(0)
 /* script */
 
@@ -824,7 +843,7 @@ var __vue_scopeId__ = null
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_tab_bar_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_9a42dc98_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_tab_bar_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_969dc580_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_tab_bar_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
@@ -836,7 +855,7 @@ var Component = normalizeComponent(
 
 /***/ }),
 
-/***/ 275:
+/***/ 238:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -908,7 +927,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 276:
+/***/ 239:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -193,20 +193,12 @@ module.exports = require("element-ui/lib/mixins/locale");
 /***/ 54:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(55);
-
-
-/***/ }),
-
-/***/ 55:
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 
 exports.__esModule = true;
 
-var _pagination = __webpack_require__(56);
+var _pagination = __webpack_require__(55);
 
 var _pagination2 = _interopRequireDefault(_pagination);
 
@@ -221,7 +213,7 @@ exports.default = _pagination2.default;
 
 /***/ }),
 
-/***/ 56:
+/***/ 55:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -229,15 +221,15 @@ exports.default = _pagination2.default;
 
 exports.__esModule = true;
 
-var _pager = __webpack_require__(57);
+var _pager = __webpack_require__(56);
 
 var _pager2 = _interopRequireDefault(_pager);
 
-var _select = __webpack_require__(60);
+var _select = __webpack_require__(59);
 
 var _select2 = _interopRequireDefault(_select);
 
-var _option = __webpack_require__(61);
+var _option = __webpack_require__(60);
 
 var _option2 = _interopRequireDefault(_option);
 
@@ -267,6 +259,15 @@ exports.default = {
     total: Number,
 
     pageCount: Number,
+
+    pagerCount: {
+      type: Number,
+      validator: function validator(value) {
+        return (value | 0) === value && value > 4 && value < 22 && value % 2 === 1;
+      },
+
+      default: 7
+    },
 
     currentPage: {
       type: Number,
@@ -328,7 +329,7 @@ exports.default = {
       pager: h(
         'pager',
         {
-          attrs: { currentPage: this.internalCurrentPage, pageCount: this.internalPageCount, disabled: this.disabled },
+          attrs: { currentPage: this.internalCurrentPage, pageCount: this.internalPageCount, pagerCount: this.pagerCount, disabled: this.disabled },
           on: {
             'change': this.handleCurrentChange
           }
@@ -482,6 +483,7 @@ exports.default = {
               attrs: {
                 value: this.$parent.internalPageSize,
                 popperClass: this.$parent.popperClass || '',
+                size: 'mini',
 
                 disabled: this.$parent.disabled },
               on: {
@@ -515,6 +517,7 @@ exports.default = {
             this.$parent.internalPageSize = val = parseInt(val, 10);
             this.$parent.userChangePageSize = true;
             this.$parent.$emit('size-change', val);
+            this.$parent.$emit('update:pageSize', val);
           }
         }
       }
@@ -570,15 +573,16 @@ exports.default = {
           var num = parseInt(value, 10);
           if (!isNaN(num)) {
             if (num < 1) {
-              this.$refs.input.$el.querySelector('input').value = 1;
+              this.$refs.input.setCurrentValue(1);
             } else {
               this.reassignMaxValue(value);
             }
           }
         },
         reassignMaxValue: function reassignMaxValue(value) {
-          if (+value > this.$parent.internalPageCount) {
-            this.$refs.input.$el.querySelector('input').value = this.$parent.internalPageCount;
+          var internalPageCount = this.$parent.internalPageCount;
+          if (+value > internalPageCount) {
+            this.$refs.input.setCurrentValue(internalPageCount);
           }
         }
       },
@@ -642,12 +646,14 @@ exports.default = {
       if (this.disabled) return;
       var newVal = this.internalCurrentPage - 1;
       this.internalCurrentPage = this.getValidCurrentPage(newVal);
+      this.$emit('prev-click', this.internalCurrentPage);
       this.emitChange();
     },
     next: function next() {
       if (this.disabled) return;
       var newVal = this.internalCurrentPage + 1;
       this.internalCurrentPage = this.getValidCurrentPage(newVal);
+      this.$emit('next-click', this.internalCurrentPage);
       this.emitChange();
     },
     getValidCurrentPage: function getValidCurrentPage(value) {
@@ -733,6 +739,7 @@ exports.default = {
         } else {
           this.$emit('update:currentPage', newVal);
         }
+        this.lastEmittedPage = -1;
       }
     },
 
@@ -752,14 +759,14 @@ exports.default = {
 
 /***/ }),
 
-/***/ 57:
+/***/ 56:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_pager_vue__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_pager_vue__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_pager_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_pager_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_e5b72590_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_pager_vue__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_046e52c4_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_pager_vue__ = __webpack_require__(58);
 var normalizeComponent = __webpack_require__(0)
 /* script */
 
@@ -775,7 +782,7 @@ var __vue_scopeId__ = null
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_pager_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_e5b72590_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_pager_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_046e52c4_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_pager_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
@@ -787,7 +794,7 @@ var Component = normalizeComponent(
 
 /***/ }),
 
-/***/ 58:
+/***/ 57:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -835,6 +842,8 @@ exports.default = {
 
     pageCount: Number,
 
+    pagerCount: Number,
+
     disabled: Boolean
   },
 
@@ -857,12 +866,13 @@ exports.default = {
       var newPage = Number(event.target.textContent);
       var pageCount = this.pageCount;
       var currentPage = this.currentPage;
+      var pagerCountOffset = this.pagerCount - 2;
 
       if (target.className.indexOf('more') !== -1) {
         if (target.className.indexOf('quickprev') !== -1) {
-          newPage = currentPage - 5;
+          newPage = currentPage - pagerCountOffset;
         } else if (target.className.indexOf('quicknext') !== -1) {
-          newPage = currentPage + 5;
+          newPage = currentPage + pagerCountOffset;
         }
       }
 
@@ -893,7 +903,8 @@ exports.default = {
 
   computed: {
     pagers: function pagers() {
-      var pagerCount = 7;
+      var pagerCount = this.pagerCount;
+      var halfPagerCount = (pagerCount - 1) / 2;
 
       var currentPage = Number(this.currentPage);
       var pageCount = Number(this.pageCount);
@@ -902,11 +913,11 @@ exports.default = {
       var showNextMore = false;
 
       if (pageCount > pagerCount) {
-        if (currentPage > pagerCount - 3) {
+        if (currentPage > pagerCount - halfPagerCount) {
           showPrevMore = true;
         }
 
-        if (currentPage < pageCount - 3) {
+        if (currentPage < pageCount - halfPagerCount) {
           showNextMore = true;
         }
       }
@@ -953,7 +964,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 59:
+/***/ 58:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -961,6 +972,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 var staticRenderFns = []
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
+
+/***/ }),
+
+/***/ 59:
+/***/ (function(module, exports) {
+
+module.exports = require("element-ui/lib/select");
 
 /***/ }),
 
@@ -972,13 +990,6 @@ module.exports = require("element-ui/lib/input");
 /***/ }),
 
 /***/ 60:
-/***/ (function(module, exports) {
-
-module.exports = require("element-ui/lib/select");
-
-/***/ }),
-
-/***/ 61:
 /***/ (function(module, exports) {
 
 module.exports = require("element-ui/lib/option");

@@ -61,7 +61,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 237);
+/******/ 	return __webpack_require__(__webpack_require__.s = 207);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -87,15 +87,7 @@ module.exports = require("element-ui/lib/utils/vdom");
 
 /***/ }),
 
-/***/ 237:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(238);
-
-
-/***/ }),
-
-/***/ 238:
+/***/ 207:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -103,7 +95,7 @@ module.exports = __webpack_require__(238);
 
 exports.__esModule = true;
 
-var _main = __webpack_require__(239);
+var _main = __webpack_require__(208);
 
 var _main2 = _interopRequireDefault(_main);
 
@@ -118,7 +110,7 @@ exports.default = _main2.default;
 
 /***/ }),
 
-/***/ 239:
+/***/ 208:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

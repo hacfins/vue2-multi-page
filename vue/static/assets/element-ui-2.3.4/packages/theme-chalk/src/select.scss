@@ -33,7 +33,6 @@
       font-size: $--select-input-font-size;
       transition: transform .3s;
       transform: rotateZ(180deg);
-      line-height: 16px;
       cursor: pointer;
 
       @include when(reverse) {
@@ -113,11 +112,6 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-
-    > span {
-      display: inline-block;
-      width: 100%;
-    }
   }
 
   .el-tag__close {
