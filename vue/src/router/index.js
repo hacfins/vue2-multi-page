@@ -19,7 +19,7 @@ const editor_editor       = r => require.ensure([], () => r(require('index/pages
 const editor_con          = r => require.ensure([], () => r(require('index/pages/editor/children/editor-con')), 'index/editor-con');
 const valaditor_valaditor = r => require.ensure([], () => r(require('index/pages/valaditor/children/valaditor')), 'index/valaditor-valaditor');
 const valaditor_con       = r => require.ensure([], () => r(require('index/pages/valaditor/children/valaditor-con')), 'index/valaditor-con');
-
+const noexsit             = r => require.ensure([], () => r(require('index/pages/noexsit/children/noexsit')), 'index/no-exsit');
 
 const routes = [
     {
@@ -109,7 +109,12 @@ const routes = [
             meta     : [],
         }]
     },
-]
+    {
+        path     : '*',
+        component: noexsit,
+        name     : '',
+    },
+];
 
 export default new Router({
     mode  : routerMode,
