@@ -84,9 +84,15 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 Object.keys(utils.entries()).forEach(function (entry) {
   var entryname = entry.substring(entry.lastIndexOf('/') + 1);
   var entrypre  = entry.substring(0, entry.lastIndexOf('/'));
+  var etToZh = {
+      'index':'首页',
+      'video':'视频'
+  }
+  var page_title = etToZh[entryname] ? etToZh[entryname] : '';
 
   devWebpackConfig.plugins.push(
     new HtmlWebpackPlugin({
+      title:page_title,
       filename: entry + '.html',
       template: 'src/modules/' + entrypre + '/pages/' + entryname + '/' + entryname + '.pug',
       favicon : 'favicon.ico',

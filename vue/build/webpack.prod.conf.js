@@ -219,9 +219,15 @@ Object.keys(utils.entries()).forEach(function (entry) {
         vendor   = 'index/vendor';
         manifest = 'index/manifest';
     }
+    var etToZh = {
+        'index':'首页',
+        'video':'视频'
+    }
+    var page_title = etToZh[entryname] ? etToZh[entryname] : '';
 
     webpackConfig.plugins.push(
         new HtmlWebpackPlugin({
+            title:page_title,
             filename      : entry + '.html',
             template      : 'src/modules/' + entrypre + '/pages/' + entryname + '/' + entryname + '.pug',
             favicon       : 'favicon.ico',
