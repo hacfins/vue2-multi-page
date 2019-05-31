@@ -20,11 +20,11 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   // cheap-module-eval-source-map is faster for development
   devtool: config.dev.devtool,
 
-  // these devServer options should be customized in /config/index.js
+  // 服务器配置
   devServer: {
     clientLogLevel: 'warning',
     historyApiFallback: {
-      //hacfin
+      //hacfin 路由配置
       index:'/index/index.html',
       rewrites: [
         { from: /^\/video(\/.*)*$/, to: '/index/video.html' },
@@ -36,11 +36,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         { from: /^\/m\/video(\/.*)*$/, to: '/phone/video.html' },
         { from: /^\/m\/noexsit$/, to: '/phone/noexsit.html' },
       ]
-      // rewrites: [
-      //   { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') },
-      // ],
     },
-    hot: true,
+    hot: true,//热替换
     contentBase: false, // since we use CopyWebpackPlugin.
     compress: true,
     host: HOST || config.dev.host,
@@ -57,20 +54,19 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     }
   },
   plugins: [
+    //定义环境变量
     new webpack.DefinePlugin({
       'process.env': require('../config/dev.env')
     }),
-    // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
+
+    // 热替换
     new webpack.HotModuleReplacementPlugin(),
+
     new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
+
     new webpack.NoEmitOnErrorsPlugin(),
-    // // https://github.com/ampedandwired/html-webpack-plugin
-    // new HtmlWebpackPlugin({
-    //   filename: 'index.html',
-    //   template: 'index.html',
-    //   inject: true
-    // }),
-    // copy custom static assets
+
+    // 复制静态组件
     new CopyWebpackPlugin([
       {
         from: path.resolve(__dirname, '../static'),
@@ -82,6 +78,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 });
 
 //hacfin
+//根据入口生成多页面
 Object.keys(utils.entries()).forEach(function (entry) {
   var entryname = entry.substring(entry.lastIndexOf('/') + 1);
   var entrypre  = entry.substring(0, entry.lastIndexOf('/'));

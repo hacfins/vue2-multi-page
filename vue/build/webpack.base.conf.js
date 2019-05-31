@@ -86,6 +86,7 @@ module.exports = {
       },
     ]
   },
+  //以下选项是Node.js全局变量或模块，这里主要是防止webpack注入一些Node.js的东西到vue中
   node: {
     // prevent webpack from injecting useless setImmediate polyfill because Vue
     // source contains it (although only uses it if it's native).
@@ -98,7 +99,7 @@ module.exports = {
     tls: 'empty',
     child_process: 'empty'
   },
-  //hacfin
+  //hacfin 为了import这些文件不会编译到vendor
   externals: {
     'vue'       : 'Vue',
     'element-ui': 'ELEMENT',

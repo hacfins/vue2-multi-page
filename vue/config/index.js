@@ -13,13 +13,13 @@ module.exports = {
     proxyTable: {},
 
     // Various Dev Server settings
-    host: '192.168.123.90', // can be overwritten by process.env.HOST
-    port: 8004, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    host: '192.168.123.90',
+    port: 8004,
     //-hacfin
-    autoOpenBrowser: true,
-    errorOverlay: true,
-    notifyOnErrors: true,
-    poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
+    autoOpenBrowser: true,// 是否自动打开浏览器
+    errorOverlay: true,// 浏览器错误提示遮罩层
+    notifyOnErrors: true,// 编译错误的时候通知提示，需要friendly-errors-webpack-plugin 配合
+    poll: false,
 
     // Use Eslint Loader?
     // If true, your code will be linted during bundling and

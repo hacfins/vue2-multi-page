@@ -5,6 +5,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const packageConfig = require('../package.json')
 const glob          = require('glob')
 
+//生成绝对路径
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
     ? config.build.assetsSubDirectory
@@ -79,7 +80,7 @@ exports.cssLoaders = function (options) {
   }
 }
 
-// Generate loaders for standalone style files (outside of .vue)
+//各种类型css文件生成对应的loader
 exports.styleLoaders = function (options) {
   const output = []
   const loaders = exports.cssLoaders(options)
@@ -94,6 +95,8 @@ exports.styleLoaders = function (options) {
 
   return output
 }
+
+//编译错误时产生的通知
 
 exports.createNotifierCallback = () => {
   const notifier = require('node-notifier')
@@ -114,7 +117,7 @@ exports.createNotifierCallback = () => {
 }
 
 //hacfin
-//根据modules目录下的JS生成多个入口，并且入口的key分index和phone
+// 根据modules目录下的JS生成多个入口，并且入口的key分index和phone
 exports.entries = function () {
   var files  = glob.sync('./src/modules/**/*.js');
   var entris = {};

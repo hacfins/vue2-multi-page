@@ -33,11 +33,11 @@ const webpackConfig = merge(baseWebpackConfig, {
         chunkFilename: utils.assetsPath('js/[name].[chunkhash].js')
     },
     plugins: [
-        // http://vuejs.github.io/vue-loader/en/workflow/production.html
         //【1】定义变量用来判断环境
         new webpack.DefinePlugin({
             'process.env': env
         }),
+
         //【2】压缩JS
         new UglifyJsPlugin({
             uglifyOptions: {
@@ -48,45 +48,26 @@ const webpackConfig = merge(baseWebpackConfig, {
             sourceMap    : config.build.productionSourceMap,
             parallel     : true
         }),
-        // extract css into its own file
+
         //【3】抽离各个入口所依赖的css
         new ExtractTextPlugin({
             filename : utils.assetsPath('css/[name].[contenthash].css'),
-            // Setting the following option to `false` will not extract CSS from codesplit chunks.
-            // Their CSS will instead be inserted dynamically with style-loader when the codesplit chunk has been loaded by webpack.
-            // It's currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it's `false`,
-            // increasing file size: https://github.com/vuejs-templates/webpack/issues/1110
             allChunks: true,
         }),
-        // Compress extracted CSS. We are using this plugin so that possible
-        //【4】duplicated CSS from different components can be deduped.
+
+        //【4】css去重
         new OptimizeCSSPlugin({
             cssProcessorOptions: config.build.productionSourceMap
                 ? {safe: true, map: {inline: false}}
                 : {safe: true}
         }),
-        // // generate dist index.html with correct asset hash for caching.
-        // // you can customize output by editing /index.html
-        // // see https://github.com/ampedandwired/html-webpack-plugin
-        // new HtmlWebpackPlugin({
-        //   filename: config.build.index,
-        //   template: 'index.html',
-        //   inject: true,
-        //   minify: {
-        //     removeComments: true,
-        //     collapseWhitespace: true,
-        //     removeAttributeQuotes: true
-        //     // more options:
-        //     // https://github.com/kangax/html-minifier#options-quick-reference
-        //   },
-        //   // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-        //   chunksSortMode: 'dependency'
-        // }),
-        // keep module.id stable when vendor modules does not change
+
+        //根据模块的相对路径生成一个四位数的hash作为模块id
         new webpack.HashedModuleIdsPlugin(),
+
         // enable scope hoisting
         new webpack.optimize.ModuleConcatenationPlugin(),
-        // split vendor js into its own file
+
         //【5】提取PC端node-module中的依赖
         new webpack.optimize.CommonsChunkPlugin({
             name     : 'index/vendor',
@@ -133,9 +114,6 @@ const webpackConfig = merge(baseWebpackConfig, {
             chunks   : ['phone/vendor']
         }),
 
-        // This instance extracts shared chunks from code splitted chunks and bundles them
-        // in a separate chunk, similar to the vendor chunk
-        // see: https://webpack.js.org/plugins/commons-chunk-plugin/#extra-async-commons-chunk
         //【9】提取env
         new webpack.optimize.CommonsChunkPlugin({
             name     : 'common/env',
@@ -155,7 +133,6 @@ const webpackConfig = merge(baseWebpackConfig, {
             }
         }),
 
-        // copy custom static assets
         //【10】复制静态资源
         new CopyWebpackPlugin([
             {
