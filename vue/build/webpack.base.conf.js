@@ -19,14 +19,11 @@ const createLintingRule = () => ({
   }
 })
 
+var entry = utils.entries()
+
 module.exports = {
   //hacfin
-  entry    :utils.entries(),
-  // context: path.resolve(__dirname, '../'),
-  // entry: {
-  //   app: './src/main.js'
-  // },
-
+  entry    :entry,
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',

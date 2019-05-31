@@ -13,8 +13,8 @@ module.exports = {
     proxyTable: {},
 
     // Various Dev Server settings
-    host: '192.168.123.100', // can be overwritten by process.env.HOST
-    port: 88, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    host: '192.168.123.90', // can be overwritten by process.env.HOST
+    port: 8004, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     //-hacfin
     autoOpenBrowser: true,
     errorOverlay: true,
@@ -24,7 +24,7 @@ module.exports = {
     // Use Eslint Loader?
     // If true, your code will be linted during bundling and
     // linting errors and warnings will be shown in the console.
-    useEslint: true,
+    useEslint: false,
     // If true, eslint errors and warnings will also be shown in the error overlay
     // in the browser.
     showEslintErrorsInOverlay: false,
@@ -41,7 +41,7 @@ module.exports = {
     // https://vue-loader.vuejs.org/en/options.html#cachebusting
     cacheBusting: true,
 
-    cssSourceMap: true
+    cssSourceMap: false
   },
 
   build: {
@@ -59,7 +59,7 @@ module.exports = {
      * 项目打包后，代码都是经过压缩加密的，如果运行时报错，输出的错误信息无法准确得知是哪里的代码报错。
      * 有了map就可以像未加密的代码一样，准确的输出是哪一行哪一列有错。
      */
-    productionSourceMap: true,
+    productionSourceMap: false,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 

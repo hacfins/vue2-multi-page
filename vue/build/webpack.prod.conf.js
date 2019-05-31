@@ -23,7 +23,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         rules: utils.styleLoaders({
             sourceMap : config.build.productionSourceMap,
             extract   : true,
-            usePostCSS: true
+            usePostCSS: false
         })
     },
     devtool: config.build.productionSourceMap ? config.build.devtool : false,
@@ -107,8 +107,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         // prevent vendor hash from being updated whenever app bundle is updated
         new webpack.optimize.CommonsChunkPlugin({
             name     : 'index/manifest',
-            chunks   : ['index/vendor'],
-            minChunks: Infinity
+            chunks   : ['index/vendor']
         }),
 
         //【7】提取Mobile端node-module中的依赖
@@ -131,8 +130,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         // prevent vendor hash from being updated whenever app bundle is updated
         new webpack.optimize.CommonsChunkPlugin({
             name     : 'phone/manifest',
-            chunks   : ['phone/vendor'],
-            minChunks: Infinity
+            chunks   : ['phone/vendor']
         }),
 
         // This instance extracts shared chunks from code splitted chunks and bundles them
@@ -163,7 +161,7 @@ const webpackConfig = merge(baseWebpackConfig, {
             {
                 from  : path.resolve(__dirname, '../static'),
                 to    : config.build.assetsSubDirectory,
-                ignore: ['.*', 'imgs/*.*']
+                ignore: ['.*', 'imgs/*.*','lib/**/*.*']
             },
             {
                 from: path.resolve(__dirname, '../.htaccess'),
