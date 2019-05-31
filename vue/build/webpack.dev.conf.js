@@ -34,6 +34,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         { from: /^\/editor(\/.*)*$/, to: '/index/editor.html' },
         { from: /^\/m\/index(\/.*)*$/, to: '/phone/index.html' },
         { from: /^\/m\/video(\/.*)*$/, to: '/phone/video.html' },
+        { from: /^\/m\/noexsit$/, to: '/phone/noexsit.html' },
       ]
       // rewrites: [
       //   { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') },

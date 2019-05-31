@@ -78,7 +78,13 @@ html(lang='en')
                         if(getUrlRelativePath() == '/'){
                             location.href = '/m/index'
                         }else{
-                            location.href = '/m'+getUrlRelativePath()+''
+                            var path = getUrlRelativePath();
+                            var reg  = /^\/m/;
+                            if (reg.test(path)) {
+                                location.href = '/m/noexsit'
+                            } else {
+                                location.href = '/m' + path + ''
+                            }
                         }
 
                     }
