@@ -4,22 +4,22 @@ import Router from 'vue-router'
 
 Vue.use(Router);
 
-const index_user          = r => require.ensure([], () => r(require('index/pages/index/children/user')), 'index/index-user');
-const index_echart        = r => require.ensure([], () => r(require('index/pages/index/children/echart')), 'index/index-echart');
-const index_setbindsns    = r => require.ensure([], () => r(require('index/pages/index/children/setbindsns')), 'index/index-setbindsns');
-const video_play          = r => require.ensure([], () => r(require('index/pages/video/children/video')), 'index/video-play');
-const video_normal        = r => require.ensure([], () => r(require('index/pages/video/children/video-normal')), 'index/video-normal');
-const video_hls           = r => require.ensure([], () => r(require('index/pages/video/children/video-hls')), 'index/video-hls');
-const video_rtmp          = r => require.ensure([], () => r(require('index/pages/video/children/video-rtmp')), 'index/video-rtmp');
-const audio_play          = r => require.ensure([], () => r(require('index/pages/audio/children/audio')), 'index/audio-play');
-const audio_normal        = r => require.ensure([], () => r(require('index/pages/audio/children/audio-normal')), 'index/audio-normal');
-const audio_jplayer       = r => require.ensure([], () => r(require('index/pages/audio/children/audio-jplayer')), 'index/audio-jplayer');
-const upload_upload       = r => require.ensure([], () => r(require('index/pages/upload/children/upload')), 'index/upload-upload');
-const upload_con          = r => require.ensure([], () => r(require('index/pages/upload/children/upload-con')), 'index/upload-con');
-const editor_editor       = r => require.ensure([], () => r(require('index/pages/editor/children/editor')), 'index/editor-editor');
-const editor_con          = r => require.ensure([], () => r(require('index/pages/editor/children/editor-con')), 'index/editor-con');
-const valaditor_valaditor = r => require.ensure([], () => r(require('index/pages/valaditor/children/valaditor')), 'index/valaditor-valaditor');
-const valaditor_con       = r => require.ensure([], () => r(require('index/pages/valaditor/children/valaditor-con')), 'index/valaditor-con');
+const index_user          = r => require.ensure([], () => r(require('index/pages/index/children/user')), 'index/index-main');
+const index_echart        = r => require.ensure([], () => r(require('index/pages/index/children/echart')), 'index/index-main');
+const index_setbindsns    = r => require.ensure([], () => r(require('index/pages/index/children/setbindsns')), 'index/index-main');
+const video_play          = r => require.ensure([], () => r(require('index/pages/video/children/video')), 'index/video-main');
+const video_normal        = r => require.ensure([], () => r(require('index/pages/video/children/video-normal')), 'index/video-main');
+const video_hls           = r => require.ensure([], () => r(require('index/pages/video/children/video-hls')), 'index/video-main');
+const video_rtmp          = r => require.ensure([], () => r(require('index/pages/video/children/video-rtmp')), 'index/video-main');
+const audio_play          = r => require.ensure([], () => r(require('index/pages/audio/children/audio')), 'index/audio-main');
+const audio_normal        = r => require.ensure([], () => r(require('index/pages/audio/children/audio-normal')), 'index/audio-main');
+const audio_jplayer       = r => require.ensure([], () => r(require('index/pages/audio/children/audio-jplayer')), 'index/audio-main');
+const upload_upload       = r => require.ensure([], () => r(require('index/pages/upload/children/upload')), 'index/upload-main');
+const upload_con          = r => require.ensure([], () => r(require('index/pages/upload/children/upload-con')), 'index/upload-main');
+const editor_editor       = r => require.ensure([], () => r(require('index/pages/editor/children/editor')), 'index/editor-main');
+const editor_con          = r => require.ensure([], () => r(require('index/pages/editor/children/editor-con')), 'index/editor-main');
+const valaditor_valaditor = r => require.ensure([], () => r(require('index/pages/valaditor/children/valaditor')), 'index/valaditor-main');
+const valaditor_con       = r => require.ensure([], () => r(require('index/pages/valaditor/children/valaditor-con')), 'index/valaditor-main');
 const noexsit             = r => require.ensure([], () => r(require('index/pages/noexsit/children/noexsit')), 'index/no-exsit');
 
 const routes = [

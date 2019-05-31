@@ -4,12 +4,19 @@
   -webkit-box-sizing : border-box;
   -moz-box-sizing    : border-box;
   box-sizing         : border-box;
+  margin             : 0;
+  padding            : 0;
 }
 
 body, html {
   background-color : $grayLight;
   height           : 100%;
   width            : 100%;
+  font-family: "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif,
+  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
+  font-family: "Microsoft Yahei"
 }
 
 html {
@@ -38,8 +45,9 @@ h1 {
   font-size : 2em;
   margin    : .67em 0
 }
-ul{
-  list-style: none;
+
+ul,li {
+  list-style : none;
 }
 
 figcaption, figure, main {
@@ -64,7 +72,7 @@ pre {
 a {
   background-color             : transparent;
   -webkit-text-decoration-skip : objects;
-  text-decoration: none;
+  text-decoration              : none;
 }
 
 abbr[title] {
@@ -132,7 +140,7 @@ svg:not(:root) {
 }
 
 button, input, optgroup, select, textarea {
-  font-family : sans-serif;
+  font-family: "Microsoft Yahei";
   font-size   : 100%;
   line-height : 1.15;
   margin      : 0
@@ -223,4 +231,70 @@ template {
 [hidden] {
   display : none
 }
+.pull-left{
+  float:left;
+}
+.pull-right{
+  float:right;
+}
 
+$boxSize : (10n:-10, 5n:-5, 0: 0, 5:5, 7:7, 8:8, 10:10, 12:12, 15:15, 16:16, 20:20, 24:24, 30:30, 32:32) !global;
+@each $k, $v in $boxSize {
+  .#{$pf}mg-#{$k} {
+    margin : #{$v}px !important;
+  }
+  .#{$pf}mg-t-#{$k} {
+    margin-top : #{$v}px !important;
+  }
+  .#{$pf}mg-l-#{$k} {
+    margin-left : #{$v}px !important;
+  }
+  .#{$pf}mg-r-#{$k} {
+    margin-right : #{$v}px !important;
+  }
+  .#{$pf}mg-b-#{$k} {
+    margin-bottom : #{$v}px !important;
+  }
+  .#{$pf}mg-h-#{$k} {
+    margin-left  : #{$v}px !important;
+    margin-right : #{$v}px !important;
+  }
+  .#{$pf}mg-v-#{$k} {
+    margin-top    : #{$v}px !important;
+    margin-bottom : #{$v}px !important;
+  }
+
+  .#{$pf}pd-#{$k} {
+    padding : #{$v}px !important;
+  }
+  .#{$pf}pd-t-#{$k} {
+    padding-top : #{$v}px !important;
+  }
+  .#{$pf}pd-l-#{$k} {
+    padding-left : #{$v}px !important;
+  }
+  .#{$pf}pd-r-#{$k} {
+    padding-right : #{$v}px !important;
+  }
+  .#{$pf}pd-b-#{$k} {
+    padding-bottom : #{$v}px !important;
+  }
+  .#{$pf}pd-h-#{$k} {
+    padding-left  : #{$v}px !important;
+    padding-right : #{$v}px !important;
+  }
+  .#{$pf}pd-v-#{$k} {
+    padding-top    : #{$v}px !important;
+    padding-bottom : #{$v}px !important;
+  }
+}
+.#{$pf}text-ellipsis {
+  display       : block !important;
+  word-break    : break-all;
+  white-space   : nowrap;
+  overflow      : hidden;
+  text-overflow : ellipsis;
+}
+.#{$pf}default{
+  cursor:default!important;
+}

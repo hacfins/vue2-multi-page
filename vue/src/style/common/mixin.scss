@@ -10,81 +10,84 @@
 // 清除子元素的浮动
 @mixin clearfix() {
   &:after {
-    content: "";
-    display: block;
-    clear: both;
+    content : "";
+    display : block;
+    clear   : both;
   }
 }
 
 // 元素设置宽度才可应用省略号, 多行时，传入行数
 @mixin ellipsis($row) {
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow      : hidden;
+  text-overflow : ellipsis;
   @if $row {
-    display: -webkit-box;
-    -webkit-line-clamp: $row;
-    -webkit-box-orient: vertical;
-  } @else {
-    white-space: nowrap;
+    display            : -webkit-box;
+    -webkit-line-clamp : $row;
+    -webkit-box-orient : vertical;
+  } @else if {
+    white-space        : nowrap;
   }
 }
 
 // 元素的绝对定位 -- 左上
 @mixin absolute-lt($left, $top, $width, $height) {
-  position: absolute;
-  left: $left;
-  top: $top;
-  width: $width;
-  height: $height;
+  position : absolute;
+  left     : $left;
+  top      : $top;
+  width    : $width;
+  height   : $height;
 }
+
 // 元素的绝对定位 -- 右下
 @mixin absolute-rb($right, $bottom, $width, $height) {
-  position: absolute;
-  right: $right;
-  bottom: $bottom;
-  width: $width;
-  height: $height;
+  position : absolute;
+  right    : $right;
+  bottom   : $bottom;
+  width    : $width;
+  height   : $height;
 }
 
 // 纯css三角箭头 arrow(direction, size, color);
 @mixin arrow($direction, $size, $color) {
-  width: 0;
-  height: 0;
-  line-height: 0;
-  font-size: 0;
-  overflow: hidden;
-  border-width: $size;
-  cursor: pointer;
+  width        : 0;
+  height       : 0;
+  line-height  : 0;
+  font-size    : 0;
+  overflow     : hidden;
+  border-width : $size;
+  cursor       : pointer;
   @if $direction == top {
-    border-style: dashed dashed solid dashed;
-    border-color: transparent transparent $color transparent;
-    border-top: none;
+    border-style  : dashed dashed solid dashed;
+    border-color  : transparent transparent $color transparent;
+    border-top    : none;
+  } @else if $direction == bottom {
+    border-style  : solid dashed dashed dashed;
+    border-color  : $color transparent transparent transparent;
+    border-bottom : none;
+  } @else if $direction == right {
+    border-style  : dashed dashed dashed solid;
+    border-color  : transparent transparent transparent $color;
+    border-right  : none;
+  } @else if $direction == left {
+    border-style  : dashed solid dashed dashed;
+    border-color  : transparent $color transparent transparent;
+    border-left   : none;
+  } @else if $direction == rightTop {
+    border-style  : solid solid dashed dashed;
+    border-color  : $color $color transparent transparent;
+  } @else if $direction == leftTop {
+    border-style  : solid dashed dashed solid;
+    border-color  : $color transparent transparent $color;
+  } @else if $direction == leftBottom {
+    border-style  : dashed dashed solid solid;
+    border-color  : transparent transparent $color $color;
   }
-  @else if $direction == bottom {
-    border-style: solid dashed dashed dashed;
-    border-color: $color transparent transparent transparent;
-    border-bottom: none;
-  }
-  @else if $direction == right {
-    border-style: dashed dashed dashed solid;
-    border-color: transparent transparent transparent $color;
-    border-right: none;
-  }
-  @else if $direction == left {
-    border-style: dashed solid dashed dashed;
-    border-color: transparent $color transparent transparent;
-    border-left: none;
-  }
-  @else if $direction == rightTop {
-    border-style: solid solid dashed dashed;
-    border-color: $color $color transparent transparent;
-  }
-  @else if $direction == leftTop {
-    border-style: solid dashed dashed solid;
-    border-color: $color transparent transparent $color;
-  }
-  @else if $direction == leftBottom {
-    border-style: dashed dashed solid solid;
-    border-color: transparent transparent $color $color;
-  }
+}
+
+@mixin badge($bgcolor,$padding,$size,$color,$rdius) {
+  background    : $bgcolor;
+  padding       : $padding;
+  font-size     : $size;
+  color         : $color;
+  border-radius : $rdius;
 }
