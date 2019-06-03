@@ -30,15 +30,25 @@ const webpackConfig = merge(baseWebpackConfig, {
         minimize: true, //是否进行代码压缩
         splitChunks: {
             cacheGroups: {
-                vendor: {
+                indexvendor: {
+                    chunks: (chunk) => {
+                       const entrypre  = chunk.name.substring(0, chunk.name.lastIndexOf('/'));
+                       return entrypre == 'index'
+                    },
                     test: /[\\/]node_modules[\\/]/,
-                    priority: 10,
-                    name:'vendor/vendor',
+                    name:'index/vendor',
+                },
+                phonevendor: {
+                    chunks: (chunk) => {
+                        const entrypre  = chunk.name.substring(0, chunk.name.lastIndexOf('/'));
+                        return entrypre == 'phone'
+                    },
+                    test: /[\\/]node_modules[\\/]/,
+                    name:'phone/vendor',
                 },
                 env: {
                     chunks:function(chunk){
                         return getEntryname().all
-
                     },
                     test: /[\\/]src[\\/]config[\\/]/,
                     priority: 8,
@@ -230,7 +240,7 @@ Object.keys(utils.entries()).forEach(function (entry) {
             template      : 'src/modules/' + entrypre + '/pages/' + entryname + '/' + entryname + '.pug',
             favicon       : 'favicon.ico',
             inject        : true,
-            chunks        : ['common/env',entry],
+            chunks        : ['common/env',vendor,entry],
             minify        : {
                 removeComments       : true,
                 collapseWhitespace   : true,
