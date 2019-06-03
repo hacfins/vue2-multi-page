@@ -23,8 +23,32 @@ const webpackConfig = merge(baseWebpackConfig, {
         rules: utils.styleLoaders({
             sourceMap : config.build.productionSourceMap,
             extract   : true,
-            usePostCSS: false
+            usePostCSS: true
         })
+    },
+    optimization:{
+        minimize: true, //是否进行代码压缩
+        splitChunks: {
+            cacheGroups: {
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: 10,
+                    name:'vendors/vendors',
+                },
+                initial: {
+                    chunks:'initial',
+                    test: /[\\/]src[\\/]/,
+                    priority: 9,
+                    name:'common/initial',
+                },
+                common: {
+                    chunks:'async',
+                    test: /[\\/]src[\\/]/,
+                    priority: 8,
+                    name:'common/common',
+                },
+            }
+        },
     },
     devtool: config.build.productionSourceMap ? config.build.devtool : false,
     output : {
@@ -51,7 +75,7 @@ const webpackConfig = merge(baseWebpackConfig, {
 
         //【3】抽离各个入口所依赖的css
         new ExtractTextPlugin({
-            filename : utils.assetsPath('css/[name].[contenthash].css'),
+            filename : utils.assetsPath('css/[name].[hash].css'),
             allChunks: true,
         }),
 
@@ -66,72 +90,72 @@ const webpackConfig = merge(baseWebpackConfig, {
         new webpack.HashedModuleIdsPlugin(),
 
         // enable scope hoisting
-        new webpack.optimize.ModuleConcatenationPlugin(),
+        // new webpack.optimize.ModuleConcatenationPlugin(),
 
-        //【5】提取PC端node-module中的依赖
-        new webpack.optimize.CommonsChunkPlugin({
-            name     : 'index/vendor',
-            chunks   : getEntryname().pc,
-            minChunks: function (module, count) {
-                // any required modules inside node_modules are extracted to vendor
-                return (
-                    module.resource &&
-                    /\.js$/.test(module.resource) &&
-                    module.resource.indexOf(
-                        path.join(__dirname, '../node_modules')
-                    ) === 0
-                );
-            }
-        }),
-
-        //【6】PC端 extract webpack runtime and module manifest to its own file in order to
-        // prevent vendor hash from being updated whenever app bundle is updated
-        new webpack.optimize.CommonsChunkPlugin({
-            name     : 'index/manifest',
-            chunks   : ['index/vendor']
-        }),
-
-        //【7】提取Mobile端node-module中的依赖
-        new webpack.optimize.CommonsChunkPlugin({
-            name  : 'phone/vendor',
-            chunks: getEntryname().phone,
-            minChunks(module) {
-                // any required modules inside node_modules are extracted to vendor
-                return (
-                    module.resource &&
-                    /\.js$/.test(module.resource) &&
-                    module.resource.indexOf(
-                        path.join(__dirname, '../node_modules')
-                    ) === 0
-                );
-            }
-        }),
-
-        //【8】Mobile端 extract webpack runtime and module manifest to its own file in order to
-        // prevent vendor hash from being updated whenever app bundle is updated
-        new webpack.optimize.CommonsChunkPlugin({
-            name     : 'phone/manifest',
-            chunks   : ['phone/vendor']
-        }),
-
-        //【9】提取env
-        new webpack.optimize.CommonsChunkPlugin({
-            name     : 'common/env',
-            //async    : 'vendor-async',
-            chunks   : getEntryname().all,
-            //children: true,
-            //minChunks: 3
-            minChunks: function (module, count) {
-                // any required modules inside node_modules are extracted to vendor
-                return (
-                    module.resource &&
-                    /\.js$/.test(module.resource) &&
-                    module.resource.indexOf(
-                        path.join(__dirname, '../src/config')
-                    ) === 0
-                );
-            }
-        }),
+        // //【5】提取PC端node-module中的依赖
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name     : 'index/vendor',
+        //     chunks   : getEntryname().pc,
+        //     minChunks: function (module, count) {
+        //         // any required modules inside node_modules are extracted to vendor
+        //         return (
+        //             module.resource &&
+        //             /\.js$/.test(module.resource) &&
+        //             module.resource.indexOf(
+        //                 path.join(__dirname, '../node_modules')
+        //             ) === 0
+        //         );
+        //     }
+        // }),
+        //
+        // //【6】PC端 extract webpack runtime and module manifest to its own file in order to
+        // // prevent vendor hash from being updated whenever app bundle is updated
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name     : 'index/manifest',
+        //     chunks   : ['index/vendor']
+        // }),
+        //
+        // //【7】提取Mobile端node-module中的依赖
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name  : 'phone/vendor',
+        //     chunks: getEntryname().phone,
+        //     minChunks(module) {
+        //         // any required modules inside node_modules are extracted to vendor
+        //         return (
+        //             module.resource &&
+        //             /\.js$/.test(module.resource) &&
+        //             module.resource.indexOf(
+        //                 path.join(__dirname, '../node_modules')
+        //             ) === 0
+        //         );
+        //     }
+        // }),
+        //
+        // //【8】Mobile端 extract webpack runtime and module manifest to its own file in order to
+        // // prevent vendor hash from being updated whenever app bundle is updated
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name     : 'phone/manifest',
+        //     chunks   : ['phone/vendor']
+        // }),
+        //
+        // //【9】提取env
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name     : 'common/env',
+        //     //async    : 'vendor-async',
+        //     chunks   : getEntryname().all,
+        //     //children: true,
+        //     //minChunks: 3
+        //     minChunks: function (module, count) {
+        //         // any required modules inside node_modules are extracted to vendor
+        //         return (
+        //             module.resource &&
+        //             /\.js$/.test(module.resource) &&
+        //             module.resource.indexOf(
+        //                 path.join(__dirname, '../src/config')
+        //             ) === 0
+        //         );
+        //     }
+        // }),
 
         //【10】复制静态资源
         new CopyWebpackPlugin([
@@ -209,7 +233,7 @@ Object.keys(utils.entries()).forEach(function (entry) {
             template      : 'src/modules/' + entrypre + '/pages/' + entryname + '/' + entryname + '.pug',
             favicon       : 'favicon.ico',
             inject        : true,
-            chunks        : [manifest, vendor, 'common/env', entry],
+            chunks        : ['common/initial',entry],
             minify        : {
                 removeComments       : true,
                 collapseWhitespace   : true,

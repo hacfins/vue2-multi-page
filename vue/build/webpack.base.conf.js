@@ -3,6 +3,7 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -86,6 +87,10 @@ module.exports = {
       },
     ]
   },
+  plugins: [
+      // make sure to include the plugin for the magic
+      new VueLoaderPlugin()
+  ],
   //以下选项是Node.js全局变量或模块，这里主要是防止webpack注入一些Node.js的东西到vue中
   node: {
     // prevent webpack from injecting useless setImmediate polyfill because Vue
