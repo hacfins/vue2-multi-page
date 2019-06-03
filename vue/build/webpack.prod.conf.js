@@ -30,15 +30,18 @@ const webpackConfig = merge(baseWebpackConfig, {
         minimize: true, //是否进行代码压缩
         splitChunks: {
             cacheGroups: {
-                vendors: {
+                vendor: {
                     test: /[\\/]node_modules[\\/]/,
                     priority: 10,
-                    name:'vendors/vendors',
+                    name:'vendor/vendor',
                 },
                 env: {
-                    chunks:'initial',
+                    chunks:function(chunk){
+                        return getEntryname().all
+
+                    },
                     test: /[\\/]src[\\/]config[\\/]/,
-                    priority: 9,
+                    priority: 8,
                     name:'common/env',
                 },
             }
