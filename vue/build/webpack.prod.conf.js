@@ -35,17 +35,11 @@ const webpackConfig = merge(baseWebpackConfig, {
                     priority: 10,
                     name:'vendors/vendors',
                 },
-                initial: {
+                env: {
                     chunks:'initial',
-                    test: /[\\/]src[\\/]/,
+                    test: /[\\/]src[\\/]config[\\/]/,
                     priority: 9,
-                    name:'common/initial',
-                },
-                common: {
-                    chunks:'async',
-                    test: /[\\/]src[\\/]/,
-                    priority: 8,
-                    name:'common/common',
+                    name:'common/env',
                 },
             }
         },
@@ -233,7 +227,7 @@ Object.keys(utils.entries()).forEach(function (entry) {
             template      : 'src/modules/' + entrypre + '/pages/' + entryname + '/' + entryname + '.pug',
             favicon       : 'favicon.ico',
             inject        : true,
-            chunks        : ['common/initial',entry],
+            chunks        : ['common/env',entry],
             minify        : {
                 removeComments       : true,
                 collapseWhitespace   : true,
