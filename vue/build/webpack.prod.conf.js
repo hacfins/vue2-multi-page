@@ -50,6 +50,20 @@ const webpackConfig = merge(baseWebpackConfig, {
                     test: /[\\/]node_modules[\\/]/,
                     name:'phone/vendor',
                 },
+                phonecommon: {
+                    chunks:'async',
+                    test: /[\\/]src[\\/]modules[\\/]phone[\\/]/,
+                    name:'phone/common',
+                    minChunks: 2,
+                    enforce:true
+                },
+                indexcommon: {
+                    chunks:'async',
+                    test: /[\\/]src[\\/]modules[\\/]index[\\/]/,
+                    name:'index/common',
+                    minChunks: 2,
+                    enforce:true
+                },
                 env: {
                     chunks:function(chunk){
                         return getEntryname().all
