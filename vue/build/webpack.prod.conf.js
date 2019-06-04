@@ -34,6 +34,18 @@ const webpackConfig = merge(baseWebpackConfig, {
         minimize: true, //是否进行代码压缩
         splitChunks: {
             cacheGroups: {
+                vuex: {
+                    chunks:'all',
+                    test: /[\\/]node_modules[\\/]vuex[\\/]/,
+                    name:'common/vuex',
+                    priority: 20,
+                },
+                bowser: {
+                    chunks:'all',
+                    test: /[\\/]node_modules[\\/]bowser[\\/]/,
+                    name:'common/bowser',
+                    priority: 20,
+                },
                 indexvendor: {
                     chunks: (chunk) => {
                        const entrypre  = chunk.name.substring(0, chunk.name.lastIndexOf('/'));
@@ -258,7 +270,7 @@ Object.keys(utils.entries()).forEach(function (entry) {
             template      : 'src/modules/' + entrypre + '/pages/' + entryname + '/' + entryname + '.pug',
             favicon       : 'favicon.ico',
             inject        : true,
-            chunks        : ['common/env',vendor,entry],
+            chunks        : ['common/bowser','common/vuex',vendor,'common/env',entry],
             minify        : {
                 removeComments       : true,
                 collapseWhitespace   : true,

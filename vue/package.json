@@ -11,6 +11,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "bowser": "^1.9.3",
     "time-formater": "1.0.1",
     "vee-validate": "^2.0.9",
     "vue-cookies": "^1.5.6",

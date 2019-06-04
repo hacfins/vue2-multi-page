@@ -63,7 +63,7 @@ function jsonpAdapter(config) {
         };
 
         src += (src.indexOf('?') >= 0 ? '&' : '?') + buildParams({
-                jsonp_callback: jsonp,
+                callback: jsonp,
                 _             : (new Date().getTime())
             });
 

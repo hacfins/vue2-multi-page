@@ -1,5 +1,5 @@
 import VueCookies from 'vue-cookies'
-import Bowser from 'static/assets/bowser-1.9.3/bowser.min.js'
+import Bowser from 'bowser'
 
 /**
  * 存储localStorage
@@ -169,4 +169,11 @@ export const getCurrentMonthLast = function(){
     var nextMonthFirstDay=new Date(date.getFullYear(),nextMonth,1);
     var oneDay=1000*60*60*24;
     return new Date(nextMonthFirstDay-oneDay).getDate();
+}
+export const rootPath = function () {
+    var strFullPath = window.document.location.href;
+    var strPath     = window.document.location.pathname;
+    var pos         = strFullPath.indexOf(strPath);
+    var prePath     = strFullPath.substring(0, pos);
+    return prePath;
 }
