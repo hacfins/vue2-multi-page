@@ -19,6 +19,7 @@ const env = require('../config/prod.env');
 
 //与基本配置进行合并
 const webpackConfig = merge(baseWebpackConfig, {
+    mode: 'production',
     performance: {
         hints: false
     },
