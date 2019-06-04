@@ -68,7 +68,7 @@ const webpackConfig = merge(baseWebpackConfig, {
                     chunks:function(chunk){
                         return getEntryname().all
                     },
-                    test: /[\\/]src[\\/](api|config)[\\/]/,
+                    test: /[\\/]src[\\/](api|config|router)[\\/]/,
                     priority: 8,
                     name:'common/env',
                 },
