@@ -19,6 +19,9 @@ const env = require('../config/prod.env');
 
 //与基本配置进行合并
 const webpackConfig = merge(baseWebpackConfig, {
+    performance: {
+        hints: false
+    },
     module : {
         rules: utils.styleLoaders({
             sourceMap : config.build.productionSourceMap,
