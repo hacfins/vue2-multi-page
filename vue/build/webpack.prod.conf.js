@@ -54,7 +54,7 @@ const webpackConfig = merge(baseWebpackConfig, {
                 },
 
                 //【3】提取（env/config/utils/api/router）配置
-                env: {//环境配置
+                env: {
                     chunks  : function (chunk) {
                         return getEntryname().all
                     },
@@ -75,7 +75,7 @@ const webpackConfig = merge(baseWebpackConfig, {
                 },
 
                 //【5】Mobile端提取node_module
-                phonevendor: {//移动端：从node_module中提取
+                phonevendor: {
                     chunks  : (chunk) => {
                         const entrypre = chunk.name.substring(0, chunk.name.lastIndexOf('/'));
                         return entrypre == 'phone'
@@ -86,7 +86,7 @@ const webpackConfig = merge(baseWebpackConfig, {
                 },
 
                 //【6】PC端提取内部组件公共部分
-                indexcommon: {//PC端组件共用部分
+                indexcommon: {
                     chunks   : 'async',
                     test     : /[\\/]src[\\/]modules[\\/]index[\\/]/,
                     name     : 'index/common',
@@ -96,7 +96,7 @@ const webpackConfig = merge(baseWebpackConfig, {
                 },
 
                 //【7】Mobile端提取内部组件公共部分
-                phonecommon: {//移动端组件共用部分
+                phonecommon: {
                     chunks   : 'async',
                     test     : /[\\/]src[\\/]modules[\\/]phone[\\/]/,
                     name     : 'phone/common',
