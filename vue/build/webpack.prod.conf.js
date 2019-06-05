@@ -107,7 +107,7 @@ const webpackConfig = merge(baseWebpackConfig, {
 
                 //【8】PC端提取入口文件的公共样式
                 index_entry_style: {
-                    name: 'index/entry_style',
+                    name: 'index/common',
                     test: (m, c) => {
                         var cname = c.map((cd) => {
                             return cd.name
@@ -124,7 +124,7 @@ const webpackConfig = merge(baseWebpackConfig, {
 
                 //【9】Mobile端提取入口文件的公共样式
                 phone_entry_style: {
-                    name: 'phone/entry_style',
+                    name: 'phone/common',
                     test: (m, c) => {
                         var cname = c.map((cd) => {
                             return cd.name
@@ -302,13 +302,13 @@ if (config.build.bundleAnalyzerReport) {
 Object.keys(utils.entries()).forEach(function (entry) {
     const entryname = entry.substring(entry.lastIndexOf('/') + 1);
     const entrypre  = entry.substring(0, entry.lastIndexOf('/'));
-    let vendor, entrystyle;
+    let vendor, common;
     if (entrypre == 'phone') {
         vendor   = 'phone/vendor';
-        entrystyle = 'phone/entry_style';
+        common = 'phone/common';
     } else {
         vendor   = 'index/vendor';
-        entrystyle = 'index/entry_style';
+        common = 'index/common';
     }
     var etToZh = {
         'index':'首页',
@@ -323,7 +323,7 @@ Object.keys(utils.entries()).forEach(function (entry) {
             template      : 'src/modules/' + entrypre + '/pages/' + entryname + '/' + entryname + '.pug',
             favicon       : 'favicon.ico',
             inject        : true,
-            chunks        : [entrystyle,'common/bowser','common/vuex',vendor,'common/env',entry],
+            chunks        : ['common/bowser','common/vuex',vendor,common,'common/env',entry],
             minify        : {
                 removeComments       : true,
                 collapseWhitespace   : true,
