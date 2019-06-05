@@ -106,8 +106,8 @@ const webpackConfig = merge(baseWebpackConfig, {
                 },
 
                 //【8】PC端提取入口文件的公共样式
-                index_com_style: {
-                    name: 'index/com_style',
+                index_entry_style: {
+                    name: 'index/entry_style',
                     test: (m, c) => {
                         var cname = c.map((cd) => {
                             return cd.name
@@ -123,8 +123,8 @@ const webpackConfig = merge(baseWebpackConfig, {
                 },
 
                 //【9】Mobile端提取入口文件的公共样式
-                phone_com_style: {
-                    name: 'phone/com_style',
+                phone_entry_style: {
+                    name: 'phone/entry_style',
                     test: (m, c) => {
                         var cname = c.map((cd) => {
                             return cd.name
@@ -302,13 +302,13 @@ if (config.build.bundleAnalyzerReport) {
 Object.keys(utils.entries()).forEach(function (entry) {
     const entryname = entry.substring(entry.lastIndexOf('/') + 1);
     const entrypre  = entry.substring(0, entry.lastIndexOf('/'));
-    let vendor, comstyle;
+    let vendor, entrystyle;
     if (entrypre == 'phone') {
         vendor   = 'phone/vendor';
-        comstyle = 'phone/com_style';
+        entrystyle = 'phone/entry_style';
     } else {
         vendor   = 'index/vendor';
-        comstyle = 'index/com_style';
+        entrystyle = 'index/entry_style';
     }
     var etToZh = {
         'index':'首页',
@@ -323,7 +323,7 @@ Object.keys(utils.entries()).forEach(function (entry) {
             template      : 'src/modules/' + entrypre + '/pages/' + entryname + '/' + entryname + '.pug',
             favicon       : 'favicon.ico',
             inject        : true,
-            chunks        : [comstyle,'common/bowser','common/vuex',vendor,'common/env',entry],
+            chunks        : [entrystyle,'common/bowser','common/vuex',vendor,'common/env',entry],
             minify        : {
                 removeComments       : true,
                 collapseWhitespace   : true,
