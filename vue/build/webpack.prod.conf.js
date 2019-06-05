@@ -1,18 +1,18 @@
 'use strict'
 
-const path              = require('path');//获取路径的方法
-const utils             = require('./utils');//公用方法
-const webpack           = require('webpack');//webpack
-const config            = require('../config');//配置对象
-const merge             = require('webpack-merge');//合并工具
-const baseWebpackConfig = require('./webpack.base.conf');//获取基本配置
-const CopyWebpackPlugin = require('copy-webpack-plugin');//复制工具
-const HtmlWebpackPlugin = require('html-webpack-plugin');//HTML工具
+const path                 = require('path');//获取路径的方法
+const utils                = require('./utils');//公用方法
+const webpack              = require('webpack');//webpack
+const config               = require('../config');//配置对象
+const merge                = require('webpack-merge');//合并工具
+const baseWebpackConfig    = require('./webpack.base.conf');//获取基本配置
+const CopyWebpackPlugin    = require('copy-webpack-plugin');//复制工具
+const HtmlWebpackPlugin    = require('html-webpack-plugin');//HTML工具
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');//CSS去重工具
-const UglifyJsPlugin    = require('uglifyjs-webpack-plugin');
-const ImageminPlugin    = require('imagemin-webpack-plugin').default;//图片压缩工具
-const imageminMozjpeg   = require('imagemin-mozjpeg');//jpg压缩工具
+const OptimizeCSSPlugin    = require('optimize-css-assets-webpack-plugin');//CSS去重工具
+const UglifyJsPlugin       = require('uglifyjs-webpack-plugin');
+const ImageminPlugin       = require('imagemin-webpack-plugin').default;//图片压缩工具
+const imageminMozjpeg      = require('imagemin-mozjpeg');//jpg压缩工具
 
 
 //定义环境变量
@@ -20,11 +20,11 @@ const env = require('../config/prod.env');
 
 //与基本配置进行合并
 const webpackConfig = merge(baseWebpackConfig, {
-    mode: 'production',
-    performance: {
+    mode        : 'production',
+    performance : {
         hints: false
     },
-    module : {
+    module      : {
         rules: utils.styleLoaders({
             sourceMap : config.build.productionSourceMap,
             extract   : true,
@@ -32,83 +32,83 @@ const webpackConfig = merge(baseWebpackConfig, {
         })
 
     },
-    optimization:{
-        minimize: true, //是否进行代码压缩
+    optimization: {
+        minimize   : true, //是否进行代码压缩
         splitChunks: {
             cacheGroups: {
 
                 //【1】提取bowser
                 bowser: {
-                    chunks:'all',
-                    test: /[\\/]node_modules[\\/]bowser[\\/]/,
-                    name:'common/bowser',
+                    chunks  : 'all',
+                    test    : /[\\/]node_modules[\\/]bowser[\\/]/,
+                    name    : 'common/bowser',
                     priority: 30,
                 },
 
                 //【2】提取vuex
                 vuex: {
-                    chunks:'all',
-                    test: /[\\/]node_modules[\\/]vuex[\\/]/,
-                    name:'common/vuex',
+                    chunks  : 'all',
+                    test    : /[\\/]node_modules[\\/]vuex[\\/]/,
+                    name    : 'common/vuex',
                     priority: 29,
                 },
 
                 //【3】提取（env/config/utils/api/router）配置
                 env: {//环境配置
-                    chunks:function(chunk){
+                    chunks  : function (chunk) {
                         return getEntryname().all
                     },
-                    test: /[\\/]src[\\/](api|config|router)[\\/]/,
+                    test    : /[\\/]src[\\/](api|config|router)[\\/]/,
                     priority: 28,
-                    name:'common/env',
+                    name    : 'common/env',
                 },
 
                 //【4】PC端提取node_module
                 indexvendor: {
-                    chunks: (chunk) => {
-                       const entrypre  = chunk.name.substring(0, chunk.name.lastIndexOf('/'));
-                       return entrypre == 'index'
+                    chunks  : (chunk) => {
+                        const entrypre = chunk.name.substring(0, chunk.name.lastIndexOf('/'));
+                        return entrypre == 'index'
                     },
-                    test: /[\\/]node_modules[\\/]/,
-                    name:'index/vendor',
+                    test    : /[\\/]node_modules[\\/]/,
+                    name    : 'index/vendor',
                     priority: 27,
                 },
 
                 //【5】Mobile端提取node_module
                 phonevendor: {//移动端：从node_module中提取
-                    chunks: (chunk) => {
-                        const entrypre  = chunk.name.substring(0, chunk.name.lastIndexOf('/'));
+                    chunks  : (chunk) => {
+                        const entrypre = chunk.name.substring(0, chunk.name.lastIndexOf('/'));
                         return entrypre == 'phone'
                     },
-                    test: /[\\/]node_modules[\\/]/,
-                    name:'phone/vendor',
+                    test    : /[\\/]node_modules[\\/]/,
+                    name    : 'phone/vendor',
                     priority: 26,
                 },
 
                 //【6】PC端提取内部组件公共部分
                 indexcommon: {//PC端组件共用部分
-                    chunks:'async',
-                    test: /[\\/]src[\\/]modules[\\/]index[\\/]/,
-                    name:'index/common',
+                    chunks   : 'async',
+                    test     : /[\\/]src[\\/]modules[\\/]index[\\/]/,
+                    name     : 'index/common',
                     minChunks: 2,
-                    enforce:true,
-                    priority: 25,
+                    enforce  : true,
+                    priority : 25,
                 },
 
                 //【7】Mobile端提取内部组件公共部分
                 phonecommon: {//移动端组件共用部分
-                    chunks:'async',
-                    test: /[\\/]src[\\/]modules[\\/]phone[\\/]/,
-                    name:'phone/common',
+                    chunks   : 'async',
+                    test     : /[\\/]src[\\/]modules[\\/]phone[\\/]/,
+                    name     : 'phone/common',
                     minChunks: 2,
-                    enforce:true,
-                    priority: 24,
+                    enforce  : true,
+                    priority : 24,
                 },
 
                 //【8】PC端提取入口文件的公共样式
                 index_entry_style: {
-                    name: 'index/common',
-                    test: (m, c) => {
+                    name    : 'index/common',
+                    test    : (m, c) => {
                         var cname = c.map((cd) => {
                             return cd.name
                         })
@@ -117,15 +117,15 @@ const webpackConfig = merge(baseWebpackConfig, {
 
                             })
                     },
-                    chunks: 'initial',
-                    enforce: true,
+                    chunks  : 'initial',
+                    enforce : true,
                     priority: 23,
                 },
 
                 //【9】Mobile端提取入口文件的公共样式
                 phone_entry_style: {
-                    name: 'phone/common',
-                    test: (m, c) => {
+                    name    : 'phone/common',
+                    test    : (m, c) => {
                         var cname = c.map((cd) => {
                             return cd.name
                         })
@@ -133,20 +133,20 @@ const webpackConfig = merge(baseWebpackConfig, {
                                 return s.indexOf('phone/') != -1
                             })
                     },
-                    chunks: 'initial',
-                    enforce: true,
+                    chunks  : 'initial',
+                    enforce : true,
                     priority: 22,
                 },
             }
         },
     },
-    devtool: config.build.productionSourceMap ? config.build.devtool : false,
-    output : {
+    devtool     : config.build.productionSourceMap ? config.build.devtool : false,
+    output      : {
         path         : config.build.assetsRoot,
         filename     : utils.assetsPath('js/[name].[chunkhash].js'),
         chunkFilename: utils.assetsPath('js/[name].[chunkhash].js')
     },
-    plugins: [
+    plugins     : [
         //【1】定义变量用来判断环境
         new webpack.DefinePlugin({
             'process.env': env
@@ -165,7 +165,7 @@ const webpackConfig = merge(baseWebpackConfig, {
 
         //【3】抽离各个入口所依赖的css
         new MiniCssExtractPlugin({
-            filename: utils.assetsPath('css/[name].[contenthash].css'),
+            filename     : utils.assetsPath('css/[name].[contenthash].css'),
             chunkFilename: utils.assetsPath('css/[name].[contenthash].css'),
         }),
 
@@ -252,7 +252,7 @@ const webpackConfig = merge(baseWebpackConfig, {
             {
                 from  : path.resolve(__dirname, '../static'),
                 to    : config.build.assetsSubDirectory,
-                ignore: ['.*', 'imgs/*.*','lib/**/*.*']
+                ignore: ['.*', 'imgs/*.*', 'lib/**/*.*']
             },
             {
                 from: path.resolve(__dirname, '../.htaccess'),
@@ -304,26 +304,26 @@ Object.keys(utils.entries()).forEach(function (entry) {
     const entrypre  = entry.substring(0, entry.lastIndexOf('/'));
     let vendor, common;
     if (entrypre == 'phone') {
-        vendor   = 'phone/vendor';
+        vendor = 'phone/vendor';
         common = 'phone/common';
     } else {
-        vendor   = 'index/vendor';
+        vendor = 'index/vendor';
         common = 'index/common';
     }
-    var etToZh = {
-        'index':'首页',
-        'video':'视频'
+    var etToZh     = {
+        'index': '首页',
+        'video': '视频'
     }
     var page_title = etToZh[entryname] ? etToZh[entryname] : '';
 
     webpackConfig.plugins.push(
         new HtmlWebpackPlugin({
-            title:page_title,
+            title         : page_title,
             filename      : entry + '.html',
             template      : 'src/modules/' + entrypre + '/pages/' + entryname + '/' + entryname + '.pug',
             favicon       : 'favicon.ico',
             inject        : true,
-            chunks        : ['common/bowser','common/vuex',vendor,common,'common/env',entry],
+            chunks        : ['common/bowser', 'common/vuex', vendor, common, 'common/env', entry],
             minify        : {
                 removeComments       : true,
                 collapseWhitespace   : true,
