@@ -64,7 +64,7 @@ function jsonpAdapter(config) {
 
         src += (src.indexOf('?') >= 0 ? '&' : '?') + buildParams({
                 callback: jsonp,
-                _             : (new Date().getTime())
+                _       : (new Date().getTime())
             });
 
         script.onload = script.onreadystatechange = function () {

@@ -15,11 +15,11 @@
         },
         mounted(){
             ueditor.Init({
-                el: 'answereditor',
-                toolbars:[[
+                el      : 'answereditor',
+                toolbars: [[
                     'paragraph', 'bold', 'italic', 'underline', 'blockquote', 'insertorderedlist', 'insertunorderedlist', 'insertcode', '|', 'link', 'unlink', 'horizontal', 'insertimage', '|', 'removeformat', 'undo', 'redo', 'fullscreen', 'formula'
                 ]],
-                zIndex:1,
+                zIndex  : 1,
             });
 
         }

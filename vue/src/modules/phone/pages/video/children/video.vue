@@ -2,7 +2,7 @@
     <div>
         <head-top></head-top>
         <div class="container">
-          另一个
+            另一个
         </div>
         <foot-bootom></foot-bootom>
     </div>

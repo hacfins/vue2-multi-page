@@ -1,8 +1,8 @@
 <template>
-        <div style="width: 100%;height:450px;">
+    <div style="width: 100%;height:450px;">
 
-            <div id="line1" class="line1" style="width:100%;height:100%"></div>
-        </div>
+        <div id="line1" class="line1" style="width:100%;height:100%"></div>
+    </div>
 
 </template>
 
@@ -10,7 +10,7 @@
     export default {
         data(){
             return {
-                userNum:[0, 30, 40, 65, 23, 56, 43]
+                userNum: [0, 30, 40, 65, 23, 56, 43]
             }
         },
         mounted(){
@@ -18,7 +18,7 @@
             this.initData();
 
         },
-        props  : ['userCount','timeData'],
+        props  : ['userCount', 'timeData'],
         methods: {
             initData(){
                 const colors = ['#2697eb'];
@@ -46,21 +46,21 @@
                             axisLabel: {
                                 formatter: '{value}'
                             },
-                            interval:15
+                            interval : 15
                         },
                         {
-                            show : false,
+                            show: false,
                         },
                     ],
                     series : [{
-                        name:'用户增长数',
+                        name: '用户增长数',
                         data: this.userCount,
                         type: 'line'
                     }
 
                     ]
                 };
-                if(typeof this.myChart != 'undefined')
+                if (typeof this.myChart != 'undefined')
                     this.myChart.setOption(option);
             },
 

@@ -1,5 +1,4 @@
-
-import  { IsPC } from '@/config/utils'
+import  {IsPC} from '@/config/utils'
 
 var MessageTip;
 if (IsPC()) {
@@ -11,7 +10,7 @@ if (IsPC()) {
 
 export default{
 
-    WebUploader  : function (options) {
+    WebUploader: function (options) {
 
         if (!options || !options.server) {
             return null;
@@ -161,9 +160,9 @@ export default{
 
             if (options.uploadAccept) {
                 uploader.on('uploadAccept', options.uploadAccept);
-            }else{
-                uploader.on('uploadAccept', function (obj,res) {
-                    if(res.code == 481){
+            } else {
+                uploader.on('uploadAccept', function (obj, res) {
+                    if (res.code == 481) {
                         MessageTip(res.msg);
                     }
                 });
@@ -213,39 +212,39 @@ export default{
         }
 
 
-        function WebUploderRegister(){
+        function WebUploderRegister() {
             WebUploader.Uploader.register({
                 'before-send': 'checkchunk'
             }, {
-                checkchunk: function( block ) {
+                checkchunk: function (block) {
                     var me = this, owner = this.owner;
-                    if(owner.tempdata){
+                    if (owner.tempdata) {
                         var deferred = WebUploader.Deferred();
-                        if(owner.tempdata.length>0){
+                        if (owner.tempdata.length > 0) {
                             var startpos;
-                            $.each(owner.tempdata,function(i,v){
-                                if(block.file == v.file){
+                            $.each(owner.tempdata, function (i, v) {
+                                if (block.file == v.file) {
                                     startpos = owner.tempdata[i].start;
 
                                     return;
                                 }
                             })
-                            if(typeof startpos !='undefined'){
-                                if(block.start< startpos){
+                            if (typeof startpos != 'undefined') {
+                                if (block.start < startpos) {
                                     //跳过分片
                                     owner.notrefreshprogress = true;
                                     deferred.reject();
-                                }else{
+                                } else {
                                     //上传
                                     owner.notrefreshprogress = false;
                                     deferred.resolve();
                                 }
-                            }else{
+                            } else {
                                 //上传
                                 owner.notrefreshprogress = false;
                                 deferred.resolve();
                             }
-                        }else{
+                        } else {
                             //上传
                             owner.notrefreshprogress = false;
                             deferred.resolve();
@@ -257,7 +256,6 @@ export default{
                 }
             });
         }
-
 
 
     },

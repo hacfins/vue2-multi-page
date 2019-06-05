@@ -15,6 +15,7 @@
 
 <style lang="scss" rel="stylesheet/scss">
     @import '../../../../style/common/mixin';
+
     #app {
         min-width : 1170px;
     }

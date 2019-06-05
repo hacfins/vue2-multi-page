@@ -21,9 +21,7 @@
 </template>
 <script>
     export default {
-        components: {
-
-        },
+        components: {},
         mounted(){
             document.title = 404
         }
@@ -33,30 +31,30 @@
 
 <style lang="scss" scoped rel="stylesheet/scss">
     .noexsit-wrap {
-        text-align : center;
-        position   : fixed;
-        top        : 0;
-        bottom     : 55px;
-        width      : 100%;
-        display: flex;
-        flex-direction: column;
-        .noexsit-wrap-head{
-            background-color: #EDEFF0;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            h1{
-                margin:0;
+        text-align     : center;
+        position       : fixed;
+        top            : 0;
+        bottom         : 55px;
+        width          : 100%;
+        display        : flex;
+        flex-direction : column;
+        .noexsit-wrap-head {
+            background-color : #edeff0;
+            flex             : 1;
+            display          : flex;
+            flex-direction   : column;
+            justify-content  : center;
+            h1 {
+                margin : 0;
             }
 
         }
-        .notfound{
-            color: #636b6f;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        .notfound {
+            color           : #636b6f;
+            flex            : 1;
+            display         : flex;
+            flex-direction  : column;
+            justify-content : center;
         }
     }
 

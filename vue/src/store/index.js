@@ -17,15 +17,15 @@ const mutations = {
 const actions = {
     getUserData({commit}, path){
         getCourseList({
-            data    : {},
-            callback: (res) => {
+            data     : {},
+            callback : (res) => {
                 console.log(1)
                 commit('saveUserInfo', res);
 
             },
-            errorback:() => {
-            commit('saveUserInfo', {'name':'12'});
-        }
+            errorback: () => {
+                commit('saveUserInfo', {'name': '12'});
+            }
         })
     },
 

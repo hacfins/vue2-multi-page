@@ -1,4 +1,3 @@
-
 <template>
     <div>
         <vue-video class="vjs-custom-skin"
@@ -28,24 +27,24 @@
     import PlayVideo from '@/modules/index/components/common/video.vue'
     export default {
         data(){
-            return{
-                playerOptions:{
-                    height: '360',
-                    sources:[{
-                        type:'application/x-mpegURL',
-                        src:'http://sample.vodobox.net/skate_phantom_flex_4k/skate_phantom_flex_4k.m3u8'
+            return {
+                playerOptions: {
+                    height   : '360',
+                    sources  : [{
+                        type: 'application/x-mpegURL',
+                        src : 'http://sample.vodobox.net/skate_phantom_flex_4k/skate_phantom_flex_4k.m3u8'
                     }],
-                    flash:{
-                        swf:'/static/assets/videojs-flashls-source-handler-0.0.0/video-js-hls.swf'
+                    flash    : {
+                        swf: '/static/assets/videojs-flashls-source-handler-0.0.0/video-js-hls.swf'
                     },
-                    techOrder: ['html5','flash'],
+                    techOrder: ['html5', 'flash'],
                 },
             }
         },
         components: {
-            'vue-video':PlayVideo
+            'vue-video': PlayVideo
         },
-        methods: {
+        methods   : {
             // listen event
             onPlayerPlay(player) {
                 //                 console.log('player play!', player)
@@ -92,7 +91,7 @@
 
             }
         },
-        watch:{
+        watch     : {
             $route(){
 
                 this.$destroy()

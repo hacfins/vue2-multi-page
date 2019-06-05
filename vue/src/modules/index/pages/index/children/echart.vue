@@ -74,19 +74,19 @@
             return {
                 timeData   : [],
                 userCount  : [],
-                allMonth : [],
-                allDay : [],
-                sevenDate:[],
-                tableData:[],
-                currentPage:1,
-                count:0
+                allMonth   : [],
+                allDay     : [],
+                sevenDate  : [],
+                tableData  : [],
+                currentPage: 1,
+                count      : 0
             }
         },
         components: {
             tendency
 
         },
-        computed:{
+        computed  : {
             ...mapState(['userInfo']),
         },
         created(){
@@ -122,16 +122,16 @@
             }
 
 
-            for (var  i = 1; i <= getCurrentMonthLast(); i++) {
-                var  date = dtime(new Date(time.getFullYear(), time.getMonth(), i, 0, 0, 0)).format('MM-DD')
+            for (var i = 1; i <= getCurrentMonthLast(); i++) {
+                var date = dtime(new Date(time.getFullYear(), time.getMonth(), i, 0, 0, 0)).format('MM-DD')
                 this.allDay.push(date)
             }
 
             //全年
-            for (var  i = 1; i <= 12; i++) {
-                this.allMonth.push(i+'月')
+            for (var i = 1; i <= 12; i++) {
+                this.allMonth.push(i + '月')
             }
-            this.userCount = [0,15,30,40,60,23,46]
+            this.userCount = [0, 15, 30, 40, 60, 23, 46]
         },
         methods   : {
             ...mapActions(['getUserData']),
@@ -146,15 +146,15 @@
 
             },
             getUserNum(type){
-                if(type == 1){
-                    this.userCount = [20,15,30,40,60,23,46];
-                    this.timeData = this.sevenDate
-                }else if(type == 2){
-                    this.userCount = [60,30,10,50,10,24,36]
-                    this.timeData = this.allDay;
-                }else if(type == 3){
-                    this.userCount = [30,20,10,40,50,14,26,45,56,34,23,45];
-                    this.timeData = this.allMonth
+                if (type == 1) {
+                    this.userCount = [20, 15, 30, 40, 60, 23, 46];
+                    this.timeData  = this.sevenDate
+                } else if (type == 2) {
+                    this.userCount = [60, 30, 10, 50, 10, 24, 36]
+                    this.timeData  = this.allDay;
+                } else if (type == 3) {
+                    this.userCount = [30, 20, 10, 40, 50, 14, 26, 45, 56, 34, 23, 45];
+                    this.timeData  = this.allMonth
                 }
             },
             handleSizeChange(){
@@ -164,7 +164,7 @@
 
             }
         },
-        watch:{
+        watch     : {
             userInfo(val){
                 console.log(val)
             }
@@ -176,29 +176,30 @@
     .table_container {
         padding : 20px;
     }
-    .data_section{
-        .data_section_row{
-            height:105px;
-            text-align: center;
-            background:#fff;
-            margin:20px 0!important;
-            padding:24px 0
+
+    .data_section {
+        .data_section_row {
+            height     : 105px;
+            text-align : center;
+            background : #fff;
+            margin     : 20px 0 !important;
+            padding    : 24px 0
         }
-        .data-list-item{
-            border-left:1px solid #ddd;
-            &:first-child{
-                border:none
+        .data-list-item {
+            border-left : 1px solid #ddd;
+            &:first-child {
+                border : none
             }
         }
-        .data_list{
-            font-size:14px;
-            color:gray;
-            line-height:30px;
+        .data_list {
+            font-size   : 14px;
+            color       : gray;
+            line-height : 30px;
 
         }
-        .data_num{
-            font-size:24px;
-            font-weight:bold;
+        .data_num {
+            font-size   : 24px;
+            font-weight : bold;
 
         }
     }

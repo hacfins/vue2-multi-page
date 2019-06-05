@@ -12,11 +12,12 @@ body, html {
   background-color : $grayLight;
   height           : 100%;
   width            : 100%;
-  font-family: "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif,
+  font-family      : "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif,
   "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
-input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
-  font-family: "Microsoft Yahei"
+
+input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  font-family                 : "Microsoft Yahei"
 }
 
 html {
@@ -46,7 +47,7 @@ h1 {
   margin    : .67em 0
 }
 
-ul,li {
+ul, li {
   list-style : none;
 }
 
@@ -140,7 +141,7 @@ svg:not(:root) {
 }
 
 button, input, optgroup, select, textarea {
-  font-family: "Microsoft Yahei";
+  font-family : "Microsoft Yahei";
   font-size   : 100%;
   line-height : 1.15;
   margin      : 0
@@ -231,11 +232,13 @@ template {
 [hidden] {
   display : none
 }
-.pull-left{
-  float:left;
+
+.pull-left {
+  float : left;
 }
-.pull-right{
-  float:right;
+
+.pull-right {
+  float : right;
 }
 
 $boxSize : (10n:-10, 5n:-5, 0: 0, 5:5, 7:7, 8:8, 10:10, 12:12, 15:15, 16:16, 20:20, 24:24, 30:30, 32:32) !global;
@@ -288,6 +291,7 @@ $boxSize : (10n:-10, 5n:-5, 0: 0, 5:5, 7:7, 8:8, 10:10, 12:12, 15:15, 16:16, 20:
     padding-bottom : #{$v}px !important;
   }
 }
+
 .#{$pf}text-ellipsis {
   display       : block !important;
   word-break    : break-all;
@@ -295,6 +299,7 @@ $boxSize : (10n:-10, 5n:-5, 0: 0, 5:5, 7:7, 8:8, 10:10, 12:12, 15:15, 16:16, 20:
   overflow      : hidden;
   text-overflow : ellipsis;
 }
-.#{$pf}default{
-  cursor:default!important;
+
+.#{$pf}default {
+  cursor : default !important;
 }

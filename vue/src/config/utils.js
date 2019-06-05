@@ -144,14 +144,14 @@ export const innerLink = function (url) {
  * 获取url相对路径
  * @returns {string}
  */
-export const getUrlRelativePath  =function () {
-    var url = document.location.toString();
+export const getUrlRelativePath = function () {
+    var url    = document.location.toString();
     var arrUrl = url.split("//");
 
-    var start = arrUrl[1].indexOf("/");
+    var start  = arrUrl[1].indexOf("/");
     var relUrl = arrUrl[1].substring(start);//stop省略，截取从start开始到结尾的所有字符
 
-    if(relUrl.indexOf("?") != -1){
+    if (relUrl.indexOf("?") != -1) {
         relUrl = relUrl.split("?")[0];
     }
     return relUrl;
@@ -162,15 +162,15 @@ export const getUrlRelativePath  =function () {
  * @returns {number}
  */
 
-export const getCurrentMonthLast = function(){
-    var date=new Date();
-    var currentMonth=date.getMonth();
-    var nextMonth=++currentMonth;
-    var nextMonthFirstDay=new Date(date.getFullYear(),nextMonth,1);
-    var oneDay=1000*60*60*24;
-    return new Date(nextMonthFirstDay-oneDay).getDate();
+export const getCurrentMonthLast = function () {
+    var date              = new Date();
+    var currentMonth      = date.getMonth();
+    var nextMonth         = ++currentMonth;
+    var nextMonthFirstDay = new Date(date.getFullYear(), nextMonth, 1);
+    var oneDay            = 1000 * 60 * 60 * 24;
+    return new Date(nextMonthFirstDay - oneDay).getDate();
 }
-export const rootPath = function () {
+export const rootPath            = function () {
     var strFullPath = window.document.location.href;
     var strPath     = window.document.location.pathname;
     var pos         = strFullPath.indexOf(strPath);

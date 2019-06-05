@@ -10,10 +10,10 @@ body {
 .mint-header {
   background : #fff;
   .mint-header-title {
-    color : #000;
-    margin: 0;
-    height:40px;
-    line-height:40px;
+    color       : #000;
+    margin      : 0;
+    height      : 40px;
+    line-height : 40px;
   }
   .mint-header-button {
     color : #26a2ff
@@ -135,9 +135,9 @@ body {
 }
 
 .mint-cell-value {
-  margin-right : 5px;
-  min-width:0;
-  padding-right:10px;
+  margin-right  : 5px;
+  min-width     : 0;
+  padding-right : 10px;
 }
 
 .mint-cell-ft {
@@ -160,11 +160,13 @@ body {
     margin-right   : 16px
   }
 }
-.mint-field .mint-cell-title{
-  width:90px;
+
+.mint-field .mint-cell-title {
+  width : 90px;
 }
-.phone-pre-fix{
-  width:75px!important;
+
+.phone-pre-fix {
+  width : 75px !important;
 }
 
 [type=file] {
@@ -238,9 +240,9 @@ a.mt-media-box {
   overflow           : hidden;
   text-overflow      : ellipsis;
   display            : -webkit-box;
- /*! autoprefixer: next */
-  -webkit-box-orient: vertical;
- /* autoprefixer: on */
+                     /*! autoprefixer: next */
+  -webkit-box-orient : vertical;
+                     /* autoprefixer: on */
   -webkit-line-clamp : 2;
   word-break         : break-all;
   word-wrap          : break-word;
@@ -272,32 +274,37 @@ a.mt-media-box {
   text-align : center;
   font-size  : 14px;
 }
-.mt-cell_warn .mintui-field-default{
-  font-size: 23px!important;
-  display: inline-block;
-  font: normal normal normal 14px/1 FontAwesome;
-  font-size: inherit;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-family: FontAwesome!important;
-}
-.mt-cell_warn .mintui-field-default:before{
-  content: "\f06a";
-}
-//修复安卓-平板 时间不显示的问题
-.mint-datetime .picker-items,.mint-sex-popup .picker{
-  width:100%;
-}
-//修复安卓-平板 退出登陆提示字体模糊的问题
-.mint-msgbox {
-  transform: translate3d(-50%,-50%,0);
-  -webkit-transform: translate3d(-50%,-50%,0);
+
+.mt-cell_warn .mintui-field-default {
+  font-size               : 23px !important;
+  display                 : inline-block;
+  font                    : normal normal normal 14px/1 FontAwesome;
+  font-size               : inherit;
+  text-rendering          : auto;
+  -webkit-font-smoothing  : antialiased;
+  -moz-osx-font-smoothing : grayscale;
+  font-family             : FontAwesome !important;
 }
 
-.mint-header{
-  font-size:17px;
+.mt-cell_warn .mintui-field-default:before {
+  content : "\f06a";
 }
-.mint-header .mint-header-button{
-  font-size:16px;
+
+                               //修复安卓-平板 时间不显示的问题
+.mint-datetime .picker-items, .mint-sex-popup .picker {
+  width : 100%;
+}
+
+                               //修复安卓-平板 退出登陆提示字体模糊的问题
+.mint-msgbox {
+  transform         : translate3d(-50%, -50%, 0);
+  -webkit-transform : translate3d(-50%, -50%, 0);
+}
+
+.mint-header {
+  font-size : 17px;
+}
+
+.mint-header .mint-header-button {
+  font-size : 16px;
 }

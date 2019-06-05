@@ -1,4 +1,3 @@
-
 <template>
     <div>
         <vue-video class="vjs-custom-skin"
@@ -28,25 +27,25 @@
     import PlayVideo from '@/modules/index/components/common/video.vue'
     export default {
         data(){
-            return{
+            return {
                 playerOptions: {
-                    height: '360',
+                    height : '360',
                     sources: [{
                         type: "rtmp/mp4",
-                        src: "rtmp://184.72.239.149/vod/&mp4:BigBuckBunny_115k.mov"
+                        src : "rtmp://184.72.239.149/vod/&mp4:BigBuckBunny_115k.mov"
                     }],
 
                     techOrder: ['flash'],
-                    autoplay: false,
-                    controls: true,
-                    poster: "https://surmon-china.github.io/vue-quill-editor/static/images/surmon-9.jpg"
+                    autoplay : false,
+                    controls : true,
+                    poster   : "https://surmon-china.github.io/vue-quill-editor/static/images/surmon-9.jpg"
                 }
             }
         },
         components: {
-            'vue-video':PlayVideo
+            'vue-video': PlayVideo
         },
-        methods: {
+        methods   : {
             // listen event
             onPlayerPlay(player) {
                 //                 console.log('player play!', player)
@@ -93,7 +92,7 @@
 
             }
         },
-        watch:{
+        watch     : {
             $route(){
 
                 this.$destroy()

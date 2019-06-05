@@ -52,15 +52,14 @@
                 border-radius : 50%;
             }
         }
-        .head-nav-list{
-            li{
-                float:left;
-                a{
-                    display: block;
-                    padding:0 30px
+        .head-nav-list {
+            li {
+                float : left;
+                a {
+                    display : block;
+                    padding : 0 30px
                 }
             }
-
 
         }
 
