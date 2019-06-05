@@ -76,7 +76,10 @@
                 userCount  : [],
                 allMonth : [],
                 allDay : [],
-                sevenDate:[]
+                sevenDate:[],
+                tableData:[],
+                currentPage:1,
+                count:0
             }
         },
         components: {
@@ -153,6 +156,12 @@
                     this.userCount = [30,20,10,40,50,14,26,45,56,34,23,45];
                     this.timeData = this.allMonth
                 }
+            },
+            handleSizeChange(){
+
+            },
+            handleCurrentChange(){
+
             }
         },
         watch:{

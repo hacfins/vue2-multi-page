@@ -3,7 +3,7 @@
         <head-top></head-top>
         <el-row class="container">
             <el-col :span="6" style=" background-color: #fff;">
-                <el-menu :default-active="defaultActive" theme="dark" router>
+                <el-menu :default-active="defaultActive"  router>
                     <el-menu-item index="/"><i class="el-icon-menu"></i><span>用户信息</span></el-menu-item>
                     <el-menu-item index="/index/setbindsns"><i class="el-icon-menu"></i><span>账号绑定</span></el-menu-item>
                 </el-menu>
