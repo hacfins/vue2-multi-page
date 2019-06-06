@@ -150,9 +150,9 @@ export default function (url = '', options, type) {
                 }
                 setTimeout(() => {
                     if (IsPC()) {
-                        location.href = '/passport/login';
+                        // location.href = '/passport/login';
                     } else {
-                        location.href = '/m/passport/login';
+                        // location.href = '/m/passport/login';
                     }
                 },2000)
                 break;
@@ -176,9 +176,9 @@ export default function (url = '', options, type) {
                 }
                 setTimeout(() => {
                     if (IsPC()) {
-                        location.href = '/passport/login';
+                        // location.href = '/passport/login';
                     } else {
-                        location.href = '/m/passport/login';
+                        // location.href = '/m/passport/login';
                     }
                 },2000)
 
