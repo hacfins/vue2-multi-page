@@ -112,7 +112,7 @@ const webpackConfig = merge(baseWebpackConfig, {
                         var cname = c.map((cd) => {
                             return cd.name
                         })
-                        return m.constructor.name === 'CssModule' && cname.some((s) => {
+                        return m.constructor.name === 'CssModule' && cname.every((s) => {
                                 return s.indexOf('index/') != -1
 
                             })
@@ -129,7 +129,7 @@ const webpackConfig = merge(baseWebpackConfig, {
                         var cname = c.map((cd) => {
                             return cd.name
                         })
-                        return m.constructor.name === 'CssModule' && cname.some((s) => {
+                        return m.constructor.name === 'CssModule' && cname.every((s) => {
                                 return s.indexOf('phone/') != -1
                             })
                     },
