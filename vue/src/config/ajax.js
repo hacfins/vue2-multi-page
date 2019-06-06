@@ -160,9 +160,9 @@ export default function (url = '', options, type) {
             case 461://令牌无效
             case 462://过期
                 if (IsPC()) {
-                    location.href = '/passport/login';
+                    // location.href = '/passport/login';
                 } else {
-                    location.href = '/m/passport/login';
+                    // location.href = '/m/passport/login';
                 }
                 break;
             case 463://异地登录，被迫下线
