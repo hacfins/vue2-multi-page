@@ -102,3 +102,9 @@ acceptFile:function(a){this.accept = this.owner.accept||this.accept;var b=!a||!a
 j.multiple&&l.attr("multiple","multiple"),j.accept&&j.accept.length>0){for(a=[],b=0,d=j.accept.length;d>b;b++)a.push(j.accept[b].mimeTypes);l.attr("accept",a.join(","))
 改为：
 j.multiple&&l.attr("multiple","multiple"),j.is_fold&&l.attr("webkitdirectory",""),j.accept&&j.accept.length>0){for(a=[],b=0,d=j.accept.length;d>b;b++)a.push(j.accept[b].mimeTypes);l.attr("accept",a.join(","))
+
+(6)/static/assets/vee-validate-2.0.9.1/dist/vee-validate.min.js disabled 不进行验证的问题
+由：
+Ot.isDisabled.get=function(){return!(!this.component||!this.component.disabled)||!(!this.el||!this.el.disabled)}
+改为：
+Ot.isDisabled.get=function(){return false}
