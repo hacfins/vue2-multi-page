@@ -63,9 +63,27 @@
 #四、修改说明
 (1)/static/assets/element-ui-2.9.1/lib/index.js 为了实现 el-tree 组件 是不是叶子节点 原UI 只有在lazy 模式下 data中的isLeaf 属性值设置才生效，
 但是lazy 模式下 无法动态添加的节点 及节点的排序，所以将不是lazy模式也可以通过isLeaf 设置是否是叶子节点
-由：e.prototype.updateLeafState=function(){if(!0!==this.store.lazy||!0===this.loaded||void 0===this.isLeafByUser)
-改为：e.prototype.updateLeafState=function(){if(!0===this.loaded||void 0===this.isLeafByUser)
+由：
+e.prototype.updateLeafState=function(){if(!0!==this.store.lazy||!0===this.loaded||void 0===this.isLeafByUser)
+改为：
+e.prototype.updateLeafState=function(){if(!0===this.loaded||void 0===this.isLeafByUser)
 
-(2)/static/assets/element-ui-2.4.5/lib/index.js 为了解决fireFox nodeClick event 拿不到,导致无法区分点击的元素，无法对点击添加编辑等按钮时禁止展开操作,及禁用的节点还可以选中的问题及el-tree禁用的节点还可以点击的问题
-由    handleClick(){... this.tree.$emit("node-click",this.node.data,this.node,this)} 
-改为：handleClick(event){if(this.node.disabled) return;... this.tree.$emit("node-click",this.node.data,this.node,this,event)
+(2)/static/assets/element-ui-2.9.1/lib/index.js 为了解决fireFox nodeClick event 拿不到,导致无法区分点击的元素，无法对点击添加编辑等按钮时禁止展开操作,及禁用的节点还可以选中的问题及el-tree禁用的节点还可以点击的问题
+由    
+handleClick(){... this.tree.$emit("node-click",this.node.data,this.node,this)} 
+改为：
+handleClick(event){if(this.node.disabled) return;... this.tree.$emit("node-click",this.node.data,this.node,this,event)
+
+(3)/static/assets/mint-ui-2.2.13/lib/index.js 为了支持datetimepicker type=time 类型 可以控制开始分钟与结束分钟
+由：
+startHour:{type:Number,default:0},endHour:{type:Number,default:23}}和
+computed:{rims:function(){if(!this.currentValue)return{year:[],month:[],date:[],hour:[],min:[]};var t;return"time"===this.type?t={hour:[this.startHour,this.endHour],min:[0,59]}
+改为：
+startHour:{type:Number,default:0},endHour:{type:Number,default:23},startMinute:{type:Number,default:0},endMinute:{type:Number,default:59}
+computed:{rims:function(){if(!this.currentValue)return{year:[],month:[],date:[],hour:[],min:[]};var t;return"time"===this.type?t={hour:[this.startHour,this.endHour],min:[this.startMinute,this.endMinute]}
+
+(4)/static/assets/videojs-7.1.0/dist/video.min.js 为了解决IE10 视频播放时不在当前页再回来IE10 卡死的问题
+由：
+e.updateInterval=e.setInterval(function(){e.requestAnimationFrame(function(){e.update()})},30)})
+改为：
+e.updateInterval=e.setInterval(function(){e.rafId_&&e.cancelAnimationFrame(e.rafId_),e.rafId_=e.requestAnimationFrame(function(){e.update()})},30)})
