@@ -1901,10 +1901,10 @@
              *     innerHTML: '选择文件'
              * });
              */
-            addBtn: function( pick ) {
+            addBtn: function( pick ,acceptopt) {
                 var me = this,
                     opts = me.options,
-                    accept = opts.accept,
+                    accept = acceptopt || opts.accept, //hacfin
                     promises = [];
     
                 if ( !pick ) {
@@ -2902,6 +2902,9 @@
     
             // 判断文件是否可以被加入队列
             acceptFile: function( file ) {
+                //hacfin
+               this.accept = this.owner.accept || this.accept;
+
                 var invalid = !file || !file.size || this.accept &&
     
                         // 如果名字中有后缀，才做后缀白名单处理。

@@ -87,3 +87,18 @@ computed:{rims:function(){if(!this.currentValue)return{year:[],month:[],date:[],
 e.updateInterval=e.setInterval(function(){e.requestAnimationFrame(function(){e.update()})},30)})
 改为：
 e.updateInterval=e.setInterval(function(){e.rafId_&&e.cancelAnimationFrame(e.rafId_),e.rafId_=e.requestAnimationFrame(function(){e.update()})},30)})
+
+(5)/static/assets/webuploader-0.1.8/dist/webuploader.nolog.min.js 为了添加button可以选择接受类型及增加文件夹上传
+由：
+addBtn:function(b){var e=this,f=e.options,g=f.accept
+改为：
+addBtn:function(b,acceptopt){var e=this,f=e.options,g=acceptopt||f.accept
+由：
+acceptFile:function(a){var b=!a||!a.size||this.accept&&h.exec(a.name)&&!this.accept.test(a.name);return!b}
+改为：
+acceptFile:function(a){this.accept = this.owner.accept||this.accept;var b=!a||!a.size||this.accept&&h.exec(a.name)&&!this.accept.test(a.name);return!b}
+
+由：
+j.multiple&&l.attr("multiple","multiple"),j.accept&&j.accept.length>0){for(a=[],b=0,d=j.accept.length;d>b;b++)a.push(j.accept[b].mimeTypes);l.attr("accept",a.join(","))
+改为：
+j.multiple&&l.attr("multiple","multiple"),j.is_fold&&l.attr("webkitdirectory",""),j.accept&&j.accept.length>0){for(a=[],b=0,d=j.accept.length;d>b;b++)a.push(j.accept[b].mimeTypes);l.attr("accept",a.join(","))
