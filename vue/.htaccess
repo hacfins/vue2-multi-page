@@ -17,9 +17,7 @@
   RewriteRule "^m/([^/]*)/?(.*)$" "/phone/$1.html"
 </IfModule>
 #[2]缓存
-#1.0 Etag - 多服务器须禁用Etag[配合Last-Modified]
-FileETag none
-#2.0 expires - [Cache-Control与expires只需指定一个即可]
+#1.0 expires - [Cache-Control与expires只需指定一个即可]
 <IfModule mod_expires.c>
     #打开缓存
     ExpiresActive On
