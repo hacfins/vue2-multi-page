@@ -17,6 +17,10 @@
   RewriteRule "^m/([^/]*)/?(.*)$" "/phone/$1.html"
 </IfModule>
 #[2]缓存
-<FilesMatch ".(html|htm|shtml)$">
-    Header set Cache-Control "no-store"
-</FilesMatch>
+<IfModule mod_expires.c>
+    #打开缓存
+    ExpiresActive On
+    #纯文本 缓存1天
+    ExpiresByType text/plain A0
+    ExpiresByType text/html  A0
+</IfModule>
