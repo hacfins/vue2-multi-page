@@ -21,7 +21,7 @@ const createLintingRule = () => ({
 })
 
 var entry = utils.entries()
-
+entry['common/config'] =  './src/config/config.js'
 module.exports = {
     //hacfin
     entry    : entry,
