@@ -35,6 +35,8 @@ const webpackConfig = merge(baseWebpackConfig, {
     optimization: {
         minimize   : true, //是否进行代码压缩
         splitChunks: {
+            maxAsyncRequests: Infinity,
+            maxInitialRequests: Infinity,
             cacheGroups: {
 
                 //【1】提取bowser
@@ -58,7 +60,7 @@ const webpackConfig = merge(baseWebpackConfig, {
                     chunks  : function (chunk) {
                         return getEntryname().all
                     },
-                    test    : /[\\/]src[\\/](api|config|router)[\\/]/,
+                    test    : /[\\/]src[\\/](api|config|router|script|store)[\\/]/,
                     priority: 28,
                     name    : 'common/env',
                 },
