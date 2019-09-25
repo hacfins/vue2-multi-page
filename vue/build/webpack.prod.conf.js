@@ -180,6 +180,8 @@ const webpackConfig = merge(baseWebpackConfig, {
 
         //根据模块的相对路径生成一个四位数的hash作为模块id
         new webpack.HashedModuleIdsPlugin(),
+        //生成稳定的ChunkId
+        new webpack.NamedChunksPlugin(),
 
         // enable scope hoisting
         // new webpack.optimize.ModuleConcatenationPlugin(),
