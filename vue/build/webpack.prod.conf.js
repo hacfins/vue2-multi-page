@@ -38,25 +38,32 @@ const webpackConfig = merge(baseWebpackConfig, {
             maxAsyncRequests: Infinity,
             maxInitialRequests: Infinity,
             cacheGroups: {
-                //【1】提取vuex
-                vuex: {
-                    chunks  : 'all',
-                    test    : /[\\/]node_modules[\\/]vuex[\\/]/,
-                    name    : 'common/vuex',
-                    priority: 29,
-                },
-
-                //【2】提取（env/config/utils/api/router）配置
+                //【1】提取（env/config/utils/api/router）配置
                 env: {
                     chunks  : function (chunk) {
                         return getEntryname().all
                     },
-                    test    : /[\\/]src[\\/](api|config|router|script|store)[\\/]/,
-                    priority: 28,
+                    test    : /[\\/]src[\\/](api|config|script)[\\/]/,
+                    priority: 30,
                     name    : 'common/env',
                 },
-
-                //【3】PC端提取node_module
+                //【2】提取PC端（/router/store）配置
+                indexrouterstore: {
+                    chunks  : 'initial',
+                    test    : /[\\/]src[\\/](router|store)[\\/]index[\\.]js/,
+                    priority: 29,
+                    name    : 'index/routerstore',
+                    enforce  : true,
+                },
+                //【3】提取Mobile端（/router/store）配置
+                phonerouterstore: {
+                    chunks  : 'initial',
+                    test    : /[\\/]src[\\/](router|store)[\\/]phone[\\.]js/,
+                    priority: 28,
+                    name    : 'phone/routerstore',
+                    enforce  : true,
+                },
+                //【4】PC端提取node_module
                 indexvendor: {
                     chunks  : (chunk) => {
                         const entrypre = chunk.name.substring(0, chunk.name.lastIndexOf('/'));
@@ -67,7 +74,7 @@ const webpackConfig = merge(baseWebpackConfig, {
                     priority: 27,
                 },
 
-                //【4】Mobile端提取node_module
+                //【5】Mobile端提取node_module
                 phonevendor: {
                     chunks  : (chunk) => {
                         const entrypre = chunk.name.substring(0, chunk.name.lastIndexOf('/'));
@@ -78,27 +85,27 @@ const webpackConfig = merge(baseWebpackConfig, {
                     priority: 26,
                 },
 
-                //【5】PC端提取内部组件公共部分
+                //【6】PC端提取内部组件公共部分
                 indexcommon: {
                     chunks   : 'async',
                     test     : /[\\/]src[\\/]modules[\\/]index[\\/]/,
                     name     : 'index/common',
-                    minChunks: 2,
+                    minChunks: 3,
                     enforce  : true,
                     priority : 25,
                 },
 
-                //【6】Mobile端提取内部组件公共部分
+                //【7】Mobile端提取内部组件公共部分
                 phonecommon: {
                     chunks   : 'async',
                     test     : /[\\/]src[\\/]modules[\\/]phone[\\/]/,
                     name     : 'phone/common',
-                    minChunks: 2,
+                    minChunks: 3,
                     enforce  : true,
                     priority : 24,
                 },
 
-                //【7】PC端提取入口文件的公共样式
+                //【8】PC端提取入口文件的公共样式
                 index_entry_style: {
                     name    : 'index/common',
                     test    : (m, c) => {
@@ -115,7 +122,7 @@ const webpackConfig = merge(baseWebpackConfig, {
                     priority: 23,
                 },
 
-                //【8】Mobile端提取入口文件的公共样式
+                //【9】Mobile端提取入口文件的公共样式
                 phone_entry_style: {
                     name    : 'phone/common',
                     test    : (m, c) => {
@@ -306,15 +313,17 @@ if (config.build.bundleAnalyzerReport) {
 Object.keys(utils.entries()).forEach(function (entry) {
     const entryname = entry.substring(entry.lastIndexOf('/') + 1);
     const entrypre  = entry.substring(0, entry.lastIndexOf('/'));
-    let vendor, common,runtime;
+    let vendor, common,runtime,routerstore;
     if (entrypre == 'phone') {
         vendor = 'phone/vendor';
         common = 'phone/common';
-        runtime = 'phone/runtime'
+        runtime = 'phone/runtime';
+        routerstore = 'phone/routerstore'
     } else {
         vendor = 'index/vendor';
         common = 'index/common';
-        runtime = 'index/runtime'
+        runtime = 'index/runtime';
+        routerstore = 'index/routerstore'
     }
     var etToZh     = {
         'index': '首页',
@@ -329,7 +338,7 @@ Object.keys(utils.entries()).forEach(function (entry) {
             template      : 'src/modules/' + entrypre + '/pages/' + entryname + '/' + entryname + '.pug',
             favicon       : 'favicon.ico',
             inject        : true,
-            chunks        : [runtime,vendor,'common/config','common/vuex',common, 'common/env', entry],
+            chunks        : [runtime,vendor,'common/config','common/env',routerstore,common,entry],
             minify        : {
                 removeComments       : true,
                 collapseWhitespace   : true,
