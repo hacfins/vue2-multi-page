@@ -38,6 +38,7 @@ const webpackConfig = merge(baseWebpackConfig, {
             maxAsyncRequests: Infinity,
             maxInitialRequests: Infinity,
             cacheGroups: {
+                default: false,
                 //【1】提取（api/config/script）配置
                 env: {
                     chunks  : function (chunk) {
@@ -92,7 +93,7 @@ const webpackConfig = merge(baseWebpackConfig, {
                         return entrypre == 'index'
                     },
                     name     : 'index/common',
-                    minChunks: 2,
+                    minChunks: 3,
                     enforce  : true,
                     priority : 25,
                 },
@@ -103,7 +104,7 @@ const webpackConfig = merge(baseWebpackConfig, {
                         return entrypre == 'phone'
                     },
                     name     : 'phone/common',
-                    minChunks: 2,
+                    minChunks: 3,
                     enforce  : true,
                     priority : 24,
                 },
