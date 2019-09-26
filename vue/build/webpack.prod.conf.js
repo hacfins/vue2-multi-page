@@ -176,6 +176,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         new MiniCssExtractPlugin({
             filename     : utils.assetsPath('css/[name].[contenthash].css'),
             chunkFilename: utils.assetsPath('css/[name].[contenthash].css'),
+            ignoreOrder: true,
         }),
 
         //【4】css去重
@@ -263,7 +264,7 @@ const webpackConfig = merge(baseWebpackConfig, {
             {
                 from  : path.resolve(__dirname, '../static'),
                 to    : config.build.assetsSubDirectory,
-                ignore: ['.*', 'imgs/*.*', 'lib/**/*.*']
+                ignore: ['.*', 'images/*.*', 'lib/**/*.*']
             },
             {
                 from: path.resolve(__dirname, '../.htaccess'),

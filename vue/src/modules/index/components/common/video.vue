@@ -57,7 +57,7 @@
                     plugins   : {},
                     autoplay  : false,
                     preload   : 'auto',
-                    poster    : require('static/imgs/player.jpg'),
+                    poster    : require('static/images/player.jpg'),
                 })
             },
             globalEvents   : {

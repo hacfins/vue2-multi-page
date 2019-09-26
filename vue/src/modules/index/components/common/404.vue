@@ -1,7 +1,7 @@
 <template>
     <div class="not-exsit">
         <div class="no-exsit-imgc">
-            <img src="~static/imgs/404.png" alt="">
+            <img src="~static/images/404.png" alt="">
         </div>
         <div class="no-exsit-content">
             <h1>404</h1>

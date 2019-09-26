@@ -3,10 +3,10 @@
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <img src="~static/imgs/1.jpeg" alt="">
+                    <img src="~static/images/1.jpeg" alt="">
                 </div>
                 <div class="swiper-slide">
-                    <img src="~static/imgs/2.jpg" alt="">
+                    <img src="~static/images/2.jpg" alt="">
                 </div>
             </div>
             <div class="swiper-pagination"></div>
