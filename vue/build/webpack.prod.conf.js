@@ -87,20 +87,23 @@ const webpackConfig = merge(baseWebpackConfig, {
 
                 //【6】PC端提取内部组件公共部分
                 indexcommon: {
-                    chunks   : 'async',
-                    test     : /[\\/]src[\\/]modules[\\/]index[\\/]/,
+                    chunks  : (chunk) => {
+                        const entrypre = chunk.name.substring(0, chunk.name.lastIndexOf('/'));
+                        return entrypre == 'index'
+                    },
                     name     : 'index/common',
-                    minChunks: 3,
+                    minChunks: 2,
                     enforce  : true,
                     priority : 25,
                 },
-
                 //【7】Mobile端提取内部组件公共部分
                 phonecommon: {
-                    chunks   : 'async',
-                    test     : /[\\/]src[\\/]modules[\\/]phone[\\/]/,
+                    chunks  : (chunk) => {
+                        const entrypre = chunk.name.substring(0, chunk.name.lastIndexOf('/'));
+                        return entrypre == 'phone'
+                    },
                     name     : 'phone/common',
-                    minChunks: 3,
+                    minChunks: 2,
                     enforce  : true,
                     priority : 24,
                 },
