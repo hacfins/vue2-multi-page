@@ -38,7 +38,7 @@ const webpackConfig = merge(baseWebpackConfig, {
             maxAsyncRequests: Infinity,
             maxInitialRequests: Infinity,
             cacheGroups: {
-                //【1】提取（env/config/utils/api/router）配置
+                //【1】提取（api/config/script）配置
                 env: {
                     chunks  : function (chunk) {
                         return getEntryname().all
