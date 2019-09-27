@@ -42,7 +42,7 @@ const webpackConfig = merge(baseWebpackConfig, {
                 //【1】提取（api/config/script）配置
                 env: {
                     chunks  : function (chunk) {
-                        return chunk.name == 'common/config'
+                        return chunk.name != 'common/config'
                     },
                     test    : /[\\/]src[\\/](api|config|script)[\\/]/,
                     priority: 30,
