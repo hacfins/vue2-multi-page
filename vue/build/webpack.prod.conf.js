@@ -42,7 +42,7 @@ const webpackConfig = merge(baseWebpackConfig, {
                 //【1】提取（api/config/script）配置
                 env: {
                     chunks  : function (chunk) {
-                        return getEntryname().all
+                        return chunk.name == 'common/config'
                     },
                     test    : /[\\/]src[\\/](api|config|script)[\\/]/,
                     priority: 30,
@@ -181,11 +181,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         },
         runtimeChunk: {
             name: (entrypoint) => {
-                if(entrypoint.name.indexOf('phone') == -1){
-                    return 'index/runtime'
-                }else{
-                    return 'phone/runtime'
-                }
+                return 'common/runtime'
             }
         }
     },
@@ -354,16 +350,14 @@ if (config.build.bundleAnalyzerReport) {
 Object.keys(utils.entries()).forEach(function (entry) {
     const entryname = entry.substring(entry.lastIndexOf('/') + 1);
     const entrypre  = entry.substring(0, entry.lastIndexOf('/'));
-    let vendor,entry_com,async_com,runtime;
+    let vendor,entry_com,async_com;
     if (entrypre == 'phone') {
         vendor = 'phone/vendor';
         async_com = 'phone/async-com';
-        runtime = 'phone/runtime';
         entry_com = 'phone/entry-com'
     } else {
         vendor = 'index/vendor';
         async_com = 'index/async-com';
-        runtime = 'index/runtime';
         entry_com = 'index/entry-com'
     }
     var etToZh     = {
@@ -379,7 +373,7 @@ Object.keys(utils.entries()).forEach(function (entry) {
             template      : 'src/modules/' + entrypre + '/pages/' + entryname + '/' + entryname + '.pug',
             favicon       : 'favicon.ico',
             inject        : true,
-            chunks        : [runtime,vendor,'common/config','common/env',entry_com,async_com,entry],
+            chunks        : ['common/runtime',vendor,'common/config','common/env',entry_com,async_com,entry],
             minify        : {
                 removeComments       : true,
                 collapseWhitespace   : true,
