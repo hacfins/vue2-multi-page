@@ -48,22 +48,25 @@ const webpackConfig = merge(baseWebpackConfig, {
                     priority: 30,
                     name    : 'common/env',
                 },
-                //【2】提取PC端（/router/store）配置
-                indexrouterstore: {
+
+                //【2】提取PC端入口（/router/store）配置
+                indexentrycom: {
                     chunks  : 'initial',
                     test    : /[\\/]src[\\/](router|store)[\\/]index[\\.]js/,
                     priority: 29,
-                    name    : 'index/routerstore',
+                    name    : 'index/entry-com',
                     enforce  : true,
                 },
-                //【3】提取Mobile端（/router/store）配置
-                phonerouterstore: {
+
+                //【3】提取Mobile端入口（/router/store）配置
+                phoneentrycom: {
                     chunks  : 'initial',
                     test    : /[\\/]src[\\/](router|store)[\\/]phone[\\.]js/,
                     priority: 28,
-                    name    : 'phone/routerstore',
+                    name    : 'phone/entry-com',
                     enforce  : true,
                 },
+
                 //【4】PC端提取node_module
                 indexvendor: {
                     chunks  : (chunk) => {
@@ -86,32 +89,9 @@ const webpackConfig = merge(baseWebpackConfig, {
                     priority: 26,
                 },
 
-                //【6】PC端提取内部组件公共部分
-                indexcommon: {
-                    chunks  : (chunk) => {
-                        const entrypre = chunk.name.substring(0, chunk.name.lastIndexOf('/'));
-                        return entrypre == 'index'
-                    },
-                    name     : 'index/common',
-                    minChunks: 3,
-                    enforce  : true,
-                    priority : 25,
-                },
-                //【7】Mobile端提取内部组件公共部分
-                phonecommon: {
-                    chunks  : (chunk) => {
-                        const entrypre = chunk.name.substring(0, chunk.name.lastIndexOf('/'));
-                        return entrypre == 'phone'
-                    },
-                    name     : 'phone/common',
-                    minChunks: 3,
-                    enforce  : true,
-                    priority : 24,
-                },
-
-                //【8】PC端提取入口文件的公共样式
-                index_entry_style: {
-                    name    : 'index/common',
+                //【6】PC端提取入口组件所有的css
+                indexentrystyle: {
+                    name    : 'index/entry-com',
                     test    : (m, c) => {
                         var cname = c.map((cd) => {
                             return cd.name
@@ -123,24 +103,80 @@ const webpackConfig = merge(baseWebpackConfig, {
                     },
                     chunks  : 'initial',
                     enforce : true,
-                    priority: 23,
+                    priority: 25,
                 },
 
-                //【9】Mobile端提取入口文件的公共样式
-                phone_entry_style: {
-                    name    : 'phone/common',
+                //【7】PC端提取异步组件所有的css
+                phoneentrystyle: {
+                    name    : 'phone/entry-com',
                     test    : (m, c) => {
                         var cname = c.map((cd) => {
                             return cd.name
                         })
                         return m.constructor.name === 'CssModule' && cname.every((s) => {
                                 return s.indexOf('phone/') != -1
+
                             })
                     },
                     chunks  : 'initial',
                     enforce : true,
+                    priority: 24,
+                },
+
+                //【8】PC端提取异步组件所有的css
+                indexasyncstyle: {
+                    chunks  : (chunk) => {
+                        const entrypre = chunk.name.substring(0, chunk.name.lastIndexOf('/'));
+                        return entrypre == 'index'
+                    },
+                    name    : 'index/async-com',
+                    test    : (m, c) => {
+                        return m.constructor.name === 'CssModule'
+                    },
+                    enforce : true,
+                    priority: 23,
+                },
+
+                //【9】Mobile端提取异步组件所有的css
+                phoneasyncstyle: {
+                    chunks  : (chunk) => {
+                        const entrypre = chunk.name.substring(0, chunk.name.lastIndexOf('/'));
+                        return entrypre == 'phone'
+                    },
+                    name    : 'phone/async-com',
+                    test    : (m, c) => {
+                        return m.constructor.name === 'CssModule'
+                    },
+                    enforce : true,
                     priority: 22,
                 },
+
+                //【10】PC端提取内部组件公共部分
+                indexasynccom: {
+                    chunks  : (chunk) => {
+                        const entrypre = chunk.name.substring(0, chunk.name.lastIndexOf('/'));
+                        return entrypre == 'index'
+                    },
+                    name     : 'index/async-com',
+                    minChunks: 3,
+                    enforce  : true,
+                    priority : 21,
+                },
+
+                //【11】Mobile端提取内部组件公共部分
+                phoneasynccom: {
+                    chunks  : (chunk) => {
+                        const entrypre = chunk.name.substring(0, chunk.name.lastIndexOf('/'));
+                        return entrypre == 'phone'
+                    },
+                    name     : 'phone/async-com',
+                    minChunks: 3,
+                    enforce  : true,
+                    priority : 20,
+                },
+
+
+
             }
         },
         runtimeChunk: {
@@ -318,17 +354,17 @@ if (config.build.bundleAnalyzerReport) {
 Object.keys(utils.entries()).forEach(function (entry) {
     const entryname = entry.substring(entry.lastIndexOf('/') + 1);
     const entrypre  = entry.substring(0, entry.lastIndexOf('/'));
-    let vendor, common,runtime,routerstore;
+    let vendor,entry_com,async_com,runtime;
     if (entrypre == 'phone') {
         vendor = 'phone/vendor';
-        common = 'phone/common';
+        async_com = 'phone/async-com';
         runtime = 'phone/runtime';
-        routerstore = 'phone/routerstore'
+        entry_com = 'phone/entry-com'
     } else {
         vendor = 'index/vendor';
-        common = 'index/common';
+        async_com = 'index/async-com';
         runtime = 'index/runtime';
-        routerstore = 'index/routerstore'
+        entry_com = 'index/entry-com'
     }
     var etToZh     = {
         'index': '首页',
@@ -343,7 +379,7 @@ Object.keys(utils.entries()).forEach(function (entry) {
             template      : 'src/modules/' + entrypre + '/pages/' + entryname + '/' + entryname + '.pug',
             favicon       : 'favicon.ico',
             inject        : true,
-            chunks        : [runtime,vendor,'common/config','common/env',routerstore,common,entry],
+            chunks        : [runtime,vendor,'common/config','common/env',entry_com,async_com,entry],
             minify        : {
                 removeComments       : true,
                 collapseWhitespace   : true,
