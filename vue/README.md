@@ -122,3 +122,27 @@ Ot.isDisabled.get=function(){return false}
 1.将引用nodeModule中的css按照PC/Mobile 打包到css/(index|phone)/vendor.css
 2.将reset CSS按照PC/Mobile打包到css/(index|phone)/entry-com.css及css/phone/entry-com.css
 3.将chunks中的css按照PC/Mobile打包到css/（index|phone）async-com.css
+
+> **由于升级到webpack4在开发模式下热更新比较慢，是有html-webpack-plugin的问题，增加了multihtmlCache的配置，更改内容如下：**
+> **在compile make 及 emit 事件中增加
+if (self.options.multihtmlCache && isValidChildCompilation) {
+    return callback();
+ }及增加两个事件进行变量的控制失效事件(invalid)和完成(done)事件进行isValidChildCompilation的控制**
+> **(compiler.hooks ? compiler.hooks.invalid.tap.bind(compiler.hooks.invalid, 'HtmlWebpackPlugin') : compiler.plugin.bind(compiler, 'invalid'))((fileName) => {
+    if (childCompilation &&
+          childCompilation.fileDependencies.indexOf(fileName) !== -1) {
+          isValidChildCompilation = false;
+    }
+});
+compiler.hooks ? compiler.hooks.done.tap.bind(compiler.hooks.done, 'HtmlWebpackPlugin') : compiler.plugin.bind(compiler, 'done'))((stats) => {
+     var compilation = stats.compilation;
+     if (childCompilation) {
+          // webpack watch
+          childCompilation.fileDependencies.forEach(function (fileName) {
+              if (compilation.fileDependencies.indexOf(fileName) === -1) {
+                  compilation.fileDependencies.push(fileName);
+              }
+          });
+     }
+     isValidChildCompilation = true;   
+})**
