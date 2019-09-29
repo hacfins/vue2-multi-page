@@ -7,7 +7,6 @@ const path                 = require('path')
 const baseWebpackConfig    = require('./webpack.base.conf')
 const CopyWebpackPlugin    = require('copy-webpack-plugin')
 const HtmlWebpackPlugin    = require('html-webpack-plugin')
-const HtmlWebpackPluginMul    = require('html-webpack-plugin-for-multihtml')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder           = require('portfinder')
 
