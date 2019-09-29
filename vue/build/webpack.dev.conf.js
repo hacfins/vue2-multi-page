@@ -40,7 +40,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         },
         // hot               : true,//热替换
         hotOnly:true,
-        contentBase       : false, // since we use CopyWebpackPlugin.
         compress          : true,
         host              : HOST || config.dev.host,
         port              : PORT || config.dev.port,
@@ -68,14 +67,14 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
         new webpack.NoEmitOnErrorsPlugin(),
 
-        // 复制静态组件
-        new CopyWebpackPlugin([
-            {
-                from  : path.resolve(__dirname, '../static'),
-                to    : config.dev.assetsSubDirectory,
-                ignore: ['.*']
-            }
-        ])
+        // // 复制静态组件
+        // new CopyWebpackPlugin([
+        //     {
+        //         from  : path.resolve(__dirname, '../static'),
+        //         to    : config.dev.assetsSubDirectory,
+        //         ignore: ['.*']
+        //     }
+        // ])
     ]
 });
 
