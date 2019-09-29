@@ -7,6 +7,7 @@ const path                 = require('path')
 const baseWebpackConfig    = require('./webpack.base.conf')
 const CopyWebpackPlugin    = require('copy-webpack-plugin')
 const HtmlWebpackPlugin    = require('html-webpack-plugin')
+const HtmlWebpackPluginMul    = require('html-webpack-plugin-for-multihtml')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder           = require('portfinder')
 
@@ -14,6 +15,7 @@ const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
 const devWebpackConfig = merge(baseWebpackConfig, {
+    mode: "development",
     module : {
         rules: utils.styleLoaders({sourceMap: config.dev.cssSourceMap, usePostCSS: true})
     },
@@ -37,7 +39,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
                 {from: /^\/m\/noexsit$/, to: '/phone/noexsit.html'},
             ]
         },
-        hot               : true,//热替换
+        // hot               : true,//热替换
+        hotOnly:true,
         contentBase       : false, // since we use CopyWebpackPlugin.
         compress          : true,
         host              : HOST || config.dev.host,
@@ -87,16 +90,19 @@ Object.keys(utils.entries()).forEach(function (entry) {
         'video': '视频'
     }
     var page_title = etToZh[entryname] ? etToZh[entryname] : '';
-
     devWebpackConfig.plugins.push(
         new HtmlWebpackPlugin({
+            multihtmlCache: true, // 开启多入口缓存
             title   : page_title,
             filename: entry + '.html',
             template: 'src/modules/' + entrypre + '/pages/' + entryname + '/' + entryname + '.pug',
             favicon : 'favicon.ico',
             inject  : true,
-            chunks  : [entry],
+            chunks  : ['common/config',entry],
+            chunksSortMode: 'manual'
         })
+
+
     )
 });
 
