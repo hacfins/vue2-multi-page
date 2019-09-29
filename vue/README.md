@@ -108,3 +108,17 @@ j.multiple&&l.attr("multiple","multiple"),j.is_fold&&l.attr("webkitdirectory",""
 Ot.isDisabled.get=function(){return!(!this.component||!this.component.disabled)||!(!this.el||!this.el.disabled)}
 改为：
 Ot.isDisabled.get=function(){return false}
+
+#五、webpack打包说明
+(1)js打包：
+1.将配置文件打包到js/common/config.js
+2.api、config、script中的文件打包到js/common/env.js
+3.将PC端及Mobile端入口产生的runtime单独打包到js/common/runtime.js(为了更改某个文件缓存失效的问题)
+4.将入口文件中router、store的配置打包到entry-com.js（PC、Mobile 已区分）
+5.将所有chunks只要共用大于等于3就将其打包到async-com.js（PC、Mobile 已区分）
+6.分别将入口文件及异步chunks打包到对应模块中
+7.将nodemodule中的第三方插件打包到vendor.js
+(2)css打包：
+1.将引用nodeModule中的css按照PC/Mobile 打包到css/(index|phone)/vendor.css
+2.将reset CSS按照PC/Mobile打包到css/(index|phone)/entry-com.css及css/phone/entry-com.css
+3.将chunks中的css按照PC/Mobile打包到css/（index|phone）async-com.css
