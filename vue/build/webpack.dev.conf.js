@@ -90,7 +90,6 @@ Object.keys(utils.entries()).forEach(function (entry) {
     var page_title = etToZh[entryname] ? etToZh[entryname] : '';
     devWebpackConfig.plugins.push(
         new HtmlWebpackPlugin({
-            multihtmlCache: true, // 开启多入口缓存
             title   : page_title,
             filename: entry + '.html',
             template: 'src/modules/' + entrypre + '/pages/' + entryname + '/' + entryname + '.pug',
