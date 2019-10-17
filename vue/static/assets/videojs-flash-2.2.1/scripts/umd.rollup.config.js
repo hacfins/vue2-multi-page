@@ -1,36 +1,27 @@
 /**
- * Rollup configuration for packaging the plugin in a test bundle.
+ * Rollup configuration for packaging the plugin in a module that is consumable
+ * as the `src` of a `script` tag or via AMD or similar client-side loading.
  *
- * This includes all dependencies for both the plugin and its tests.
+ * This module DOES include its dependencies.
  */
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 import json from 'rollup-plugin-json';
-import multiEntry from 'rollup-plugin-multi-entry';
 import resolve from 'rollup-plugin-node-resolve';
 
 export default {
-  moduleName: 'videojsFlashTests',
-  entry: 'test/**/*.test.js',
-  dest: 'test/dist/bundle.js',
-  format: 'iife',
-  external: [
-    'qunit',
-    'qunitjs',
-    'sinon',
-    'video.js'
-  ],
-  globals: {
-    'qunit': 'QUnit',
-    'qunitjs': 'QUnit',
-    'sinon': 'sinon',
-    'video.js': 'videojs'
+  entry: 'src/plugin.js',
+  output: {
+    file: 'dist/videojs-flash.js',
+    format: 'umd',
+    name: 'videojsFlash',
+    globals: {
+      'video.js': 'videojs'
+    }
   },
+  external: ['video.js'],
   legacy: true,
   plugins: [
-    multiEntry({
-      exports: false
-    }),
     resolve({
       browser: true,
       main: true,

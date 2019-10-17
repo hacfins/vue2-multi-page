@@ -32,7 +32,7 @@
                     height : '360',
                     sources: [{
                         type: "rtmp/mp4",
-                        src : "rtmp://192.168.123.110/live/sds-cfff"
+                        src : "rtmp://media3.scctv.net/live/scctv_800"
                     }],
                     flash    : {
                         swf: '/static/assets/videojs-swf-5.4.2/dist/video-js.swf'

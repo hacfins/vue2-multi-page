@@ -1,13 +1,20 @@
-(function (videojs,sinon,QUnit) {
-'use strict';
+/**
+ * videojs-flash
+ * @version 2.2.1
+ * @copyright 2019 Brightcove, Inc.
+ * @license Apache-2.0
+ */
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('video.js')) :
+	typeof define === 'function' && define.amd ? define(['video.js'], factory) :
+	(global.videojsFlash = factory(global.videojs));
+}(this, (function (videojs) { 'use strict';
 
-var videojs__default = 'default' in videojs ? videojs['default'] : videojs;
-sinon = sinon && sinon.hasOwnProperty('default') ? sinon['default'] : sinon;
-QUnit = QUnit && QUnit.hasOwnProperty('default') ? QUnit['default'] : QUnit;
+videojs = videojs && videojs.hasOwnProperty('default') ? videojs['default'] : videojs;
 
-var version = "5.4.1";
+var version = "5.4.2";
 
-var version$1 = "2.1.0";
+var version$1 = "2.2.1";
 
 /**
  * @file flash-rtmp.js
@@ -81,7 +88,7 @@ function FlashRtmpDecorator(Flash) {
     // Look for the normal URL separator we expect, '&'.
     // If found, we split the URL into two pieces around the
     // first '&'.
-    var connEnd = src.search(/&(?!\w+=)/);
+    var connEnd = src.search(/&(?![\w-]+=)/);
     var streamBegin = void 0;
 
     if (connEnd !== -1) {
@@ -213,7 +220,7 @@ function FlashRtmpDecorator(Flash) {
   return Flash;
 }
 
-var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 var win;
 
@@ -235,16 +242,6 @@ var classCallCheck = function (instance, Constructor) {
   }
 };
 
-
-
-
-
-
-
-
-
-
-
 var inherits = function (subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
     throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
@@ -261,16 +258,6 @@ var inherits = function (subClass, superClass) {
   if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 };
 
-
-
-
-
-
-
-
-
-
-
 var possibleConstructorReturn = function (self, call) {
   if (!self) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -286,11 +273,11 @@ var possibleConstructorReturn = function (self, call) {
  * Not using setupTriggers. Using global onEvent func to distribute events
  */
 
-var Tech = videojs__default.getComponent('Tech');
-var Dom = videojs__default.dom;
-var Url = videojs__default.url;
-var createTimeRange$1 = videojs__default.createTimeRange;
-var mergeOptions = videojs__default.mergeOptions;
+var Tech = videojs.getComponent('Tech');
+var Dom = videojs.dom;
+var Url = videojs.url;
+var createTimeRange = videojs.createTimeRange;
+var mergeOptions = videojs.mergeOptions;
 
 var navigator = window_1 && window_1.navigator || {};
 
@@ -306,14 +293,14 @@ var Flash = function (_Tech) {
   inherits(Flash, _Tech);
 
   /**
-   * Create an instance of this Tech.
-   *
-   * @param {Object} [options]
-   *        The key/value store of player options.
-   *
-   * @param {Component~ReadyCallback} ready
-   *        Callback function to call when the `Flash` Tech is ready.
-   */
+  * Create an instance of this Tech.
+  *
+  * @param {Object} [options]
+  *        The key/value store of player options.
+  *
+  * @param {Component~ReadyCallback} ready
+  *        Callback function to call when the `Flash` Tech is ready.
+  */
   function Flash(options, ready) {
     classCallCheck(this, Flash);
 
@@ -606,9 +593,9 @@ var Flash = function (_Tech) {
     var duration = this.duration();
 
     if (duration === 0) {
-      return createTimeRange$1();
+      return createTimeRange();
     }
-    return createTimeRange$1(0, duration);
+    return createTimeRange(0, duration);
   };
 
   /**
@@ -623,9 +610,9 @@ var Flash = function (_Tech) {
     var ranges = this.el_.vjs_getProperty('buffered');
 
     if (ranges.length === 0) {
-      return createTimeRange$1();
+      return createTimeRange();
     }
-    return createTimeRange$1(ranges[0][0], ranges[0][1]);
+    return createTimeRange(ranges[0][0], ranges[0][1]);
   };
 
   /**
@@ -707,7 +694,7 @@ function _createSetter(attr) {
 }
 
 /**
- * Create petters for the swf on the element
+ * Create getters for the swf on the element
  *
  * @param {string} attr
  *        The name of the parameter
@@ -1114,12 +1101,12 @@ for (var _i = 0; _i < _readOnly.length; _i++) {
  * Check if the Flash tech is currently supported.
  *
  * @return {boolean}
- *          - True for Chrome and Safari Desktop and if flash tech is supported
+ *          - True for Chrome and Safari Desktop and Microsoft Edge and if flash tech is supported
  *          - False otherwise
  */
 Flash.isSupported = function () {
   // for Chrome Desktop and Safari Desktop
-  if (videojs__default.browser.IS_CHROME && !videojs__default.browser.IS_ANDROID || videojs__default.browser.IS_SAFARI && !videojs__default.browser.IS_IOS) {
+  if (videojs.browser.IS_CHROME && (!videojs.browser.IS_ANDROID || !videojs.browser.IS_IOS) || videojs.browser.IS_SAFARI && !videojs.browser.IS_IOS || videojs.browser.IS_EDGE) {
     return true;
   }
   // for other browsers
@@ -1455,412 +1442,14 @@ Flash.getEmbedCode = function (swf, flashVars, params, attributes) {
 FlashRtmpDecorator(Flash);
 
 if (Tech.getTech('Flash')) {
-  videojs__default.log.warn('Not using videojs-flash as it appears to already be registered');
-  videojs__default.log.warn('videojs-flash should only be used with video.js@6 and above');
+  videojs.log.warn('Not using videojs-flash as it appears to already be registered');
+  videojs.log.warn('videojs-flash should only be used with video.js@6 and above');
 } else {
-  videojs__default.registerTech('Flash', Flash);
+  videojs.registerTech('Flash', Flash);
 }
 
 Flash.VERSION = version$1;
 
-var empty = {};
+return Flash;
 
-
-var empty$1 = (Object.freeze || Object)({
-	'default': empty
-});
-
-var minDoc = ( empty$1 && empty ) || empty$1;
-
-var topLevel = typeof commonjsGlobal !== 'undefined' ? commonjsGlobal :
-    typeof window !== 'undefined' ? window : {};
-
-
-var doccy;
-
-if (typeof document !== 'undefined') {
-    doccy = document;
-} else {
-    doccy = topLevel['__GLOBAL_DOCUMENT_CACHE@4'];
-
-    if (!doccy) {
-        doccy = topLevel['__GLOBAL_DOCUMENT_CACHE@4'] = minDoc;
-    }
-}
-
-var document_1 = doccy;
-
-// fake out the <object> interaction but leave all the other logic intact
-
-var MockFlash = function (_Flash) {
-  inherits(MockFlash, _Flash);
-
-  function MockFlash() {
-    classCallCheck(this, MockFlash);
-    return possibleConstructorReturn(this, _Flash.call(this, {}));
-  }
-
-  return MockFlash;
-}(Flash);
-
-QUnit.module('Flash');
-
-QUnit.test('Flash.canPlaySource', function (assert) {
-  var canPlaySource = Flash.canPlaySource;
-
-  // Supported
-  assert.ok(canPlaySource({ type: 'video/mp4; codecs=avc1.42E01E,mp4a.40.2' }, {}), 'codecs supported');
-  assert.ok(canPlaySource({ type: 'video/mp4' }, {}), 'video/mp4 supported');
-  assert.ok(canPlaySource({ type: 'video/x-flv' }, {}), 'video/x-flv supported');
-  assert.ok(canPlaySource({ type: 'video/flv' }, {}), 'video/flv supported');
-  assert.ok(canPlaySource({ type: 'video/m4v' }, {}), 'video/m4v supported');
-  assert.ok(canPlaySource({ type: 'VIDEO/FLV' }, {}), 'capitalized mime type');
-
-  // Not supported
-  assert.ok(!canPlaySource({ type: 'video/webm; codecs="vp8, vorbis"' }, {}));
-  assert.ok(!canPlaySource({ type: 'video/webm' }, {}));
-});
-
-QUnit.test('currentTime', function (assert) {
-  var getCurrentTime = Flash.prototype.currentTime;
-  var setCurrentTime = Flash.prototype.setCurrentTime;
-  var seekingCount = 0;
-  var _seeking = false;
-  var setPropVal = void 0;
-  var getPropVal = void 0;
-  var result = void 0;
-
-  // Mock out a Flash instance to avoid creating the swf object
-  var mockFlash = {
-    el_: {
-      /* eslint-disable camelcase */
-      vjs_setProperty: function vjs_setProperty(prop, val) {
-        setPropVal = val;
-      },
-      vjs_getProperty: function vjs_getProperty() {
-        return getPropVal;
-      }
-      /* eslint-enable camelcase */
-
-    },
-    seekable: function seekable() {
-      return videojs.createTimeRange(5, 1000);
-    },
-    trigger: function trigger(event) {
-      if (event === 'seeking') {
-        seekingCount++;
-      }
-    },
-    seeking: function seeking() {
-      return _seeking;
-    }
-  };
-
-  // Test the currentTime getter
-  getPropVal = 3;
-  result = getCurrentTime.call(mockFlash);
-  assert.equal(result, 3, 'currentTime is retreived from the swf element');
-
-  // Test the currentTime setter
-  setCurrentTime.call(mockFlash, 10);
-  assert.equal(setPropVal, 10, 'currentTime is set on the swf element');
-  assert.equal(seekingCount, 1, 'triggered seeking');
-
-  // Test current time while seeking
-  setCurrentTime.call(mockFlash, 20);
-  _seeking = true;
-  result = getCurrentTime.call(mockFlash);
-  assert.equal(result, 20, 'currentTime is retrieved from the lastSeekTarget while seeking');
-  assert.notEqual(result, getPropVal, 'currentTime is not retrieved from the element while seeking');
-  assert.equal(seekingCount, 2, 'triggered seeking');
-
-  // clamp seeks to seekable
-  setCurrentTime.call(mockFlash, 1001);
-  result = getCurrentTime.call(mockFlash);
-  assert.equal(result, mockFlash.seekable().end(0), 'clamped to the seekable end');
-  assert.equal(seekingCount, 3, 'triggered seeking');
-
-  setCurrentTime.call(mockFlash, 1);
-  result = getCurrentTime.call(mockFlash);
-  assert.equal(result, mockFlash.seekable().start(0), 'clamped to the seekable start');
-  assert.equal(seekingCount, 4, 'triggered seeking');
-});
-
-QUnit.test('dispose removes the object element even before ready fires', function (assert) {
-  // This test appears to test bad functionaly that was fixed
-  // so it's debateable whether or not it's useful
-  var dispose = Flash.prototype.dispose;
-  var mockFlash = new MockFlash();
-  var noop = function noop() {};
-
-  // Mock required functions for dispose
-  mockFlash.off = noop;
-  mockFlash.trigger = noop;
-  mockFlash.el_ = {};
-
-  dispose.call(mockFlash);
-  assert.strictEqual(mockFlash.el_, null, 'swf el is nulled');
-});
-
-QUnit.test('ready triggering before and after disposing the tech', function (assert) {
-  var checkReady = sinon.stub(Flash, 'checkReady');
-  var fixtureDiv = document_1.getElementById('qunit-fixture');
-  var playerDiv = document_1.createElement('div');
-  var techEl = document_1.createElement('div');
-
-  techEl.id = 'foo1234';
-  playerDiv.appendChild(techEl);
-  fixtureDiv.appendChild(playerDiv);
-
-  // Mock the swf element
-  techEl.tech = {
-    el: function el() {
-      return techEl;
-    }
-  };
-
-  playerDiv.player = {
-    tech: techEl.tech
-  };
-
-  Flash.onReady(techEl.id);
-  assert.ok(checkReady.called, 'checkReady should be called before the tech is disposed');
-
-  // remove the tech el from the player div to simulate being disposed
-  playerDiv.removeChild(techEl);
-  Flash.onReady(techEl.id);
-  assert.ok(!checkReady.calledTwice, 'checkReady should not be called after the tech is disposed');
-
-  Flash.checkReady.restore();
-});
-
-QUnit.test('should have the source handler interface', function (assert) {
-  assert.ok(Flash.registerSourceHandler, 'has the registerSourceHandler function');
-});
-
-QUnit.test('canPlayType should select the correct types to play', function (assert) {
-  var canPlayType = Flash.nativeSourceHandler.canPlayType;
-
-  assert.equal(canPlayType('video/flv'), 'maybe', 'should be able to play FLV files');
-  assert.equal(canPlayType('video/x-flv'), 'maybe', 'should be able to play x-FLV files');
-  assert.equal(canPlayType('video/mp4'), 'maybe', 'should be able to play MP4 files');
-  assert.equal(canPlayType('video/m4v'), 'maybe', 'should be able to play M4V files');
-  assert.equal(canPlayType('video/ogg'), '', 'should return empty string if it can not play the video');
-});
-
-QUnit.test('canHandleSource should be able to work with src objects without a type', function (assert) {
-  var canHandleSource = Flash.nativeSourceHandler.canHandleSource;
-
-  assert.equal('maybe', canHandleSource({ src: 'test.video.mp4' }, {}), 'should guess that it is a mp4 video');
-  assert.equal('maybe', canHandleSource({ src: 'test.video.m4v' }, {}), 'should guess that it is a m4v video');
-  assert.equal('maybe', canHandleSource({ src: 'test.video.flv' }, {}), 'should guess that it is a flash video');
-  assert.equal('', canHandleSource({ src: 'test.video.wgg' }, {}), 'should return empty string if it can not play the video');
-});
-
-QUnit.test('seekable', function (assert) {
-  var seekable = Flash.prototype.seekable;
-  var result = void 0;
-  var mockFlash = {
-    duration: function duration() {
-      return this.duration_;
-    }
-  };
-
-  // Test a normal duration
-  mockFlash.duration_ = 23;
-  result = seekable.call(mockFlash);
-  assert.equal(result.length, 1, 'seekable is non-empty');
-  assert.equal(result.start(0), 0, 'starts at zero');
-  assert.equal(result.end(0), mockFlash.duration_, 'ends at the duration');
-
-  // Test a zero duration
-  mockFlash.duration_ = 0;
-  result = seekable.call(mockFlash);
-  assert.equal(result.length, mockFlash.duration_, 'seekable is empty with a zero duration');
-});
-
-QUnit.test('play after ended seeks to the beginning', function (assert) {
-  var plays = 0;
-  var seeks = [];
-
-  Flash.prototype.play.call({
-    el_: {
-      /* eslint-disable camelcase */
-      vjs_play: function vjs_play() {
-        plays++;
-      }
-      /* eslint-enable camelcase */
-
-    },
-    ended: function ended() {
-      return true;
-    },
-    setCurrentTime: function setCurrentTime(time) {
-      seeks.push(time);
-    }
-  });
-
-  assert.equal(plays, 1, 'called play on the SWF');
-  assert.equal(seeks.length, 1, 'seeked on play');
-  assert.equal(seeks[0], 0, 'seeked to the beginning');
-});
-
-QUnit.test('duration returns NaN, Infinity or duration according to the HTML standard', function (assert) {
-  var duration = Flash.prototype.duration;
-  var mockedDuration = -1;
-  var mockedReadyState = 0;
-  var result = void 0;
-  var mockFlash = {
-    el_: {
-      /* eslint-disable camelcase */
-      vjs_getProperty: function vjs_getProperty() {
-        return mockedDuration;
-      }
-      /* eslint-enable camelcase */
-
-    },
-    readyState: function readyState() {
-      return mockedReadyState;
-    }
-  };
-
-  result = duration.call(mockFlash);
-  assert.ok(Number.isNaN(result), 'duration returns NaN when readyState equals 0');
-
-  mockedReadyState = 1;
-  result = duration.call(mockFlash);
-  assert.ok(!Number.isFinite(result), 'duration returns Infinity when duration property is less then 0');
-
-  mockedDuration = 1;
-  result = duration.call(mockFlash);
-  assert.equal(result, 1, 'duration returns duration property when readyState' + ' and duration property are both higher than 0');
-});
-
-QUnit.test('getVideoPlaybackQuality API exists', function (assert) {
-  var propertyCalls = [];
-  var videoPlaybackQuality = { test: 'test' };
-  var mockFlash = {
-    el_: {
-      /* eslint-disable camelcase */
-      vjs_getProperty: function vjs_getProperty(attr) {
-        propertyCalls.push(attr);
-        return videoPlaybackQuality;
-      }
-      /* eslint-enable camelcase */
-
-    }
-  };
-
-  assert.deepEqual(Flash.prototype.getVideoPlaybackQuality.call(mockFlash), videoPlaybackQuality, 'called to get property from flash');
-  assert.equal(propertyCalls.length, 1, 'only one property call');
-  assert.equal(propertyCalls[0], 'getVideoPlaybackQuality', 'called for getVideoPlaybackQuality');
-});
-
-QUnit.test('getVideoPlaybackQuality uses best available creationTime', function (assert) {
-  var origPerformance = window_1.performance;
-  var origDate = window_1.Date;
-  var videoPlaybackQuality = {};
-  var mockFlash = {
-    el_: {
-      /* eslint-disable camelcase */
-      vjs_getProperty: function vjs_getProperty(attr) {
-        return videoPlaybackQuality;
-      }
-      /* eslint-enable camelcase */
-
-    }
-  };
-
-  window_1.performance = void 0;
-  assert.notOk(Flash.prototype.getVideoPlaybackQuality.call(mockFlash).creationTime, 'no creationTime when no performance API available');
-
-  window_1.performance = {
-    timing: {}
-  };
-  assert.notOk(Flash.prototype.getVideoPlaybackQuality.call(mockFlash).creationTime, 'no creationTime when performance API insufficient');
-
-  window_1.performance = {
-    now: function now() {
-      return 4;
-    }
-  };
-  assert.equal(Flash.prototype.getVideoPlaybackQuality.call(mockFlash).creationTime, 4, 'creationTime is performance.now when available');
-
-  window_1.Date = {
-    now: function now() {
-      return 10;
-    }
-  };
-  window_1.performance = {
-    timing: {
-      navigationStart: 3
-    }
-  };
-  assert.equal(Flash.prototype.getVideoPlaybackQuality.call(mockFlash).creationTime, 7, 'creationTime uses Date.now() - navigationStart when available');
-
-  window_1.performance.now = function () {
-    return 4;
-  };
-  assert.equal(Flash.prototype.getVideoPlaybackQuality.call(mockFlash).creationTime, 4, 'creationTime prioritizes performance.now when available');
-
-  window_1.Date = origDate;
-  window_1.performance = origPerformance;
-});
-
-QUnit.module('Flash RTMP');
-
-var streamToPartsAndBack = function streamToPartsAndBack(url) {
-  var parts = Flash.streamToParts(url);
-
-  return Flash.streamFromParts(parts.connection, parts.stream);
-};
-
-QUnit.test('test using both streamToParts and streamFromParts', function (assert) {
-  assert.ok(streamToPartsAndBack('rtmp://myurl.com/isthis') === 'rtmp://myurl.com/&isthis');
-  assert.ok(streamToPartsAndBack('rtmp://myurl.com/&isthis') === 'rtmp://myurl.com/&isthis');
-  assert.ok(streamToPartsAndBack('rtmp://myurl.com/isthis/andthis') === 'rtmp://myurl.com/isthis/&andthis');
-});
-
-QUnit.test('test streamToParts', function (assert) {
-  var parts = Flash.streamToParts('http://myurl.com/streaming&/is/fun');
-
-  assert.ok(parts.connection === 'http://myurl.com/streaming');
-  assert.ok(parts.stream === '/is/fun');
-
-  parts = Flash.streamToParts('http://myurl.com/&streaming&/is/fun');
-  assert.ok(parts.connection === 'http://myurl.com/');
-  assert.ok(parts.stream === 'streaming&/is/fun');
-
-  parts = Flash.streamToParts('http://myurl.com/really?streaming=fun&really=fun');
-  assert.ok(parts.connection === 'http://myurl.com/');
-  assert.ok(parts.stream === 'really?streaming=fun&really=fun');
-
-  parts = Flash.streamToParts('http://myurl.com/streaming/is/fun');
-  assert.ok(parts.connection === 'http://myurl.com/streaming/is/');
-  assert.ok(parts.stream === 'fun');
-
-  parts = Flash.streamToParts('whatisgoingonhere');
-  assert.ok(parts.connection === 'whatisgoingonhere');
-  assert.ok(parts.stream === '');
-
-  parts = Flash.streamToParts();
-  assert.ok(parts.connection === '');
-  assert.ok(parts.stream === '');
-});
-
-QUnit.test('test isStreamingSrc', function (assert) {
-  var isStreamingSrc = Flash.isStreamingSrc;
-
-  assert.ok(isStreamingSrc('rtmp://streaming.is/fun'));
-  assert.ok(isStreamingSrc('rtmps://streaming.is/fun'));
-  assert.ok(isStreamingSrc('rtmpe://streaming.is/fun'));
-  assert.ok(isStreamingSrc('rtmpt://streaming.is/fun'));
-  // test invalid protocols
-  assert.ok(!isStreamingSrc('rtmp:streaming.is/fun'));
-  assert.ok(!isStreamingSrc('rtmpz://streaming.is/fun'));
-  assert.ok(!isStreamingSrc('http://streaming.is/fun'));
-  assert.ok(!isStreamingSrc('https://streaming.is/fun'));
-  assert.ok(!isStreamingSrc('file://streaming.is/fun'));
-});
-
-}(videojs,sinon,QUnit));
+})));

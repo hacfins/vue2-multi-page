@@ -1,3 +1,247 @@
+'use strict';
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var videojs = _interopDefault(require('video.js'));
+var package_json = require('videojs-swf/package.json');
+var window = _interopDefault(require('global/window'));
+
+var version = "2.2.1";
+
+/**
+ * @file flash-rtmp.js
+ * @module flash-rtmp
+ */
+
+/**
+ * Add RTMP properties to the {@link Flash} Tech.
+ *
+ * @param {Flash} Flash
+ *        The flash tech class.
+ *
+ * @mixin FlashRtmpDecorator
+ *
+ * @return {Flash}
+ *         The flash tech with RTMP properties added.
+ */
+function FlashRtmpDecorator(Flash) {
+  Flash.streamingFormats = {
+    'rtmp/mp4': 'MP4',
+    'rtmp/flv': 'FLV'
+  };
+
+  /**
+   * Join connection and stream with an ampersand.
+   *
+   * @param {string} connection
+   *        The connection string.
+   *
+   * @param {string} stream
+   *        The stream string.
+   *
+   * @return {string}
+   *         The connection and stream joined with an `&` character
+   */
+  Flash.streamFromParts = function (connection, stream) {
+    return connection + '&' + stream;
+  };
+
+  /**
+   * The flash parts object that contains connection and stream info.
+   *
+   * @typedef {Object} Flash~PartsObject
+   *
+   * @property {string} connection
+   *           The connection string of a source, defaults to an empty string.
+   *
+   * @property {string} stream
+   *           The stream string of the source, defaults to an empty string.
+   */
+
+  /**
+   * Convert a source url into a stream and connection parts.
+   *
+   * @param {string} src
+   *        the source url
+   *
+   * @return {Flash~PartsObject}
+   *         The parts object that contains a connection and a stream
+   */
+  Flash.streamToParts = function (src) {
+    var parts = {
+      connection: '',
+      stream: ''
+    };
+
+    if (!src) {
+      return parts;
+    }
+
+    // Look for the normal URL separator we expect, '&'.
+    // If found, we split the URL into two pieces around the
+    // first '&'.
+    var connEnd = src.search(/&(?![\w-]+=)/);
+    var streamBegin = void 0;
+
+    if (connEnd !== -1) {
+      streamBegin = connEnd + 1;
+    } else {
+      // If there's not a '&', we use the last '/' as the delimiter.
+      connEnd = streamBegin = src.lastIndexOf('/') + 1;
+      if (connEnd === 0) {
+        // really, there's not a '/'?
+        connEnd = streamBegin = src.length;
+      }
+    }
+
+    parts.connection = src.substring(0, connEnd);
+    parts.stream = src.substring(streamBegin, src.length);
+
+    return parts;
+  };
+
+  /**
+   * Check if the source type is a streaming type.
+   *
+   * @param {string} srcType
+   *        The mime type to check.
+   *
+   * @return {boolean}
+   *          - True if the source type is a streaming type.
+   *          - False if the source type is not a streaming type.
+   */
+  Flash.isStreamingType = function (srcType) {
+    return srcType in Flash.streamingFormats;
+  };
+
+  // RTMP has four variations, any string starting
+  // with one of these protocols should be valid
+
+  /**
+   * Regular expression used to check if the source is an rtmp source.
+   *
+   * @property {RegExp} Flash.RTMP_RE
+   */
+  Flash.RTMP_RE = /^rtmp[set]?:\/\//i;
+
+  /**
+   * Check if the source itself is a streaming type.
+   *
+   * @param {string} src
+   *        The url to the source.
+   *
+   * @return {boolean}
+   *          - True if the source url indicates that the source is streaming.
+   *          - False if the shource url indicates that the source url is not streaming.
+   */
+  Flash.isStreamingSrc = function (src) {
+    return Flash.RTMP_RE.test(src);
+  };
+
+  /**
+   * A source handler for RTMP urls
+   * @type {Object}
+   */
+  Flash.rtmpSourceHandler = {};
+
+  /**
+   * Check if Flash can play the given mime type.
+   *
+   * @param {string} type
+   *        The mime type to check
+   *
+   * @return {string}
+   *         'maybe', or '' (empty string)
+   */
+  Flash.rtmpSourceHandler.canPlayType = function (type) {
+    if (Flash.isStreamingType(type)) {
+      return 'maybe';
+    }
+
+    return '';
+  };
+
+  /**
+   * Check if Flash can handle the source natively
+   *
+   * @param {Object} source
+   *        The source object
+   *
+   * @param {Object} [options]
+   *        The options passed to the tech
+   *
+   * @return {string}
+   *         'maybe', or '' (empty string)
+   */
+  Flash.rtmpSourceHandler.canHandleSource = function (source, options) {
+    var can = Flash.rtmpSourceHandler.canPlayType(source.type);
+
+    if (can) {
+      return can;
+    }
+
+    if (Flash.isStreamingSrc(source.src)) {
+      return 'maybe';
+    }
+
+    return '';
+  };
+
+  /**
+   * Pass the source to the flash object.
+   *
+   * @param {Object} source
+   *        The source object
+   *
+   * @param {Flash} tech
+   *        The instance of the Flash tech
+   *
+   * @param {Object} [options]
+   *        The options to pass to the source
+   */
+  Flash.rtmpSourceHandler.handleSource = function (source, tech, options) {
+    var srcParts = Flash.streamToParts(source.src);
+
+    tech.setRtmpConnection(srcParts.connection);
+    tech.setRtmpStream(srcParts.stream);
+  };
+
+  // Register the native source handler
+  Flash.registerSourceHandler(Flash.rtmpSourceHandler);
+
+  return Flash;
+}
+
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+var inherits = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+};
+
+var possibleConstructorReturn = function (self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return call && (typeof call === "object" || typeof call === "function") ? call : self;
+};
+
 /**
  * @file flash.js
  * VideoJS-SWF - Custom Flash Player with HTML5-ish API
@@ -5,19 +249,13 @@
  * Not using setupTriggers. Using global onEvent func to distribute events
  */
 
-import videojs from 'video.js';
-import {version as SWF_VERSION} from 'videojs-swf/package.json';
-import {version as VERSION} from '../package.json';
-import FlashRtmpDecorator from './rtmp';
-import window from 'global/window';
+var Tech = videojs.getComponent('Tech');
+var Dom = videojs.dom;
+var Url = videojs.url;
+var createTimeRange = videojs.createTimeRange;
+var mergeOptions = videojs.mergeOptions;
 
-const Tech = videojs.getComponent('Tech');
-const Dom = videojs.dom;
-const Url = videojs.url;
-const createTimeRange = videojs.createTimeRange;
-const mergeOptions = videojs.mergeOptions;
-
-const navigator = window && window.navigator || {};
+var navigator = window && window.navigator || {};
 
 /**
  * Flash Media Controller - Wrapper for Flash Media API
@@ -26,9 +264,11 @@ const navigator = window && window.navigator || {};
  * @mixes Tech~SouceHandlerAdditions
  * @extends Tech
  */
-class Flash extends Tech {
 
- /**
+var Flash = function (_Tech) {
+  inherits(Flash, _Tech);
+
+  /**
   * Create an instance of this Tech.
   *
   * @param {Object} [options]
@@ -37,12 +277,14 @@ class Flash extends Tech {
   * @param {Component~ReadyCallback} ready
   *        Callback function to call when the `Flash` Tech is ready.
   */
-  constructor(options, ready) {
-    super(options, ready);
+  function Flash(options, ready) {
+    classCallCheck(this, Flash);
 
     // Set the source when ready
+    var _this = possibleConstructorReturn(this, _Tech.call(this, options, ready));
+
     if (options.source) {
-      this.ready(function() {
+      _this.ready(function () {
         this.setSource(options.source);
       }, true);
     }
@@ -51,7 +293,7 @@ class Flash extends Tech {
     // (hide/resize/fullscreen) in certain browsers
     // This allows resetting the playhead when we catch the reload
     if (options.startTime) {
-      this.ready(function() {
+      _this.ready(function () {
         this.load();
         this.play();
         this.currentTime(options.startTime);
@@ -68,10 +310,11 @@ class Flash extends Tech {
     window.videojs.Flash.onEvent = Flash.onEvent;
     window.videojs.Flash.onError = Flash.onError;
 
-    this.on('seeked', function() {
+    _this.on('seeked', function () {
       this.lastSeekTarget_ = undefined;
     });
 
+    return _this;
   }
 
   /**
@@ -80,22 +323,24 @@ class Flash extends Tech {
    * @return {Element}
    *         The element that gets created.
    */
-  createEl() {
-    const options = this.options_;
+
+
+  Flash.prototype.createEl = function createEl() {
+    var options = this.options_;
 
     // If video.js is hosted locally you should also set the location
     // for the hosted swf, which should be relative to the page (not video.js)
     // Otherwise this adds a CDN url.
     // The CDN also auto-adds a swf URL for that specific version.
     if (!options.swf) {
-      options.swf = `https://vjs.zencdn.net/swf/${SWF_VERSION}/video-js.swf`;
+      options.swf = 'https://vjs.zencdn.net/swf/' + package_json.version + '/video-js.swf';
     }
 
     // Generate ID for swf object
-    const objId = options.techId;
+    var objId = options.techId;
 
     // Merge default flashvars with ones passed in to init
-    const flashVars = mergeOptions({
+    var flashVars = mergeOptions({
 
       // SWF Callback Functions
       readyFunction: 'videojs.Flash.onReady',
@@ -111,7 +356,7 @@ class Flash extends Tech {
     }, options.flashVars);
 
     // Merge default parames with ones passed in
-    const params = mergeOptions({
+    var params = mergeOptions({
       // Opaque is needed to overlay controls, but can affect playback performance
       wmode: 'opaque',
       // Using bgcolor prevents a white flash when the object is loading
@@ -119,35 +364,39 @@ class Flash extends Tech {
     }, options.params);
 
     // Merge default attributes with ones passed in
-    const attributes = mergeOptions({
+    var attributes = mergeOptions({
       // Both ID and Name needed or swf to identify itself
       id: objId,
       name: objId,
-      class: 'vjs-tech'
+      'class': 'vjs-tech'
     }, options.attributes);
 
     this.el_ = Flash.embed(options.swf, flashVars, params, attributes);
     this.el_.tech = this;
 
     return this.el_;
-  }
+  };
 
   /**
    * Called by {@link Player#play} to play using the `Flash` `Tech`.
    */
-  play() {
+
+
+  Flash.prototype.play = function play() {
     if (this.ended()) {
       this.setCurrentTime(0);
     }
     this.el_.vjs_play();
-  }
+  };
 
   /**
    * Called by {@link Player#pause} to pause using the `Flash` `Tech`.
    */
-  pause() {
+
+
+  Flash.prototype.pause = function pause() {
     this.el_.vjs_pause();
-  }
+  };
 
   /**
    * A getter/setter for the `Flash` Tech's source object.
@@ -162,14 +411,16 @@ class Flash extends Tech {
    *
    * @deprecated Since version 5.
    */
-  src(src) {
-    if (src === undefined) {
+
+
+  Flash.prototype.src = function src(_src) {
+    if (_src === undefined) {
       return this.currentSrc();
     }
 
     // Setting src through `src` not `setSrc` will be deprecated
-    return this.setSrc(src);
-  }
+    return this.setSrc(_src);
+  };
 
   /**
    * A getter/setter for the `Flash` Tech's source object.
@@ -177,7 +428,11 @@ class Flash extends Tech {
    * @param {Tech~SourceObject} [src]
    *        The source object you want to set on the `Flash` techs.
    */
-  setSrc(src) {
+
+
+  Flash.prototype.setSrc = function setSrc(src) {
+    var _this2 = this;
+
     // Make sure source URL is absolute.
     src = Url.getAbsoluteURL(src);
     this.el_.vjs_src(src);
@@ -185,9 +440,11 @@ class Flash extends Tech {
     // Currently the SWF doesn't autoplay if you load a source later.
     // e.g. Load player w/ no source, wait 2s, set src.
     if (this.autoplay()) {
-      this.setTimeout(() => this.play(), 0);
+      this.setTimeout(function () {
+        return _this2.play();
+      }, 0);
     }
-  }
+  };
 
   /**
    * Indicates whether the media is currently seeking to a new position or not.
@@ -196,9 +453,11 @@ class Flash extends Tech {
    *         - True if seeking to a new position
    *         - False otherwise
    */
-  seeking() {
+
+
+  Flash.prototype.seeking = function seeking() {
     return this.lastSeekTarget_ !== undefined;
-  }
+  };
 
   /**
    * Returns the current time in seconds that the media is at in playback.
@@ -206,21 +465,22 @@ class Flash extends Tech {
    * @param {number} time
    *        Current playtime of the media in seconds.
    */
-  setCurrentTime(time) {
-    const seekable = this.seekable();
+
+
+  Flash.prototype.setCurrentTime = function setCurrentTime(time) {
+    var seekable = this.seekable();
 
     if (seekable.length) {
       // clamp to the current seekable range
       time = time > seekable.start(0) ? time : seekable.start(0);
-      time = time < seekable.end(seekable.length - 1) ?
-        time : seekable.end(seekable.length - 1);
+      time = time < seekable.end(seekable.length - 1) ? time : seekable.end(seekable.length - 1);
 
       this.lastSeekTarget_ = time;
       this.trigger('seeking');
       this.el_.vjs_setProperty('currentTime', time);
-      super.setCurrentTime();
+      _Tech.prototype.setCurrentTime.call(this);
     }
-  }
+  };
 
   /**
    * Get the current playback time in seconds
@@ -228,14 +488,16 @@ class Flash extends Tech {
    * @return {number}
    *         The current time of playback in seconds.
    */
-  currentTime() {
+
+
+  Flash.prototype.currentTime = function currentTime() {
     // when seeking make the reported time keep up with the requested time
     // by reading the time we're seeking to
     if (this.seeking()) {
       return this.lastSeekTarget_ || 0;
     }
     return this.el_.vjs_getProperty('currentTime');
-  }
+  };
 
   /**
    * Get the current source
@@ -244,12 +506,14 @@ class Flash extends Tech {
    * @return {Tech~SourceObject}
    *         The current source
    */
-  currentSrc() {
+
+
+  Flash.prototype.currentSrc = function currentSrc() {
     if (this.currentSource_) {
       return this.currentSource_.src;
     }
     return this.el_.vjs_getProperty('currentSrc');
-  }
+  };
 
   /**
    * Get the total duration of the current media.
@@ -257,33 +521,41 @@ class Flash extends Tech {
    * @return {number}
    8          The total duration of the current media.
    */
-  duration() {
+
+
+  Flash.prototype.duration = function duration() {
     if (this.readyState() === 0) {
       return NaN;
     }
-    const duration = this.el_.vjs_getProperty('duration');
+    var duration = this.el_.vjs_getProperty('duration');
 
     return duration >= 0 ? duration : Infinity;
-  }
+  };
 
   /**
    * Load media into Tech.
    */
-  load() {
+
+
+  Flash.prototype.load = function load() {
     this.el_.vjs_load();
-  }
+  };
 
   /**
    * Get the poster image that was set on the tech.
    */
-  poster() {
+
+
+  Flash.prototype.poster = function poster() {
     this.el_.vjs_getProperty('poster');
-  }
+  };
 
   /**
    * Poster images are not handled by the Flash tech so make this is a no-op.
    */
-  setPoster() {}
+
+
+  Flash.prototype.setPoster = function setPoster() {};
 
   /**
    * Determine the time ranges that can be seeked to in the media.
@@ -291,14 +563,16 @@ class Flash extends Tech {
    * @return {TimeRange}
    *         Returns the time ranges that can be seeked to.
    */
-  seekable() {
-    const duration = this.duration();
+
+
+  Flash.prototype.seekable = function seekable() {
+    var duration = this.duration();
 
     if (duration === 0) {
       return createTimeRange();
     }
     return createTimeRange(0, duration);
-  }
+  };
 
   /**
    * Get and create a `TimeRange` object for buffering.
@@ -306,14 +580,16 @@ class Flash extends Tech {
    * @return {TimeRange}
    *         The time range object that was created.
    */
-  buffered() {
-    const ranges = this.el_.vjs_getProperty('buffered');
+
+
+  Flash.prototype.buffered = function buffered() {
+    var ranges = this.el_.vjs_getProperty('buffered');
 
     if (ranges.length === 0) {
       return createTimeRange();
     }
     return createTimeRange(ranges[0][0], ranges[0][1]);
-  }
+  };
 
   /**
    * Get fullscreen support -
@@ -324,10 +600,12 @@ class Flash extends Tech {
    * @return {boolean}
    *         The Flash tech does not support fullscreen, so it will always return false.
    */
-  supportsFullScreen() {
+
+
+  Flash.prototype.supportsFullScreen = function supportsFullScreen() {
     // Flash does not allow fullscreen through javascript
     return false;
-  }
+  };
 
   /**
    * Flash does not allow fullscreen through javascript
@@ -336,9 +614,11 @@ class Flash extends Tech {
    * @return {boolean}
    *         The Flash tech does not support fullscreen, so it will always return false.
    */
-  enterFullScreen() {
+
+
+  Flash.prototype.enterFullScreen = function enterFullScreen() {
     return false;
-  }
+  };
 
   /**
    * Gets available media playback quality metrics as specified by the W3C's Media
@@ -349,47 +629,29 @@ class Flash extends Tech {
    * @return {Object}
    *         An object with supported media playback quality metrics
    */
-  getVideoPlaybackQuality() {
-    const videoPlaybackQuality = this.el_.vjs_getProperty('getVideoPlaybackQuality');
+
+
+  Flash.prototype.getVideoPlaybackQuality = function getVideoPlaybackQuality() {
+    var videoPlaybackQuality = this.el_.vjs_getProperty('getVideoPlaybackQuality');
 
     if (window.performance && typeof window.performance.now === 'function') {
       videoPlaybackQuality.creationTime = window.performance.now();
-    } else if (window.performance &&
-               window.performance.timing &&
-               typeof window.performance.timing.navigationStart === 'number') {
-      videoPlaybackQuality.creationTime =
-        window.Date.now() - window.performance.timing.navigationStart;
+    } else if (window.performance && window.performance.timing && typeof window.performance.timing.navigationStart === 'number') {
+      videoPlaybackQuality.creationTime = window.Date.now() - window.performance.timing.navigationStart;
     }
 
     return videoPlaybackQuality;
-  }
-}
+  };
+
+  return Flash;
+}(Tech);
 
 // Create setters and getters for attributes
-const _readWrite = [
-  'rtmpConnection',
-  'rtmpStream',
-  'preload',
-  'defaultPlaybackRate',
-  'playbackRate',
-  'autoplay',
-  'loop',
-  'controls',
-  'volume',
-  'muted',
-  'defaultMuted'
-];
-const _readOnly = [
-  'networkState',
-  'readyState',
-  'initialTime',
-  'startOffsetTime',
-  'paused',
-  'ended',
-  'videoWidth',
-  'videoHeight'
-];
-const _api = Flash.prototype;
+
+
+var _readWrite = ['rtmpConnection', 'rtmpStream', 'preload', 'defaultPlaybackRate', 'playbackRate', 'autoplay', 'loop', 'controls', 'volume', 'muted', 'defaultMuted'];
+var _readOnly = ['networkState', 'readyState', 'initialTime', 'startOffsetTime', 'paused', 'ended', 'videoWidth', 'videoHeight'];
+var _api = Flash.prototype;
 
 /**
  * Create setters for the swf on the element
@@ -400,15 +662,15 @@ const _api = Flash.prototype;
  * @private
  */
 function _createSetter(attr) {
-  const attrUpper = attr.charAt(0).toUpperCase() + attr.slice(1);
+  var attrUpper = attr.charAt(0).toUpperCase() + attr.slice(1);
 
-  _api['set' + attrUpper] = function(val) {
+  _api['set' + attrUpper] = function (val) {
     return this.el_.vjs_setProperty(attr, val);
   };
 }
 
 /**
- * Create petters for the swf on the element
+ * Create getters for the swf on the element
  *
  * @param {string} attr
  *        The name of the parameter
@@ -416,20 +678,20 @@ function _createSetter(attr) {
  * @private
  */
 function _createGetter(attr) {
-  _api[attr] = function() {
+  _api[attr] = function () {
     return this.el_.vjs_getProperty(attr);
   };
 }
 
 // Create getter and setters for all read/write attributes
-for (let i = 0; i < _readWrite.length; i++) {
+for (var i = 0; i < _readWrite.length; i++) {
   _createGetter(_readWrite[i]);
   _createSetter(_readWrite[i]);
 }
 
 // Create getters for read-only attributes
-for (let i = 0; i < _readOnly.length; i++) {
-  _createGetter(_readOnly[i]);
+for (var _i = 0; _i < _readOnly.length; _i++) {
+  _createGetter(_readOnly[_i]);
 }
 
 /** ------------------------------ Getters ------------------------------ **/
@@ -815,13 +1077,12 @@ for (let i = 0; i < _readOnly.length; i++) {
  * Check if the Flash tech is currently supported.
  *
  * @return {boolean}
- *          - True for Chrome and Safari Desktop and if flash tech is supported
+ *          - True for Chrome and Safari Desktop and Microsoft Edge and if flash tech is supported
  *          - False otherwise
  */
-Flash.isSupported = function() {
+Flash.isSupported = function () {
   // for Chrome Desktop and Safari Desktop
-  if ((videojs.browser.IS_CHROME && !videojs.browser.IS_ANDROID) ||
-    (videojs.browser.IS_SAFARI && !videojs.browser.IS_IOS)) {
+  if (videojs.browser.IS_CHROME && (!videojs.browser.IS_ANDROID || !videojs.browser.IS_IOS) || videojs.browser.IS_SAFARI && !videojs.browser.IS_IOS || videojs.browser.IS_EDGE) {
     return true;
   }
   // for other browsers
@@ -851,7 +1112,7 @@ Flash.nativeSourceHandler = {};
  * @return {string}
  *         'maybe', or '' (empty string)
  */
-Flash.nativeSourceHandler.canPlayType = function(type) {
+Flash.nativeSourceHandler.canPlayType = function (type) {
   if (type in Flash.formats) {
     return 'maybe';
   }
@@ -871,8 +1132,8 @@ Flash.nativeSourceHandler.canPlayType = function(type) {
  * @return {string}
  *         'maybe', or '' (empty string).
  */
-Flash.nativeSourceHandler.canHandleSource = function(source, options) {
-  let type;
+Flash.nativeSourceHandler.canHandleSource = function (source, options) {
+  var type = void 0;
 
   /**
    * Guess the mime type of a file if it does not have one
@@ -884,10 +1145,10 @@ Flash.nativeSourceHandler.canHandleSource = function(source, options) {
    *         The mime type that was guessed
    */
   function guessMimeType(src) {
-    const ext = Url.getFileExtension(src);
+    var ext = Url.getFileExtension(src);
 
     if (ext) {
-      return `video/${ext}`;
+      return 'video/' + ext;
     }
     return '';
   }
@@ -914,14 +1175,14 @@ Flash.nativeSourceHandler.canHandleSource = function(source, options) {
  * @param {Object} [options]
  *        The options to pass to the source
  */
-Flash.nativeSourceHandler.handleSource = function(source, tech, options) {
+Flash.nativeSourceHandler.handleSource = function (source, tech, options) {
   tech.setSrc(source.src);
 };
 
 /**
  * noop for native source handler dispose, as cleanup will happen automatically.
  */
-Flash.nativeSourceHandler.dispose = function() {};
+Flash.nativeSourceHandler.dispose = function () {};
 
 // Register the native source handler
 Flash.registerSourceHandler(Flash.nativeSourceHandler);
@@ -945,9 +1206,9 @@ Flash.formats = {
  * @param {Object} currSwf
  *        The current swf object
  */
-Flash.onReady = function(currSwf) {
-  const el = Dom.$('#' + currSwf);
-  const tech = el && el.tech;
+Flash.onReady = function (currSwf) {
+  var el = Dom.$('#' + currSwf);
+  var tech = el && el.tech;
 
   // if there is no el then the tech has been disposed
   // and the tech element was removed from the player div
@@ -965,7 +1226,7 @@ Flash.onReady = function(currSwf) {
  * @param {Flash} tech
  *        The instance of the flash tech to check.
  */
-Flash.checkReady = function(tech) {
+Flash.checkReady = function (tech) {
   // stop worrying if the tech has been disposed
   if (!tech.el()) {
     return;
@@ -977,7 +1238,7 @@ Flash.checkReady = function(tech) {
     tech.triggerReady();
   } else {
     // wait longer
-    this.setTimeout(function() {
+    this.setTimeout(function () {
       Flash.checkReady(tech);
     }, 50);
   }
@@ -992,16 +1253,16 @@ Flash.checkReady = function(tech) {
  * @param {string} eventName
  *        The name of the event to trigger
  */
-Flash.onEvent = function(swfID, eventName) {
-  const tech = Dom.$('#' + swfID).tech;
-  const args = Array.prototype.slice.call(arguments, 2);
+Flash.onEvent = function (swfID, eventName) {
+  var tech = Dom.$('#' + swfID).tech;
+  var args = Array.prototype.slice.call(arguments, 2);
 
   // dispatch Flash events asynchronously for two reasons:
   // - Flash swallows any exceptions generated by javascript it
   //   invokes
   // - Flash is suspended until the javascript returns which may cause
   //   playback performance issues
-  tech.setTimeout(function() {
+  tech.setTimeout(function () {
     tech.trigger(eventName, args);
   }, 1);
 };
@@ -1019,8 +1280,8 @@ Flash.onEvent = function(swfID, eventName) {
  *          - Returns a MediaError when err is 'srcnotfound'
  *          - Returns undefined otherwise.
  */
-Flash.onError = function(swfID, err) {
-  const tech = Dom.$('#' + swfID).tech;
+Flash.onError = function (swfID, err) {
+  var tech = Dom.$('#' + swfID).tech;
 
   // trigger MEDIA_ERR_SRC_NOT_SUPPORTED
   if (err === 'srcnotfound') {
@@ -1042,31 +1303,24 @@ Flash.onError = function(swfID, err) {
  * @return {Array}
  *          an array of versions that are available.
  */
-Flash.version = function() {
-  let version = '0,0,0';
+Flash.version = function () {
+  var version$$1 = '0,0,0';
 
   // IE
   try {
-    version = new window.ActiveXObject('ShockwaveFlash.ShockwaveFlash')
-      .GetVariable('$version')
-      .replace(/\D+/g, ',')
-      .match(/^,?(.+),?$/)[1];
+    version$$1 = new window.ActiveXObject('ShockwaveFlash.ShockwaveFlash').GetVariable('$version').replace(/\D+/g, ',').match(/^,?(.+),?$/)[1];
 
-  // other browsers
+    // other browsers
   } catch (e) {
     try {
       if (navigator.mimeTypes['application/x-shockwave-flash'].enabledPlugin) {
-        version = (navigator.plugins['Shockwave Flash 2.0'] ||
-          navigator.plugins['Shockwave Flash'])
-          .description
-          .replace(/\D+/g, ',')
-          .match(/^,?(.+),?$/)[1];
+        version$$1 = (navigator.plugins['Shockwave Flash 2.0'] || navigator.plugins['Shockwave Flash']).description.replace(/\D+/g, ',').match(/^,?(.+),?$/)[1];
       }
     } catch (err) {
       // satisfy linter
     }
   }
-  return version.split(',');
+  return version$$1.split(',');
 };
 
 /**
@@ -1087,11 +1341,11 @@ Flash.version = function() {
  * @return {Element}
  *          The embeded Flash DOM element.
  */
-Flash.embed = function(swf, flashVars, params, attributes) {
-  const code = Flash.getEmbedCode(swf, flashVars, params, attributes);
+Flash.embed = function (swf, flashVars, params, attributes) {
+  var code = Flash.getEmbedCode(swf, flashVars, params, attributes);
 
   // Get element by embedding code and retrieving created element
-  const obj = Dom.createEl('div', { innerHTML: code }).childNodes[0];
+  var obj = Dom.createEl('div', { innerHTML: code }).childNodes[0];
 
   return obj;
 };
@@ -1114,16 +1368,16 @@ Flash.embed = function(swf, flashVars, params, attributes) {
  * @return {Element}
  *          The embeded Flash DOM element.
  */
-Flash.getEmbedCode = function(swf, flashVars, params, attributes) {
-  const objTag = '<object type="application/x-shockwave-flash" ';
-  let flashVarsString = '';
-  let paramsString = '';
-  let attrsString = '';
+Flash.getEmbedCode = function (swf, flashVars, params, attributes) {
+  var objTag = '<object type="application/x-shockwave-flash" ';
+  var flashVarsString = '';
+  var paramsString = '';
+  var attrsString = '';
 
   // Convert flash vars to string
   if (flashVars) {
-    Object.getOwnPropertyNames(flashVars).forEach(function(key) {
-      flashVarsString += `${key}=${flashVars[key]}&amp;`;
+    Object.getOwnPropertyNames(flashVars).forEach(function (key) {
+      flashVarsString += key + '=' + flashVars[key] + '&amp;';
     });
   }
 
@@ -1138,8 +1392,8 @@ Flash.getEmbedCode = function(swf, flashVars, params, attributes) {
   }, params);
 
   // Create param tags string
-  Object.getOwnPropertyNames(params).forEach(function(key) {
-    paramsString += `<param name="${key}" value="${params[key]}" />`;
+  Object.getOwnPropertyNames(params).forEach(function (key) {
+    paramsString += '<param name="' + key + '" value="' + params[key] + '" />';
   });
 
   attributes = mergeOptions({
@@ -1153,11 +1407,11 @@ Flash.getEmbedCode = function(swf, flashVars, params, attributes) {
   }, attributes);
 
   // Create Attributes string
-  Object.getOwnPropertyNames(attributes).forEach(function(key) {
-    attrsString += `${key}="${attributes[key]}" `;
+  Object.getOwnPropertyNames(attributes).forEach(function (key) {
+    attrsString += key + '="' + attributes[key] + '" ';
   });
 
-  return `${objTag}${attrsString}>${paramsString}</object>`;
+  return '' + objTag + attrsString + '>' + paramsString + '</object>';
 };
 
 // Run Flash through the RTMP decorator
@@ -1170,6 +1424,6 @@ if (Tech.getTech('Flash')) {
   videojs.registerTech('Flash', Flash);
 }
 
-Flash.VERSION = VERSION;
+Flash.VERSION = version;
 
-export default Flash;
+module.exports = Flash;

@@ -1,3 +1,48 @@
+<a name="2.2.1"></a>
+## [2.2.1](https://github.com/videojs/videojs-flash/compare/v2.2.0...v2.2.1) (2019-10-03)
+
+### Bug Fixes
+
+* ignore Chrome on iOS ([#143](https://github.com/videojs/videojs-flash/issues/143)) ([e586938](https://github.com/videojs/videojs-flash/commit/e586938)), closes [#142](https://github.com/videojs/videojs-flash/issues/142)
+* typo with getters ([#120](https://github.com/videojs/videojs-flash/issues/120)) ([2f4f435](https://github.com/videojs/videojs-flash/commit/2f4f435))
+
+### Chores
+
+* Update deps ([#144](https://github.com/videojs/videojs-flash/issues/144)) ([1203664](https://github.com/videojs/videojs-flash/commit/1203664))
+
+<a name="2.2.0"></a>
+# [2.2.0](https://github.com/videojs/videojs-flash/compare/v2.1.2...v2.2.0) (2019-02-12)
+
+### Features
+
+* support microsoft edge ([#111](https://github.com/videojs/videojs-flash/issues/111)) ([34ffa8e](https://github.com/videojs/videojs-flash/commit/34ffa8e))
+
+### Chores
+
+* minimal rollup update along with npm audit updates to get build working ([#116](https://github.com/videojs/videojs-flash/issues/116)) ([94eecb4](https://github.com/videojs/videojs-flash/commit/94eecb4))
+
+<a name="2.1.2"></a>
+## [2.1.2](https://github.com/videojs/videojs-flash/compare/v2.1.1...v2.1.2) (2018-09-24)
+
+### Bug Fixes
+
+* **package:** update videojs-swf to version 5.4.2 🚀 ([#90](https://github.com/videojs/videojs-flash/issues/90)) ([fe0d952](https://github.com/videojs/videojs-flash/commit/fe0d952))
+* rtmp parameters can contains "-" ([#59](https://github.com/videojs/videojs-flash/issues/59)) ([3d5087d](https://github.com/videojs/videojs-flash/commit/3d5087d))
+
+### Chores
+
+* update index.html to work better ([#85](https://github.com/videojs/videojs-flash/issues/85)) ([e5e990f](https://github.com/videojs/videojs-flash/commit/e5e990f))
+* **package-lock:** upgrade to npm 6.4.1 ([aa8db77](https://github.com/videojs/videojs-flash/commit/aa8db77))
+
+<a name="2.1.1"></a>
+## [2.1.1](https://github.com/videojs/videojs-flash/compare/v2.1.0...v2.1.1) (2018-07-05)
+
+### Chores
+
+* enable Greenkeeper 🌴 ([#62](https://github.com/videojs/videojs-flash/issues/62)) ([09963ea](https://github.com/videojs/videojs-flash/commit/09963ea))
+* update to add vjs 7 support ([#75](https://github.com/videojs/videojs-flash/issues/75)) ([7fd4a27](https://github.com/videojs/videojs-flash/commit/7fd4a27)), closes [#76](https://github.com/videojs/videojs-flash/issues/76)
+* **package:** update conventional-changelog-cli to version 2.0.0 ([#72](https://github.com/videojs/videojs-flash/issues/72)) ([d9366f7](https://github.com/videojs/videojs-flash/commit/d9366f7))
+
 <a name="2.1.0"></a>
 # [2.1.0](https://github.com/videojs/videojs-flash/compare/v2.0.2...v2.1.0) (2017-12-14)
 

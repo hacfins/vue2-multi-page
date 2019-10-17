@@ -2,7 +2,7 @@ import videojs from 'video.js';
 import { version } from 'videojs-swf/package.json';
 import window from 'global/window';
 
-var version$1 = "2.1.0";
+var version$1 = "2.2.1";
 
 /**
  * @file flash-rtmp.js
@@ -76,7 +76,7 @@ function FlashRtmpDecorator(Flash) {
     // Look for the normal URL separator we expect, '&'.
     // If found, we split the URL into two pieces around the
     // first '&'.
-    var connEnd = src.search(/&(?!\w+=)/);
+    var connEnd = src.search(/&(?![\w-]+=)/);
     var streamBegin = void 0;
 
     if (connEnd !== -1) {
@@ -214,16 +214,6 @@ var classCallCheck = function (instance, Constructor) {
   }
 };
 
-
-
-
-
-
-
-
-
-
-
 var inherits = function (subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
     throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
@@ -239,16 +229,6 @@ var inherits = function (subClass, superClass) {
   });
   if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 };
-
-
-
-
-
-
-
-
-
-
 
 var possibleConstructorReturn = function (self, call) {
   if (!self) {
@@ -285,14 +265,14 @@ var Flash = function (_Tech) {
   inherits(Flash, _Tech);
 
   /**
-   * Create an instance of this Tech.
-   *
-   * @param {Object} [options]
-   *        The key/value store of player options.
-   *
-   * @param {Component~ReadyCallback} ready
-   *        Callback function to call when the `Flash` Tech is ready.
-   */
+  * Create an instance of this Tech.
+  *
+  * @param {Object} [options]
+  *        The key/value store of player options.
+  *
+  * @param {Component~ReadyCallback} ready
+  *        Callback function to call when the `Flash` Tech is ready.
+  */
   function Flash(options, ready) {
     classCallCheck(this, Flash);
 
@@ -686,7 +666,7 @@ function _createSetter(attr) {
 }
 
 /**
- * Create petters for the swf on the element
+ * Create getters for the swf on the element
  *
  * @param {string} attr
  *        The name of the parameter
@@ -1093,12 +1073,12 @@ for (var _i = 0; _i < _readOnly.length; _i++) {
  * Check if the Flash tech is currently supported.
  *
  * @return {boolean}
- *          - True for Chrome and Safari Desktop and if flash tech is supported
+ *          - True for Chrome and Safari Desktop and Microsoft Edge and if flash tech is supported
  *          - False otherwise
  */
 Flash.isSupported = function () {
   // for Chrome Desktop and Safari Desktop
-  if (videojs.browser.IS_CHROME && !videojs.browser.IS_ANDROID || videojs.browser.IS_SAFARI && !videojs.browser.IS_IOS) {
+  if (videojs.browser.IS_CHROME && (!videojs.browser.IS_ANDROID || !videojs.browser.IS_IOS) || videojs.browser.IS_SAFARI && !videojs.browser.IS_IOS || videojs.browser.IS_EDGE) {
     return true;
   }
   // for other browsers

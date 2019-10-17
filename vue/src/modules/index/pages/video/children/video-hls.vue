@@ -32,7 +32,7 @@
                     height   : '360',
                     sources  : [{
                         type: 'application/x-mpegURL',
-                        src : 'http://sample.vodobox.net/skate_phantom_flex_4k/skate_phantom_flex_4k.m3u8'
+                        src : 'http://192.168.123.22:8629/media/2019/3/22/17/8f5675fa6e224572a3ca434be6d9e88e_cvt_m3u8_/high.m3u8'
                     }],
                     flash    : {
                         swf: '/static/assets/videojs-flashls-source-handler-0.0.0/video-js-hls.swf'
