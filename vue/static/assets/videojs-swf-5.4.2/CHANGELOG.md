@@ -6,6 +6,9 @@ _(none)_
 
 --------------------
 
+## 5.4.2 (2018-09-20)
+* Fix video dimensions pinned to 100x100
+
 ## 5.4.1 (2017-07-25)
 * chore: update broken URLs
 * fix: decouple muted() from volume=0

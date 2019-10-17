@@ -1,0 +1,126 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "videojs-swf@5.4.2",
+        "scope": null,
+        "escapedName": "videojs-swf",
+        "name": "videojs-swf",
+        "rawSpec": "5.4.2",
+        "spec": "5.4.2",
+        "type": "version"
+      },
+      "D:\\Code\\vue2frame\\vue"
+    ]
+  ],
+  "_from": "videojs-swf@5.4.2",
+  "_hasShrinkwrap": false,
+  "_id": "videojs-swf@5.4.2",
+  "_inCache": true,
+  "_location": "/videojs-swf",
+  "_nodeVersion": "8.12.0",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/videojs-swf_5.4.2_1537455666720_0.9859204381248583"
+  },
+  "_npmUser": {
+    "name": "gkatsev",
+    "email": "me@gkatsev.com"
+  },
+  "_npmVersion": "6.4.1",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "videojs-swf@5.4.2",
+    "scope": null,
+    "escapedName": "videojs-swf",
+    "name": "videojs-swf",
+    "rawSpec": "5.4.2",
+    "spec": "5.4.2",
+    "type": "version"
+  },
+  "_requiredBy": [
+    "#DEV:/",
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/videojs-swf/-/videojs-swf-5.4.2.tgz",
+  "_shasum": "6964a9bff903b732f3e465314ae478a02a17e8ab",
+  "_shrinkwrap": null,
+  "_spec": "videojs-swf@5.4.2",
+  "_where": "D:\\Code\\vue2frame\\vue",
+  "author": {
+    "name": "Brightcove"
+  },
+  "bugs": {
+    "url": "https://github.com/videojs/video-js-swf/issues"
+  },
+  "copyright": "Copyright 2014 Brightcove, Inc. https://github.com/videojs/video-js-swf/blob/master/LICENSE",
+  "dependencies": {},
+  "description": "The Flash-fallback video player for video.js (http://videojs.com)",
+  "devDependencies": {
+    "async": "~0.2.9",
+    "chg": "^0.3.2",
+    "flex-sdk": "4.6.0-0",
+    "grunt": "~0.4.0",
+    "grunt-bumpup": "~0.5.0",
+    "grunt-cli": "~0.1.0",
+    "grunt-connect": "~0.2.0",
+    "grunt-contrib-jshint": "~0.4.3",
+    "grunt-contrib-qunit": "~0.2.1",
+    "grunt-contrib-watch": "~0.1.4",
+    "grunt-npm": "~0.0.2",
+    "grunt-prompt": "~0.1.2",
+    "grunt-shell": "~0.6.1",
+    "grunt-tagrelease": "~0.3.1",
+    "qunitjs": "~1.12.0",
+    "video.js": "^5.9.2"
+  },
+  "directories": {},
+  "dist": {
+    "integrity": "sha512-FGg+Csioa8/A/EacvFefBdb9Z0rSiMlheHDunZnN3xXfUF43jvjawcWFQnZvrv1Cs1nE1LBrHyUZjF7j2mKOLw==",
+    "shasum": "6964a9bff903b732f3e465314ae478a02a17e8ab",
+    "tarball": "https://registry.npmjs.org/videojs-swf/-/videojs-swf-5.4.2.tgz",
+    "fileCount": 7,
+    "unpackedSize": 61839,
+    "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJbo7YzCRA9TVsSAnZWagAA9EcP/0Uwwtftb9JmlZR/ZIpi\nXyXxV9w7xHRj8iDzuUkEt3PjxlYUx8XoV701jh2ySlIo3RGQtifrdBQmWT21\nCWrO6TRqwPqLiH155I63mcf6eyz0PFdAKchDYUeFnJByWpUwJxTnsoxNDfCP\nFzgPSkxl02HLIc0QAKDCOsJnqPd1J8BHr9leXHEIWFOsawPGFF0ZGcU1GIvc\n+/U0BgLaaGzYlTWtY8hMwdn8AFGu7+QhlmM4MeUrxLpcRP19teJuIgTtCBE2\n2ZAgjJSVnNG5ac0P5kOPxETQbmkSbJc6NEtcyKfwWsE1fpXaxjs2LQIH4RAL\nU8QhjA+psh2dQeR5vnf9B3oR0ra1O9qt0vp+J2Aa0w2JV+0cHdSpDurP9nen\nGY7jwCTPsAvICiDi4ngfjrdW/wIf0TI0DhHpaqOA7nSj6CXDL5Gx6GwGUvtp\nCWggthEatkYUm9x7VQrA3gAQTR5+P3P90P0W+2wIEfXRF+Io9vzQ1d0JsRzW\n06Iw+mHNhXK1Fhgk3tWMjnUuh/F2ctQTrmPFCWCXmI30Ztgxkk93DfTiSYHb\nRmFlQqY7uWL65uRYGL9ja0UX3aRyg4N476AXvqZFg8EvScHa9iuCOnB8ufCs\nENTnKv6UVa4RrSjvJzzYejTZFJECVm3zk95uCklQrDQw/4BHgl2RNW1pAEN7\nn1a4\r\n=p4C+\r\n-----END PGP SIGNATURE-----\r\n"
+  },
+  "gitHead": "4482f16608f4ba4a46ec2e37b12c48b5d33b76a4",
+  "homepage": "http://videojs.com",
+  "keywords": [
+    "flash",
+    "video",
+    "player"
+  ],
+  "maintainers": [
+    {
+      "name": "bclwhitaker",
+      "email": "lwhitaker@brightcove.com"
+    },
+    {
+      "name": "dmlap",
+      "email": "dlapalomento@gmail.com"
+    },
+    {
+      "name": "gkatsev",
+      "email": "me@gkatsev.com"
+    },
+    {
+      "name": "heff",
+      "email": "npm@heff.me"
+    },
+    {
+      "name": "seniorflexdeveloper",
+      "email": "seniorflexdeveloper@gmail.com"
+    }
+  ],
+  "name": "videojs-swf",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/videojs/video-js-swf.git"
+  },
+  "scripts": {
+    "version": "chg release -y && grunt dist && git add -f dist/ && git add CHANGELOG.md"
+  },
+  "version": "5.4.2"
+}

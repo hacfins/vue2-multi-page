@@ -32,9 +32,11 @@
                     height : '360',
                     sources: [{
                         type: "rtmp/mp4",
-                        src : "rtmp://184.72.239.149/vod/&mp4:BigBuckBunny_115k.mov"
+                        src : "rtmp://192.168.123.110/live/sds-cfff"
                     }],
-
+                    flash    : {
+                        swf: '/static/assets/videojs-swf-5.4.2/dist/video-js.swf'
+                    },
                     techOrder: ['flash'],
                     autoplay : false,
                     controls : true,
