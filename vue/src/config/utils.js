@@ -202,6 +202,10 @@ function share_makeurl(name, data) {
         return encodeURIComponent((data[nameKey] === undefined ? data[key] : data[nameKey]) || '');
     });
 }
+function filterTitle(title) {
+    return title.replace(/<.*?>/ig, '')
+
+}
 
 export const shareFn = function (el, opt) {
     opt.summary     = opt.summary ? filterTitle(opt.summary).replace(/&nbsp;/gi, '').substr(0, 79) : '';
@@ -218,7 +222,7 @@ export const shareFn = function (el, opt) {
         site_url: location.origin,
         source  : location.origin, // 来源（QQ空间会用到）, 默认读取head标签：<meta name="site" content="http://mooc.boolongo.com" />
         sites   : ['weibo', 'wechat', 'qq', 'qzone'], // 启用的站点
-        disabled: ['google', 'facebook', 'twitter'], // 禁用的站点
+        // disabled: ['google', 'facebook', 'twitter'], // 禁用的站点
     };
     setdata         = $.extend(setdata, opt)
     if (IsPC()) {
