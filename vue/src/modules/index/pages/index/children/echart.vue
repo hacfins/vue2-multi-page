@@ -1,7 +1,11 @@
 <template>
     <div>
-        <div class="test" style="font-size:14px;color:#666">
+        <div class="test test-max-h" style="font-size:14px;color:#666">
             发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦发大水发大厦大厦发大水发大厦发大水发大厦发大水发大厦发大水发你好
+
+        </div>
+        <div class="test test-max-h" style="font-size:14px;color:#666">
+            fdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsa
 
         </div>
         <section class="data_section">
@@ -118,7 +122,8 @@
 
             $clamp('.test',{
                 clamp:2,
-                truncationHTML:'<span class="readmore">展开</span>'
+                truncationHTML:'<span class="readmore">展开</span>',
+                max_class:"test-max-h"
             })
 
 
@@ -185,6 +190,14 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss" >
+    .test{
+        line-height:20px;
+
+    }
+    .test-max-h{
+        max-height:40px;
+        overflow:hidden;
+    }
     .readmore{
         color:blue;
         cursor:pointer
