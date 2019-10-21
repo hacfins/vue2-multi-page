@@ -39,7 +39,20 @@
             span.style.fontSize = fontsize
             span.style.fontWeight = fontweight;
             span.style.lineHeight = lh;
-            span.style.color = fontcolor
+            span.style.color = fontcolor;
+            if(computeStyle(ele,'padding-left')){
+                span.style.paddingLeft = computeStyle(ele,'padding-left')
+
+            }
+            if(computeStyle(ele,'padding-right')){
+                span.style.paddingRight = computeStyle(ele,'padding-right')
+            }
+            if(computeStyle(ele,'padding-top')){
+                span.style.paddingTop = computeStyle(ele,'padding-top')
+            }
+            if(computeStyle(ele,'padding-bottom')){
+                span.style.paddingBottom = computeStyle(ele,'padding-bottom')
+            }
             document.body.appendChild(span)
             var heightSome = span.clientHeight
             var maxHeight = getMaxHeight(ele,opt.clamp);
