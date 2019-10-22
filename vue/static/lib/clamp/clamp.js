@@ -92,7 +92,7 @@
                             ele.innerHTML = this.getAttribute('clamped_text');
                             readmore_ele.setAttribute('is_expend',2);
                             readmore_ele.innerHTML = '展开';
-                            ele.className += opt.max_class
+                            ele.className += ' '+opt.max_class
                         }
                         ele.appendChild(readmore_ele);
                     });

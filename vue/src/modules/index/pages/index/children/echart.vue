@@ -8,6 +8,13 @@
             fdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsa
 
         </div>
+        <div class="ts_child"></div>
+        <div class="ts">
+            <div class="ts_child">
+                <div class="tchild-child">12</div>
+                <div class="ts_child">w</div>
+            </div>
+        </div>
         <section class="data_section">
             <el-row :gutter="20" class="data_section_row">
                 <el-col :span="8" class="data-list-item">
@@ -119,6 +126,7 @@
         },
         mounted(){
 
+            console.log(document.querySelectorAll('.ts')[0])
 
             $clamp('.test',{
                 clamp:2,

@@ -224,7 +224,7 @@ export const shareFn = function (el, opt) {
         sites   : ['weibo', 'wechat', 'qq', 'qzone'], // 启用的站点
         // disabled: ['google', 'facebook', 'twitter'], // 禁用的站点
     };
-    setdata         = $.extend(setdata, opt)
+    setdata         = _extendObj(setdata, opt)
     if (IsPC()) {
         //【1.0 PC】
         socialShare(el, setdata);

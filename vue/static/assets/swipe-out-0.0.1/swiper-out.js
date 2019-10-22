@@ -5,18 +5,15 @@
  ************   Swipeout ************
  =============================================================================== */
 /* global $:true */
-$.support = (function() {
-    var support = {
-        touch: !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof window.DocumentTouch)
-    };
-    return support;
-})();
-$.touchEvents = {
-    start: $.support.touch ? 'touchstart' : 'mousedown',
-    move: $.support.touch ? 'touchmove' : 'mousemove',
-    end: $.support.touch ? 'touchend' : 'mouseup'
+var support = {
+    touch: !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof window.DocumentTouch)
 };
-$.getTouchPosition = function(e) {
+var touchEvents = {
+    start: support.touch ? 'touchstart' : 'mousedown',
+    move: support.touch ? 'touchmove' : 'mousemove',
+    end: support.touch ? 'touchend' : 'mouseup'
+};
+function getTouchPosition(e) {
     e = e.originalEvent || e; //jquery wrap the originevent
     if(e.type === 'touchstart' || e.type === 'touchmove' || e.type === 'touchend') {
         return {
@@ -31,7 +28,7 @@ $.getTouchPosition = function(e) {
     }
 };
 
-+function ($) {
++function () {
     "use strict";
 
     var cache = [];
@@ -39,8 +36,8 @@ $.getTouchPosition = function(e) {
 
     var Swipeout = function(el) {
 
-        this.container = $(el);
-        this.mover = this.container.find('>.weui-cell__bd')
+        this.container = el;
+        this.mover = this.container.querySelectorAll('.weui-cell__bd')[0]
 
         this.attachEvents();
 
@@ -52,22 +49,22 @@ $.getTouchPosition = function(e) {
     Swipeout.prototype.touchStart = function(e) {
 
 
-        var p = $.getTouchPosition(e);
+        if(!_hasClass(this.container,'weui-cell_swiped')){
+            return;
+        }
+        var p = getTouchPosition(e);
 
-        this.container.addClass(TOUCHING);
+        this.container.className += ' '+ TOUCHING;
         this.start = p;
         this.swip_startX = 0;
         this.startTime = + new Date;
-        var transform =  this.mover.css('transform').match(/-?[\d\.]+/g)
-
-
+        var transform =  _computeStyle(this.mover,'transform').match(/-?[\d\.]+/g)
         if (transform && transform.length) this.swip_startX = parseInt(transform[4])
         this.diffX = this.diffY = 0;
 
 
         // this._closeOthers()
-        this.limit = this.container.find('>.weui-cell__ft').width() || 68; // 因为有的时候初始化的时候元素是隐藏的（比如在对话框内），所以在touchstart的时候计算宽度而不是初始化的时候
-
+        this.limit = this.container.querySelectorAll('.weui-cell__ft')[0].clientWidth || 68; // 因为有的时候初始化的时候元素是隐藏的（比如在对话框内），所以在touchstart的时候计算宽度而不是初始化的时候
 
 
     };
@@ -76,13 +73,16 @@ $.getTouchPosition = function(e) {
 
 
         if(!this.start) return true;
-        var p = $.getTouchPosition(e);
+        var p = getTouchPosition(e);
         this.diffX = p.x - this.start.x;
         this.diffY = p.y - this.start.y;
         if (Math.abs(this.diffX) < Math.abs(this.diffY)) { // 说明是上下方向在拖动
             this.close()
             //Hacfin
-            this.container.find('.info-list-con-oper').css('visibility','visible')
+            if( this.container.querySelectorAll('.info-list-con-oper').length > 0){
+                this.container.querySelectorAll('.info-list-con-oper')[0].style.visibility = 'visible'
+            }
+
             this.start = false
             return true;
         }
@@ -92,14 +92,16 @@ $.getTouchPosition = function(e) {
         if (x > 0) x = 0;
         if (Math.abs(x) > this.limit) x = - (Math.pow(-(x+this.limit), .7) + this.limit)
 
-        this.mover.css("transform", "translate3d("+x+"px, 0, 0)");
+        this.mover.style.transform = "translate3d("+x+"px, 0, 0)";
     };
     Swipeout.prototype.touchEnd = function(e) {
+
         if (!this.start){
+
             cache.forEach(function (s) {
-                var t = s.mover.css('transform').match(/-?[\d\.]+/g)
+                var t = _computeStyle(s.mover,'transform').match(/-?[\d\.]+/g)
                 if(t && typeof t[4] != 'undefined'&& t[4] !=0){
-                    if(s.container.hasClass('weui-cell_swiped')){
+                    if(_hasClass(s.container,'weui-cell_swiped')){
                         e.preventDefault();
                         e.stopPropagation();
                         s.close()
@@ -116,7 +118,7 @@ $.getTouchPosition = function(e) {
         if (this.diffX < -5 && t < 300) { // 向左快速滑动，则打开
             //Hacfin
 
-            if(this.container.hasClass('weui-cell_swiped')){
+            if(_hasClass(this.container,'weui-cell_swiped')){
                 e.preventDefault();
                 e.stopPropagation();
             }
@@ -124,25 +126,29 @@ $.getTouchPosition = function(e) {
             this.open()
 
         } else if(this.diffX <= 5 && t<300){
+
             this._closeOthers()
 
             //Hacfin
             if(this.swip_startX != 0){
-                if(this.container.hasClass('weui-cell_swiped')){
+                if(_hasClass(this.container,'weui-cell_swiped')){
                     e.preventDefault();
                     e.stopPropagation();
                 }
                 this.close();
-                this.container.find('.info-list-con-oper').css('visibility','visible')
+                if(this.container.querySelectorAll('.info-list-con-oper').length > 0){
+                    this.container.querySelectorAll('.info-list-con-oper')[0].style.visibility = 'visible'
+                }
+
 
 
             }
-            if(!$(e.target).hasClass('info-list-con-oper')&&!$(e.target).hasClass('fa-info-more')){
+            if(!_hasClass(e.target,'info-list-con-oper')&&!_hasClass(e.target,'fa-info-more') ){
 
                 cache.forEach(function (s) {
-                    var t = s.mover.css('transform').match(/-?[\d\.]+/g)
+                    var t = _computeStyle(s.mover,'transform').match(/-?[\d\.]+/g)
                     if(t && typeof t[4] != 'undefined'&& t[4] !=0){
-                        if(s.container.hasClass('weui-cell_swiped')){
+                        if(_hasClass(s.container,'weui-cell_swiped')){
                             e.preventDefault();
                             e.stopPropagation();
                         }
@@ -155,28 +161,35 @@ $.getTouchPosition = function(e) {
 
         }else if (this.diffX >5 && t < 300) { // 向右快速滑动，或者单击,则关闭
             //Hacfin
-            if(this.container.hasClass('weui-cell_swiped')){
+
+            if(_hasClass(this.container,'weui-cell_swiped')){
                 e.preventDefault();
                 e.stopPropagation();
             }
 
             this.close()
             //Hacfin
-            this.container.find('.info-list-con-oper').css('visibility','visible')
+            if(this.container.querySelectorAll('.info-list-con-oper').length > 0){
+                this.container.querySelectorAll('.info-list-con-oper')[0].style.visibility = 'visible'
+            }
+
 
         } else if (x > 0 || -x <= this.limit / 2) {
+
             //Hacfin
-            if(this.container.hasClass('weui-cell_swiped')){
+            if(_hasClass(this.container,'weui-cell_swiped')){
                 e.preventDefault();
                 e.stopPropagation();
             }
             this.close()
             //Hacfin
-            this.container.find('.info-list-con-oper').css('visibility','visible')
+            if(this.container.querySelectorAll('.info-list-con-oper').length > 0){
+                this.container.querySelectorAll('.info-list-con-oper')[0].style.visibility = 'visible'
+            }
 
         } else {
             //Hacfin
-            if(this.container.hasClass('weui-cell_swiped')){
+            if(_hasClass(this.container,'weui-cell_swiped')){
                 e.preventDefault();
                 e.stopPropagation();
             }
@@ -186,26 +199,24 @@ $.getTouchPosition = function(e) {
 
     };
 
-
     Swipeout.prototype.close = function() {
-        this.container.removeClass(TOUCHING);
-        this.mover.css("transform", "translate3d(0, 0, 0)");
-        this.container.trigger('swipeout-close');
+        _removeClass(this.container,TOUCHING)
+        this.mover.style.transform = "translate3d(0, 0, 0)";
+        _trigger('swipeout-close', this.container);
     }
 
     Swipeout.prototype.open = function() {
-        this.container.removeClass(TOUCHING);
+        _removeClass(this.container,TOUCHING)
         this._closeOthers()
-        this.mover.css("transform", "translate3d(" + (-this.limit) + "px, 0, 0)");
-        this.container.trigger('swipeout-open');
+        this.mover.style.transform = "translate3d(" + (-this.limit) + "px, 0, 0)"
+        _trigger('swipeout-open', this.container);
     }
 
     Swipeout.prototype.attachEvents = function() {
         var el = this.mover;
-
-        el.on($.touchEvents.start, $.proxy(this.touchStart, this));
-        el.on($.touchEvents.move, $.proxy(this.touchMove, this));
-        el.on($.touchEvents.end, $.proxy(this.touchEnd, this));
+        el.addEventListener(touchEvents.start, this.touchStart.bind(this));
+        el.addEventListener(touchEvents.move, this.touchMove.bind(this));
+        el.addEventListener(touchEvents.end, this.touchEnd.bind(this));
     }
     Swipeout.prototype._closeOthers = function() {
         //close others
@@ -213,7 +224,11 @@ $.getTouchPosition = function(e) {
         cache.forEach(function (s) {
             if (s !== self) {
                 s.close();
-                s.container.find('.info-list-con-oper').css('visibility','visible')
+
+                if( s.container.querySelectorAll('.info-list-con-oper').length > 0){
+                    s.container.querySelectorAll('.info-list-con-oper')[0].style.visibility = 'visible'
+                }
+
             }
         })
     }
@@ -221,18 +236,15 @@ $.getTouchPosition = function(e) {
     var swipeout = function(el) {
         return new Swipeout(el);
     };
-
-    $.fn.swipeout = function (arg) {
-        return this.each(function() {
-            var $this = $(this)
-            var s = $this.data('swipeout') || swipeout(this);
-            $this.data('swipeout', s);
-
-            if (typeof arg === typeof 'a') {
-                s[arg]()
+    function initSwipeOut(str,methodName){
+       var elem_arr = document.querySelectorAll(str);
+        for(var i = 0; i < elem_arr.length; i++){
+            var s = swipeout(elem_arr[i]);
+            if (methodName) {
+                s[methodName]()
             }
-        });
-    }
+        }
 
-    $('.weui-cell_swiped').swipeout() // auto init
-}($);
+    }
+    window.$swipeout = initSwipeOut;
+}();
