@@ -34,7 +34,7 @@
             var fontcolor = computeStyle(ele,'color')
             var span = createElementByString('<span></span>')[0]
             span.innerHTML = ele.innerHTML;
-            span.style.cssText = 'word-break:break-all;width:'+ele.clientWidth+'px;display:block';
+            span.style.cssText = 'word-break:break-all;width:'+ele.clientWidth+'px;display:block;position:absolute;z-index:-1';
             span.style.fontFamily = fontcss
             span.style.fontSize = fontsize
             span.style.fontWeight = fontweight;
