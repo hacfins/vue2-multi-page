@@ -60,7 +60,7 @@ function _attr(element_str,attr_key,attr_value) {
     }else{
         elementArr = _dom(element_str)
     }
-    if(attr_value){
+    if(typeof attr_value != 'undefined'){
         for(var i = 0; i < elementArr.length; i++){
             elementArr[i].setAttribute(attr_key,attr_value)
         }
