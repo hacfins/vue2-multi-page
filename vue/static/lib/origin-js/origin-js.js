@@ -871,7 +871,7 @@ HTMLElement.prototype.on = function(eventName, selector, callback) {
         return false
     } else {
 
-        eventName = eventName.toLowerCase()
+        eventName = eventName == 'DOMMouseScroll' ? eventName : eventName.toLowerCase()
 
         if (typeof selector == 'function') {
             callback = selector
@@ -884,6 +884,7 @@ HTMLElement.prototype.on = function(eventName, selector, callback) {
     if (!bind_list.eventName) bind_list.eventName = []
 
     bind_list.eventName.push({
+        event:eventName,
         selector: selector,
         fn: function(event) {
 
@@ -957,7 +958,7 @@ HTMLElement.prototype.off = function(eventName, selector) {
         return false
     } else {
 
-        eventName = eventName.toLowerCase()
+        eventName = eventName == 'DOMMouseScroll' ? eventName : eventName.toLowerCase()
 
     }
 
@@ -970,9 +971,13 @@ HTMLElement.prototype.off = function(eventName, selector) {
     // 遍历已添加列表
     for (var k = 0; k < bind_list.eventName.length; k++) {
         // 仅移除相关的事件，分目标元素和委托元素绑定的事件
-        if (bind_list.eventName[k] && selector == bind_list.eventName[k].selector) {
+        if (bind_list.eventName[k] && selector == bind_list.eventName[k].selector && eventName == bind_list.eventName[k].event) {
             if (this.removeEventListener) {
-                this.removeEventListener(eventName, bind_list.eventName[k].fn, false);
+                var is_capture = false
+                if(eventName == 'focus' || eventName == 'blur'){
+                    is_capture = true
+                }
+                this.removeEventListener(eventName, bind_list.eventName[k].fn, is_capture);
             } else if (this.detachEvent) {
                 this.detachEvent("on" + eventName, bind_list.eventName[k].fn);
             }
