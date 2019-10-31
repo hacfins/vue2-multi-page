@@ -36,6 +36,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
                 {from: /^\/m\/index(\/.*)*$/, to: '/phone/index.html'},
                 {from: /^\/m\/video(\/.*)*$/, to: '/phone/video.html'},
                 {from: /^\/m\/noexsit$/, to: '/phone/noexsit.html'},
+                { from: /^\/admin(\/.*)*$/, to: '/index/admin.html' },
             ]
         },
         // hot               : true,//热替换

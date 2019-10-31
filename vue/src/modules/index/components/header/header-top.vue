@@ -10,6 +10,7 @@
                 <li><a href="/upload">上传</a></li>
                 <li><a href="/valaditor">表单验证</a></li>
                 <li><a href="/editor">Editor</a></li>
+                <li><a href="/admin/visitor">后台管理</a></li>
             </ul>
         </div>
 

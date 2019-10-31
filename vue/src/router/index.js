@@ -21,7 +21,8 @@ const editor_con          = r => require.ensure([], () => r(require('index/pages
 const valaditor_valaditor = r => require.ensure([], () => r(require('index/pages/valaditor/children/valaditor')), 'index/valaditor-main');
 const valaditor_con       = r => require.ensure([], () => r(require('index/pages/valaditor/children/valaditor-con')), 'index/valaditor-main');
 const noexsit             = r => require.ensure([], () => r(require('index/pages/noexsit/children/noexsit')), 'index/no-exsit');
-
+const admin                = r => require.ensure([], () => r(require('index/pages/admin/children/admin')), 'index/admin-main');
+const adm_visitor          = r => require.ensure([], () => r(require('index/pages/admin/children/adm-visitor')), 'index/admin-main');
 const routes = [
     {
         path     : '/',
@@ -108,6 +109,16 @@ const routes = [
             path     : '',
             component: valaditor_con,
             meta     : [],
+        }]
+    },
+    {
+        path     : '/admin',
+        component: admin,
+        name     : '',
+        children : [{
+            path     : '/admin/visitor',
+            component: adm_visitor,
+            meta     : ['站点管理', '访问控制'],
         }]
     },
     {
