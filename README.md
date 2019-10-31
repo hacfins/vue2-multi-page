@@ -11,18 +11,16 @@ npm run dev
 
 # build for production with minification
 npm run build
-
 ```
+
 ## 技术构成
 
 ``` bash
-
 - Web框架：Vue 
 
 - UI框架：Element UI(pc)/Mint UI(mobile)
 
 - 构建工具：webpack+gulp
-
 ```
 > 本产品采用 Vue 框架，主要使用了里面的 vue-route、vue-cookies、axios、pug页面继承、vuex等技术。
 
@@ -76,8 +74,8 @@ npm run build
 │   ├── medias                                  // 放置音频视频文件
 
 .
-
 ```
+
 ## 编码命名规范
 
 ```
@@ -159,8 +157,8 @@ computed:{rims:function(){if(!this.currentValue)return{year:[],month:[],date:[],
 由：  Ot.isDisabled.get=function(){return!(!this.component||!this.component.disabled)||!(!this.el||!this.el.disabled)}
 
 改为：Ot.isDisabled.get=function(){return false}
-
 ```
+
 ## webpack打包说明
 
 ```
@@ -187,7 +185,6 @@ computed:{rims:function(){if(!this.currentValue)return{year:[],month:[],date:[],
 （2）将reset CSS按照PC/Mobile打包到css/(index|phone)/entry-com.css及css/phone/entry-com.css
 
 （3）将chunks中的css按照PC/Mobile打包到css/（index|phone）async-com.css
-
 ```
 > **由于升级到webpack4在开发模式下热更新比较慢，是由于html-webpack-plugin3.2.0版本的问题，改为使用4.0.0-beta.8**
 
