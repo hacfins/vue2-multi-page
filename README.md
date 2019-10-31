@@ -2,7 +2,7 @@
 
 > vue-test
 
-##一、Build Setup
+#一、Build Setup
 
 ``` bash
 # install dependencies
@@ -14,7 +14,7 @@ npm run dev
 # build for production with minification
 npm run build
 ```
-##二、技术构成
+#二、技术构成
 ``` bash
 - Web框架：Vue 
 - UI框架：Element UI(pc)/Mint UI(mobile)
@@ -22,7 +22,7 @@ npm run build
 ```
 > 本产品采用 Vue 框架，主要使用了里面的 vue-route、vue-cookies、axios、pug页面继承、vuex等技术。
 
-##三、目录结构
+#三、目录结构
 
 ```
 .
@@ -69,7 +69,7 @@ npm run build
 
 .
 ```
-##四、编码命名规范
+#四、编码命名规范
 ```
 1. 英文命名，不可使用汉语拼音
 2. 所有的文件夹名，采用 **小写**
@@ -81,7 +81,7 @@ npm run build
 > **如果文件名及文件夹名称由多个字母构成使用中划线的方式，例如：header-top！**
 > **如果有修改，需要在该文件中详细说明！**
 
-##五、修改说明
+#五、修改说明
 ```
 (1)/static/assets/element-ui-2.9.1/lib/index.js 为了实现 el-tree 组件 是不是叶子节点 原UI 只有在lazy 模式下 data中的isLeaf 属性值设置才生效，
 但是lazy 模式下 无法动态添加的节点 及节点的排序，所以将不是lazy模式也可以通过isLeaf 设置是否是叶子节点
@@ -131,7 +131,7 @@ Ot.isDisabled.get=function(){return!(!this.component||!this.component.disabled)|
 改为：
 Ot.isDisabled.get=function(){return false}
 ```
-##六、webpack打包说明
+#六、webpack打包说明
 ```
 (1)js打包：
 1.将配置文件打包到js/common/config.js
