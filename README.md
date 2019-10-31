@@ -144,6 +144,30 @@ npm run build
 
 改为：handleClick(event){if(this.node.disabled) return;... this.tree.$emit("node-click",this.node.data,this.node,this,event)
 ```
+（3）为了解决IE10分页组件Jumper输入数字后回车第一次成功，然后接着输入数字回车没有反应的问题
+
+```
+由：  handleChange:function(e){this.$parent.internalCurrentPage=this.$parent.getValidCurrentPage(e),this.$parent.emitChange(),this.oldValue=null,this.resetValueIfNeed(e)}
+
+改为：handleChange:function(e){this.$parent.internalCurrentPage=this.$parent.getValidCurrentPage(e),this.$parent.emitChange(),this.oldValue=this.$parent.internalCurrentPage,this.resetValueIfNeed(e)}
+```
+
+（4）为了实现el-select 分组的标题可以自定义
+
+```
+由：  i("li",{staticClass:"el-select-group__title"},[e._v(e._s(e.label))])
+
+改为：i("li",{staticClass:"el-select-group__title"},[e._t("group_title", [e._v(e._s(e.label))])]，2)
+```
+
+（5）为了实现el-rate小于半数及大于半数星星点亮的不正确的问题
+
+```
+由：  this.rateDisabled&&(e=(this.valueDecimal<50?0:50)+"%")
+
+改为：this.rateDisabled&&(e=this.valueDecimal+"%")
+```
+
 
 #### 2. mint-ui
 
@@ -164,9 +188,9 @@ computed:{rims:function(){if(!this.currentValue)return{year:[],month:[],date:[],
 （1）为了解决IE10 视频播放时不在当前页再回来IE10 卡死的问题
 
 ```
-由：  e.updateInterval=e.setInterval(function(){e.requestAnimationFrame(function(){e.update()})},30)})
+由：  this.updateInterval=this.setInterval(function(){e.requestAnimationFrame(e.update)},30)}
 
-改为：e.updateInterval=e.setInterval(function(){e.rafId_&&e.cancelAnimationFrame(e.rafId_),e.rafId_=e.requestAnimationFrame(function(){e.update()})},30)})
+改为：this.updateInterval=this.setInterval(function(){e.rafId_&&e.cancelAnimationFrame(e.rafId_),e.rafId_=e.requestAnimationFrame(e.update)},30)}
 ```
 
 #### 4. webupload
