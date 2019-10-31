@@ -2,7 +2,7 @@
 
 ## 简介
 
-vue2-multi-page可用于webpack单页面及多页面的开发，它基于 [vue](https://github.com/vuejs/vue) 和 [element-ui](https://github.com/ElemeFE/element)实现。它使用了最新的前端技术栈，相信不管你的需求是什么，本项目都能帮助到你。
+vue2-multi-page可用于webpack单页面及多页面的开发，它基于 [vue](https://github.com/vuejs/vue) 、 [element-ui](https://github.com/ElemeFE/element)和[mint-ui](http://mint-ui.github.io/#!/zh-cn)实现。它使用了最新的前端技术栈，相信不管你的需求是什么，本项目都能帮助到你。
 
 ## 安装
 
@@ -19,18 +19,16 @@ npm run build
 
 ## 技术构成
 
-``` bash
 - Web框架：Vue 
 
 - UI框架：Element UI(pc)/Mint UI(mobile)
 
 - 构建工具：webpack+gulp
-```
+
 > 本产品采用 Vue 框架，主要使用了里面的 vue-route、vue-cookies、axios、pug页面继承、vuex等技术。
 
 ## 功能
 
-```
 - 首页
 
 - 视频
@@ -51,7 +49,7 @@ npm run build
     - editor（百度的富文本编辑器）
          
 - 后台管理（后台管理页面）
-```
+
 
 ## 目录结构
 
@@ -110,7 +108,6 @@ npm run build
 
 ## 编码命名规范
 
-```
 1. 英文命名，不可使用汉语拼音
 
 2. 所有的文件夹名，采用 **小写**
@@ -122,14 +119,13 @@ npm run build
 5. 所有的文件位置按照上面目录结构进行进行放置，不可乱放
 
 6. 禁止使用Jquery及Jquery依赖的插件
-```
+
 > **如果文件名及文件夹名称由多个字母构成使用中划线的方式，例如：header-top！**
 > **如果有修改，需要在该文件中详细说明！**
 
 ## 源码修改说明
 
-```
-1. element-ui
+#### 1. element-ui
 
 （1）为了实现 el-tree 组件 是不是叶子节点 原UI 只有在lazy 模式下 data中的isLeaf 属性值设置才生效，
 
@@ -145,7 +141,7 @@ npm run build
 
 改为：handleClick(event){if(this.node.disabled) return;... this.tree.$emit("node-click",this.node.data,this.node,this,event)
 
-2. mint-ui
+#### 2. mint-ui
 
 （1）为了支持datetimepicker type=time 类型 可以控制开始分钟与结束分钟
 
@@ -157,7 +153,7 @@ computed:{rims:function(){if(!this.currentValue)return{year:[],month:[],date:[],
 
 computed:{rims:function(){if(!this.currentValue)return{year:[],month:[],date:[],hour:[],min:[]};var t;return"time"===this.type?t={hour:[this.startHour,this.endHour],min:[this.startMinute,this.endMinute]}
 
-3. videojs
+#### 3. videojs
 
 （1）为了解决IE10 视频播放时不在当前页再回来IE10 卡死的问题
 
@@ -165,7 +161,7 @@ computed:{rims:function(){if(!this.currentValue)return{year:[],month:[],date:[],
 
 改为：e.updateInterval=e.setInterval(function(){e.rafId_&&e.cancelAnimationFrame(e.rafId_),e.rafId_=e.requestAnimationFrame(function(){e.update()})},30)})
 
-4. webupload
+#### 4. webupload
 
 （1）为了添加button可以选择接受类型及增加文件夹上传
 
@@ -181,19 +177,19 @@ computed:{rims:function(){if(!this.currentValue)return{year:[],month:[],date:[],
 
 改为：j.multiple&&l.attr("multiple","multiple"),j.is_fold&&l.attr("webkitdirectory",""),j.accept&&j.accept.length>0){for(a=[],b=0,d=j.accept.length;d>b;b++)a.push(j.accept[b].mimeTypes);l.attr("accept",a.join(","))
 
-5.vee-validate
+#### 5.vee-validate
 
 (1) disabled 不进行验证的问题
 
 由：  Ot.isDisabled.get=function(){return!(!this.component||!this.component.disabled)||!(!this.el||!this.el.disabled)}
 
 改为：Ot.isDisabled.get=function(){return false}
-```
+
 
 ## webpack打包说明
 
-```
-1. js打包：
+
+#### 1. js打包：
 
 （1）将配置文件打包到js/common/config.js
 
@@ -209,14 +205,14 @@ computed:{rims:function(){if(!this.currentValue)return{year:[],month:[],date:[],
 
 （7）将nodemodule中的第三方插件打包到vendor.js
 
-2. css打包：
+#### 2. css打包：
 
 （1）将引用nodeModule中的css按照PC/Mobile 打包到css/(index|phone)/vendor.css
 
 （2）将reset CSS按照PC/Mobile打包到css/(index|phone)/entry-com.css及css/phone/entry-com.css
 
 （3）将chunks中的css按照PC/Mobile打包到css/（index|phone）async-com.css
-```
+
 > **由于升级到webpack4在开发模式下热更新比较慢，是由于html-webpack-plugin3.2.0版本的问题，改为使用4.0.0-beta.8**
 
 ## Browsers support
