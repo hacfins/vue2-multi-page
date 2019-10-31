@@ -6,6 +6,7 @@ export default {
       var mouseDragDown   = false;
       var oldP            = {"left": 0, "top": 0};
       var moveTarget;
+      document.documentElement.off("mousedown", ".el-dialog__header")
       document.documentElement.on("mousedown", ".el-dialog__header", function (e) {
           if(e.target.tagName!='INPUT'){
               e.preventDefault();
