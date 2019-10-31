@@ -1,4 +1,6 @@
 @import "variable";
+// 覆盖动画的样式
+@import "./common/transition.scss";
 
 * {
   -webkit-box-sizing : border-box;
@@ -239,6 +241,14 @@ template {
 
 .pull-right {
   float : right;
+}
+
+input::-ms-clear {
+  display : none;
+}
+
+input::-ms-reveal {
+  display : none;
 }
 
 $boxSize : (10n:-10, 5n:-5, 0: 0, 5:5, 7:7, 8:8, 10:10, 12:12, 15:15, 16:16, 20:20, 24:24, 30:30, 32:32) !global;
