@@ -2,7 +2,7 @@
 
 ## 简介
 
-vue2-multi-page可用于webpack单页面及多页面的开发，它基于 [vue](https://github.com/vuejs/vue) 、 [element-ui](https://github.com/ElemeFE/element)和[mint-ui](http://mint-ui.github.io/#!/zh-cn)实现。它使用了最新的前端技术栈，相信不管你的需求是什么，本项目都能帮助到你。
+vue2-multi-page可用于webpack单页面及多页面的开发，它基于 [vue](https://github.com/vuejs/vue) 、 [element-ui](https://github.com/ElemeFE/element)、[mint-ui](http://mint-ui.github.io/#!/zh-cn) 实现。它使用了最新的前端技术栈，相信不管你的需求是什么，本项目都能帮助到你。
 
 ## 安装
 
@@ -131,20 +131,25 @@ npm run build
 
 但是lazy 模式下 无法动态添加的节点 及节点的排序，所以将不是lazy模式也可以通过isLeaf 设置是否是叶子节点
 
+```
 由：  e.prototype.updateLeafState=function(){if(!0!==this.store.lazy||!0===this.loaded||void 0===this.isLeafByUser)
 
 改为：e.prototype.updateLeafState=function(){if(!0===this.loaded||void 0===this.isLeafByUser)
+```
 
 (2)为了解决fireFox nodeClick event 拿不到,导致无法区分点击的元素，无法对点击添加编辑等按钮时禁止展开操作,及禁用的节点还可以选中的问题及el-tree禁用的节点还可以点击的问题
 
+```
 由：  handleClick(){... this.tree.$emit("node-click",this.node.data,this.node,this)} 
 
 改为：handleClick(event){if(this.node.disabled) return;... this.tree.$emit("node-click",this.node.data,this.node,this,event)
+```
 
 #### 2. mint-ui
 
 （1）为了支持datetimepicker type=time 类型 可以控制开始分钟与结束分钟
 
+```
 由：  startHour:{type:Number,default:0},endHour:{type:Number,default:23}}和
 
 computed:{rims:function(){if(!this.currentValue)return{year:[],month:[],date:[],hour:[],min:[]};var t;return"time"===this.type?t={hour:[this.startHour,this.endHour],min:[0,59]}
@@ -152,19 +157,23 @@ computed:{rims:function(){if(!this.currentValue)return{year:[],month:[],date:[],
 改为：startHour:{type:Number,default:0},endHour:{type:Number,default:23},startMinute:{type:Number,default:0},endMinute:{type:Number,default:59}
 
 computed:{rims:function(){if(!this.currentValue)return{year:[],month:[],date:[],hour:[],min:[]};var t;return"time"===this.type?t={hour:[this.startHour,this.endHour],min:[this.startMinute,this.endMinute]}
+```
 
 #### 3. videojs
 
 （1）为了解决IE10 视频播放时不在当前页再回来IE10 卡死的问题
 
+```
 由：  e.updateInterval=e.setInterval(function(){e.requestAnimationFrame(function(){e.update()})},30)})
 
 改为：e.updateInterval=e.setInterval(function(){e.rafId_&&e.cancelAnimationFrame(e.rafId_),e.rafId_=e.requestAnimationFrame(function(){e.update()})},30)})
+```
 
 #### 4. webupload
 
 （1）为了添加button可以选择接受类型及增加文件夹上传
 
+```
 由：  addBtn:function(b){var e=this,f=e.options,g=f.accept
 
 改为：addBtn:function(b,acceptopt){var e=this,f=e.options,g=acceptopt||f.accept
@@ -176,15 +185,17 @@ computed:{rims:function(){if(!this.currentValue)return{year:[],month:[],date:[],
 由：  j.multiple&&l.attr("multiple","multiple"),j.accept&&j.accept.length>0){for(a=[],b=0,d=j.accept.length;d>b;b++)a.push(j.accept[b].mimeTypes);l.attr("accept",a.join(","))
 
 改为：j.multiple&&l.attr("multiple","multiple"),j.is_fold&&l.attr("webkitdirectory",""),j.accept&&j.accept.length>0){for(a=[],b=0,d=j.accept.length;d>b;b++)a.push(j.accept[b].mimeTypes);l.attr("accept",a.join(","))
+```
 
 #### 5.vee-validate
 
 (1) disabled 不进行验证的问题
 
+```
 由：  Ot.isDisabled.get=function(){return!(!this.component||!this.component.disabled)||!(!this.el||!this.el.disabled)}
 
 改为：Ot.isDisabled.get=function(){return false}
-
+```
 
 ## webpack打包说明
 
@@ -225,4 +236,4 @@ Modern browsers and Internet Explorer 10.
 
 ## License
 
-Copyright (c) 2019-present WangXinLai
+copyright © 2019 北京华科飞扬科技股份公司
