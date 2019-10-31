@@ -65,6 +65,9 @@ npm run build
 │   └── script                                  // 放置PC/Mobile分别共用及共同共用的JS文件
 │   └── store                                   // vuex目录文件
 │   └── style                                   // 放置PC/Mobile共用的Css文件
+│   │   └── common                              // PC/Mobile共用的Css目录
+│   │   └── index.scss                          // PC的Css文件
+│   │   └── phone.scss                          // Mobile的Css文件
 ├── static                                      // 静态目录
 │   ├── assets                                  // 第三方静态文件，主要放置不变的东西例如（Vue、Axios）
 │   │   ├── axios-0.18.0                        // 每一个第三方文件名增加版本号
@@ -90,7 +93,6 @@ npm run build
 5. 所有的文件位置按照上面目录结构进行进行放置，不可乱放
 
 6. 禁止使用Jquery及Jquery依赖的插件
-
 ```
 > **如果文件名及文件夹名称由多个字母构成使用中划线的方式，例如：header-top！**
 > **如果有修改，需要在该文件中详细说明！**
