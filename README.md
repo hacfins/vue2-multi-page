@@ -168,6 +168,21 @@ npm run build
 改为：this.rateDisabled&&(e=this.valueDecimal+"%")
 ```
 
+（6）为了解决el-tree禁用的节点还可以点击的问题
+
+```
+由：  handleClick:function(){var e=this.tree.store;e.setCurrentNode(this.node)
+
+改为：handleClick:function(){var e=this.tree.store;if(this.node.disabled)return;e.setCurrentNode(this.node)
+```
+
+（7）为了解决级联菜单禁用的不能展开的问题
+
+```
+由：  n.__IS__FLAT__OPTIONS&&(o=!0),n.disabled||(h.on.keydown=function(e){var i=e.keyCode;if(!([37,38,39,40,13,9,27].indexOf(i)<0))
+
+改为：n.__IS__FLAT__OPTIONS&&(o=!0),(h.on.keydown=function(e){var i=e.keyCode;if(!([37,38,39,40,13,9,27].indexOf(i)<0))
+```
 
 #### 2. mint-ui
 
@@ -181,6 +196,15 @@ computed:{rims:function(){if(!this.currentValue)return{year:[],month:[],date:[],
 改为：startHour:{type:Number,default:0},endHour:{type:Number,default:23},startMinute:{type:Number,default:0},endMinute:{type:Number,default:59}
 
 computed:{rims:function(){if(!this.currentValue)return{year:[],month:[],date:[],hour:[],min:[]};var t;return"time"===this.type?t={hour:[this.startHour,this.endHour],min:[this.startMinute,this.endMinute]}
+```
+
+（2）为了解决移动端MintUI picker 不能禁用某一项
+
+
+```
+由： {staticClass:"picker-item",class:{"picker-selected":e===t.currentValue}
+
+改为：{staticClass:"picker-item",class:{"picker-selected":e===t.currentValue,'picker-disabled':e['disabled']}
 ```
 
 #### 3. videojs
@@ -213,12 +237,30 @@ computed:{rims:function(){if(!this.currentValue)return{year:[],month:[],date:[],
 
 #### 5.vee-validate
 
-(1) disabled 不进行验证的问题
+（1） disabled 不进行验证的问题
 
 ```
 由：  Ot.isDisabled.get=function(){return!(!this.component||!this.component.disabled)||!(!this.el||!this.el.disabled)}
 
 改为：Ot.isDisabled.get=function(){return false}
+```
+
+#### 6.vue-clipboards.es.js
+
+（1）为了解决IE粘贴板弹出对话框将其禁止还弹复制成功的问题
+
+```
+由：  try {
+        succeeded = document.execCommand(this.action)
+    } catch (err) {
+        succeeded = false
+    }
+
+改为：try {
+       succeeded = window.clipboardData ? window.clipboardData.setData('Text', this.selectedText) : document.execCommand(this.action)
+   } catch (err) {
+       succeeded = false
+   }
 ```
 
 ## webpack打包说明
