@@ -1,6 +1,6 @@
 # vue2-multi-page
 
-#一、Build Setup
+## 安装
 
 ``` bash
 # install dependencies
