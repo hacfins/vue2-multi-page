@@ -28,6 +28,31 @@ npm run build
 ```
 > 本产品采用 Vue 框架，主要使用了里面的 vue-route、vue-cookies、axios、pug页面继承、vuex等技术。
 
+## 功能
+
+```
+- 首页
+
+- 视频
+    - video
+    - video-hls
+    - video-rtmp
+    
+- 音频
+    - audio
+    - audio-jplayer
+      
+- 上传
+    - upload（webupload）
+      
+- 表单验证
+       
+- editor
+    - editor（百度的富文本编辑器）
+         
+- 后台管理（后台管理页面）
+```
+
 ## 目录结构
 
 ```
