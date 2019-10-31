@@ -8,13 +8,7 @@
             fdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsafdfsafafsafsa
 
         </div>
-        <div class="ts_child"></div>
-        <div class="ts">
-            <div class="ts_child">
-                <div class="tchild-child">12</div>
-                <div class="ts_child">w</div>
-            </div>
-        </div>
+        <el-button type="primary" @click="openModal">打开模态框</el-button>
         <section class="data_section">
             <el-row :gutter="20" class="data_section_row">
                 <el-col :span="8" class="data-list-item">
@@ -74,12 +68,15 @@
             </div>
         </div>
 
+        <modal-dialog :isShow="isShow" @close="closeModal" title="模态框"></modal-dialog>
+
     </div>
 </template>
 
 <script>
     import {getCourseList, creatCourse, editCourse} from '@/api/getdata'
     import tendency from 'index/components/common/tendency'
+    import modalDialog from 'index/components/common/modal-dialog'
     import dtime from 'time-formater'
     import {getCurrentMonthLast} from '@/config/utils'
     import {mapActions, mapState} from 'vuex'
@@ -87,6 +84,7 @@
     export default {
         data(){
             return {
+                isShow:false,
                 timeData   : [],
                 userCount  : [],
                 allMonth   : [],
@@ -98,7 +96,8 @@
             }
         },
         components: {
-            tendency
+            tendency,
+            modalDialog
 
         },
         computed  : {
@@ -126,7 +125,6 @@
         },
         mounted(){
 
-            console.log(document.querySelectorAll('.ts')[0])
 
             $clamp('.test',{
                 clamp:2,
@@ -160,6 +158,12 @@
         },
         methods   : {
             ...mapActions(['getUserData']),
+            closeModal(){
+                this.isShow = false
+            },
+            openModal(){
+                this.isShow = true
+            },
             getCourseList(){
                 var that = this;
                 getCourseList({
