@@ -1,6 +1,5 @@
 @import "variable";
-// 覆盖动画的样式
-@import "./common/transition.scss";
+@import "./transition.scss";
 
 * {
   -webkit-box-sizing : border-box;

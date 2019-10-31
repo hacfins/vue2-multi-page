@@ -137,7 +137,7 @@ npm run build
 改为：e.prototype.updateLeafState=function(){if(!0===this.loaded||void 0===this.isLeafByUser)
 ```
 
-(2)为了解决fireFox nodeClick event 拿不到,导致无法区分点击的元素，无法对点击添加编辑等按钮时禁止展开操作,及禁用的节点还可以选中的问题及el-tree禁用的节点还可以点击的问题
+（2）为了解决fireFox nodeClick event 拿不到,导致无法区分点击的元素，无法对点击添加编辑等按钮时禁止展开操作,及禁用的节点还可以选中的问题及el-tree禁用的节点还可以点击的问题
 
 ```
 由：  handleClick(){... this.tree.$emit("node-click",this.node.data,this.node,this)} 
