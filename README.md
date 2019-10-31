@@ -2,7 +2,7 @@
 
 > vue-test
 
-## Build Setup
+##一、Build Setup
 
 ``` bash
 # install dependencies
@@ -14,14 +14,15 @@ npm run dev
 # build for production with minification
 npm run build
 ```
-#一、技术构成
+##二、技术构成
+``` bash
 - Web框架：Vue 
 - UI框架：Element UI(pc)/Mint UI(mobile)
 - 构建工具：webpack+gulp
-
+```
 > 本产品采用 Vue 框架，主要使用了里面的 vue-route、vue-cookies、axios、pug页面继承、vuex等技术。
 
-#二、目录结构
+##三、目录结构
 
 ```
 .
@@ -68,17 +69,20 @@ npm run build
 
 .
 ```
-#三、编码命名规范
+##四、编码命名规范
+```
 1. 英文命名，不可使用汉语拼音
 2. 所有的文件夹名，采用 **小写**
 3. 所有的文件名，采用 **小写**
 4. URL请求地址 一律 **小写**
 5. 所有的文件位置按照上面目录结构进行进行放置，不可乱放
 6. 禁止使用Jquery及Jquery依赖的插件
+```
 > **如果文件名及文件夹名称由多个字母构成使用中划线的方式，例如：header-top！**
 > **如果有修改，需要在该文件中详细说明！**
 
-#四、修改说明
+##五、修改说明
+```
 (1)/static/assets/element-ui-2.9.1/lib/index.js 为了实现 el-tree 组件 是不是叶子节点 原UI 只有在lazy 模式下 data中的isLeaf 属性值设置才生效，
 但是lazy 模式下 无法动态添加的节点 及节点的排序，所以将不是lazy模式也可以通过isLeaf 设置是否是叶子节点
 由：
@@ -126,8 +130,9 @@ j.multiple&&l.attr("multiple","multiple"),j.is_fold&&l.attr("webkitdirectory",""
 Ot.isDisabled.get=function(){return!(!this.component||!this.component.disabled)||!(!this.el||!this.el.disabled)}
 改为：
 Ot.isDisabled.get=function(){return false}
-
-#五、webpack打包说明
+```
+##六、webpack打包说明
+```
 (1)js打包：
 1.将配置文件打包到js/common/config.js
 2.api、config、script中的文件打包到js/common/env.js
@@ -140,7 +145,7 @@ Ot.isDisabled.get=function(){return false}
 1.将引用nodeModule中的css按照PC/Mobile 打包到css/(index|phone)/vendor.css
 2.将reset CSS按照PC/Mobile打包到css/(index|phone)/entry-com.css及css/phone/entry-com.css
 3.将chunks中的css按照PC/Mobile打包到css/（index|phone）async-com.css
-
+```
 > **由于升级到webpack4在开发模式下热更新比较慢，是由于html-webpack-plugin3.2.0版本的问题，改为使用4.0.0-beta.8：**
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
