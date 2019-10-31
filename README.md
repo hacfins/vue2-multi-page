@@ -8,7 +8,7 @@
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost:8004
 npm run dev
 
 # build for production with minification
@@ -146,6 +146,6 @@ Ot.isDisabled.get=function(){return false}
 2.将reset CSS按照PC/Mobile打包到css/(index|phone)/entry-com.css及css/phone/entry-com.css
 3.将chunks中的css按照PC/Mobile打包到css/（index|phone）async-com.css
 ```
-> **由于升级到webpack4在开发模式下热更新比较慢，是由于html-webpack-plugin3.2.0版本的问题，改为使用4.0.0-beta.8：**
+> **由于升级到webpack4在开发模式下热更新比较慢，是由于html-webpack-plugin3.2.0版本的问题，改为使用4.0.0-beta.8**
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
