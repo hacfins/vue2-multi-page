@@ -265,7 +265,6 @@ computed:{rims:function(){if(!this.currentValue)return{year:[],month:[],date:[],
 
 ## webpack打包说明
 
-
 #### 1. js打包：
 
 （1）将配置文件打包到js/common/config.js
