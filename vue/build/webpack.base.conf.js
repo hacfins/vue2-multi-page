@@ -60,7 +60,7 @@ module.exports = {
                 test   : /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 loader : 'url-loader',
                 options: {
-                    limit: 10000,
+                    limit: 1,//（图片分享时转换成base64会太大，导致无法分享，所以limit改为1）
                     name : utils.assetsPath('images/[name].[hash:7].[ext]')
                 }
             },
