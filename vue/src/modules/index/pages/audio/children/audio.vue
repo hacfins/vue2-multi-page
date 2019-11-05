@@ -5,7 +5,6 @@
             <el-col :span="6" style=" background-color: #fff;">
                 <el-menu :default-active="defaultActive" theme="dark" router>
                     <el-menu-item index="/audio"><i class="el-icon-menu"></i>audio</el-menu-item>
-                    <el-menu-item index="/audio/jplayer"><i class="el-icon-menu"></i>audio-jplayer</el-menu-item>
                 </el-menu>
             </el-col>
             <el-col :span="18">

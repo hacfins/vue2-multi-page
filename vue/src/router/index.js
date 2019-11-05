@@ -13,7 +13,6 @@ const video_hls           = r => require.ensure([], () => r(require('index/pages
 const video_rtmp          = r => require.ensure([], () => r(require('index/pages/video/children/video-rtmp')), 'index/video-main');
 const audio_play          = r => require.ensure([], () => r(require('index/pages/audio/children/audio')), 'index/audio-main');
 const audio_normal        = r => require.ensure([], () => r(require('index/pages/audio/children/audio-normal')), 'index/audio-main');
-const audio_jplayer       = r => require.ensure([], () => r(require('index/pages/audio/children/audio-jplayer')), 'index/audio-main');
 const upload_upload       = r => require.ensure([], () => r(require('index/pages/upload/children/upload')), 'index/upload-main');
 const upload_con          = r => require.ensure([], () => r(require('index/pages/upload/children/upload-con')), 'index/upload-main');
 const editor_editor       = r => require.ensure([], () => r(require('index/pages/editor/children/editor')), 'index/editor-main');
@@ -74,10 +73,6 @@ const routes = [
         children : [{
             path     : '',
             component: audio_normal,
-            meta     : [],
-        }, {
-            path     : '/audio/jplayer',
-            component: audio_jplayer,
             meta     : [],
         }]
     },

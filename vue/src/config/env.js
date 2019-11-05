@@ -9,9 +9,9 @@ let baseUrl    = '';
 let routerMode = 'history';
 
 if (process.env.NODE_ENV == 'development') {
-    baseUrl = 'http://192.168.123.22:8211';
+    baseUrl = 'http://192.168.123.22:8213';
 } else {
-    baseUrl = 'http://192.168.123.22:8211';
+    baseUrl = 'http://192.168.123.22:8213';
 }
 
 export {
