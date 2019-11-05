@@ -49,6 +49,8 @@ npm run build
          
 - 后台管理（后台管理页面）
 
+> webm 及webm hdr 视频格式预览：除IE10外可支持webm及webm hdr 浏览，系统如果安装了插件[WebMMFSetUp](https://tools.google.com/dlpage/webmmf/) IE10 可以播放webm,但是webm hdr 仍然不支持。
+
 
 ## 目录结构
 
