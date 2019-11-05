@@ -38,7 +38,6 @@ npm run build
     
 - 音频
     - audio
-    - audio-jplayer
       
 - 上传
     - upload（webupload）
