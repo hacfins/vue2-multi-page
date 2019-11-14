@@ -99,7 +99,8 @@ export default{
                     resize             : false,  //不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
                     disableGlobalDnd   : true,    // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开
                     compress           : false,//图片在上传前不进行压缩
-                    duplicate          : true
+                    duplicate          : true,
+                    withCredentials    : true
                 },
                 opts.innerOptions);
 

@@ -319,6 +319,28 @@ function _hasClass(elem, cls) {
 
 }
 
+function _html(element_str,value) {
+    if(!element_str){
+        return
+    }
+    var elementArr = []
+    if(_toString.call( element_str ) == "[object NodeList]"){
+        elementArr = element_str
+    }else if(_toString.call( element_str ) == "[object HTMLDivElement]"){
+        elementArr = [element_str]
+    }else{
+        elementArr = _dom(element_str)
+    }
+    if(typeof value != 'undefined'){
+        for(var i = 0; i < elementArr.length; i++){
+            elementArr[i].innerHTML = value
+        }
+    }else{
+        return elementArr[0].innerHTML
+    }
+
+}
+
 function _getParentNode(ele,classname,isid,is_biao){
     var result = []
     if(!ele){
