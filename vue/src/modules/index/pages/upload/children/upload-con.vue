@@ -683,9 +683,7 @@
                 this.uploader.resume()
             },
             onUploadStart(){
-
-
-
+                this.uploadeStatus = 2;
 
             },
             onFileProgress(rootFile, file, chunk) {
@@ -824,11 +822,12 @@
 
                 this.uploadeStatus = 3;
                 this.fileCreatId = [];
-                this.$refs['btn_group'].fileSucCount = 0;
+                this.fileSucCount = 0;
                 if(_dom('.dialog-header .upsuccessnum').length > 0)
                     _dom('.dialog-header .upsuccessnum')[0].innerText = ''; //修改上传成功数
             },
             closeUpDialog(){
+
 
 
                 if(this.uploadeStatus == 2){
@@ -838,17 +837,14 @@
                         cancelButtonText : '取消',
                         type             : 'warning'
                     }).then(() => {
-                        var hasfinished = false;
-                        _each('.uploader-list-item',(i,obj)=>{
-                            if(_attr(obj,'data-upl-finish')!=1) {
-
-                            }else{
-                                hasfinished  = true;
+                        if(this.uploader.isUploading()){
+                            this.uploader.cancel()
+                        }else{
+                            if(this.$route.path != '/disk/share'){
+                                this.getList()
                             }
-                        });
-                        if(hasfinished && this.$route.path != '/disk/share'){
-                            this.getList()
                         }
+
                         this.resetData()
 
                     }).catch(() => {
