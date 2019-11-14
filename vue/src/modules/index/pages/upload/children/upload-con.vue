@@ -146,7 +146,7 @@
                             this.$message.error(ret.msg)
                         }
 
-                        if(chunk.offset + 1 == 1){
+                        if(chunk.offset == 0){
 
                             return true
 
