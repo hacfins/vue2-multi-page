@@ -86,6 +86,7 @@ export const fileMd5 = function(file,fn){
         chunkSize = 1024 * 1024,
         chunks    = 0,
         currentChunk  = 0,
+        blob          = (file instanceof Blob) ? file : file.file,
         spark         = new SparkMD5(),
         fileReader    = new FileReader();
 
@@ -127,16 +128,16 @@ export const fileMd5 = function(file,fn){
                 lend   = file.size;
 
             if (0 == currentChunk)
-                fileReader.readAsBinaryString(blobSlice.call(file.file, fstart, fend));
+                fileReader.readAsBinaryString(blobSlice.call(blob, fstart, fend));
             else if (1 == currentChunk)
-                fileReader.readAsBinaryString(blobSlice.call(file.file, lstart, lend));
+                fileReader.readAsBinaryString(blobSlice.call(blob, lstart, lend));
             else if (2 == currentChunk) {
                 //此时直接追加文件大小的文本 结束md5的计算
                 spark.appendBinary(file.size.toString());
                 loadEnd();
             }
         } else {
-            fileReader.readAsBinaryString(blobSlice.call(file.file, 0, file.size));
+            fileReader.readAsBinaryString(blobSlice.call(blob, 0, file.size));
         }
     }
 
