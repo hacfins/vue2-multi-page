@@ -307,13 +307,11 @@
 
                     //当每个文件开始上传时触发。
                     uploadStart        : function (file) {
-                        console.log(file)
 
                         var formData = uploader.option('formData');
 
                         uploader.option('formData', formData);
 
-                        console.log(file)
                         uploader.option('formData', {
                             f_id: file.f_id,
                             auto_create: 2
@@ -353,7 +351,6 @@
 
                     //当文件上传成功时触发。
                     uploadSuccess: function (file, ret) {
-                        console.log(file)
                         that.handCreatFile(file,2)
 
                     },

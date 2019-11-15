@@ -11,7 +11,7 @@ let routerMode = 'history';
 if (process.env.NODE_ENV == 'development') {
     baseUrl = 'http://192.168.123.110:8221';
 } else {
-    baseUrl = 'http://192.168.123.22:8213';
+    baseUrl = 'http://192.168.123.110:8221';
 }
 
 export {
