@@ -9,6 +9,9 @@
 
         </div>
         <el-button type="primary" @click="openModal">打开模态框</el-button>
+
+        <div id="captcha"></div>
+        <div id="msg"></div>
         <section class="data_section">
             <el-row :gutter="20" class="data_section_row">
                 <el-col :span="8" class="data-list-item">
@@ -124,7 +127,17 @@
 
         },
         mounted(){
-
+            jigsaw.init({
+                el: document.getElementById('captcha'),
+                onSuccess: function() {
+                    document.getElementById('msg').innerHTML = '登录成功！'
+                },
+                onFail: cleanMsg,
+                onRefresh: cleanMsg
+            })
+            function cleanMsg() {
+                document.getElementById('msg').innerHTML = ''
+            }
 
             $clamp('.test',{
                 clamp:2,
