@@ -43,14 +43,22 @@
             },
             week_prev(){
                 var from =   dtime(new Date(new Date(this.week_time.start.replace(/-/g, '/')).getTime()  - 7 *60*60*24*1000)).format('YYYY-MM-DD')
-                this.setWeekTime(from)
+                this.setWeekTime(from);
+
             },
             week_next(){
                 var from =   dtime(new Date(new Date(this.week_time.start.replace(/-/g, '/')).getTime()  + 7 *60*60*24*1000)).format('YYYY-MM-DD')
-                this.setWeekTime(from)
+                this.setWeekTime(from);
 
             },
 
+        },
+        watch:{
+            week_time(val){
+                var end = dtime(new Date(new Date(val.start.replace(/-/g, '/')).getTime()  + 6 *60*60*24*1000)).format('YYYY-MM-DD')
+
+                this.$emit('change',val.start,end)
+            }
         }
     }
 </script>

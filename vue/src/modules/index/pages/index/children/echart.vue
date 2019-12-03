@@ -9,7 +9,7 @@
 
         </div>
         <el-button type="primary" @click="openModal">打开模态框</el-button>
-        <week></week>
+        <week @change="weekChange"></week>
 
         <div id="captcha"></div>
         <div id="msg"></div>
@@ -174,6 +174,11 @@
         },
         methods   : {
             ...mapActions(['getUserData']),
+            weekChange(from,end){
+                console.log(from)
+                console.log(end)
+
+            },
             closeModal(){
                 this.isShow = false
             },
