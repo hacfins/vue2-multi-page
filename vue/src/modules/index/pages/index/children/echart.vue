@@ -9,6 +9,7 @@
 
         </div>
         <el-button type="primary" @click="openModal">打开模态框</el-button>
+        <week></week>
 
         <div id="captcha"></div>
         <div id="msg"></div>
@@ -79,6 +80,7 @@
 <script>
     import {getCourseList, creatCourse, editCourse} from '@/api/getdata'
     import tendency from 'index/components/common/tendency'
+    import week from 'index/components/common/week'
     import modalDialog from 'index/components/common/modal-dialog'
     import dtime from 'time-formater'
     import {getCurrentMonthLast} from '@/config/utils'
@@ -100,7 +102,8 @@
         },
         components: {
             tendency,
-            modalDialog
+            modalDialog,
+            week
 
         },
         computed  : {
