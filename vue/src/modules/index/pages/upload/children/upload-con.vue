@@ -143,7 +143,14 @@
                         let ret = JSON.parse(retq);
                         var fg = false
                         if (ret.code != 200) {
-                            this.$message.error(ret.msg)
+
+                            chunk.file.pause()
+
+                            _hide("[data-fupl-id='" + chunk.file.id + "'] .uploadevent")
+                            _html("[data-fupl-id='" + chunk.file.id + "'] .uploadstatus",'<i style="color:red" class="el-icon-error"></i>&nbsp;'+ret.msg+'')
+                            _attr("[data-fupl-id='" + chunk.file.id + "'] .uploadstatus",'title',ret.msg)
+                            _css("[data-fupl-id='" + chunk.file.id + "'] .uploadstatus",{color:'red',cursor:'default'});
+
                         }
 
                         if(chunk.offset == 0){
