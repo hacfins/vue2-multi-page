@@ -65,7 +65,12 @@ function _attr(element_str,attr_key,attr_value) {
             elementArr[i].setAttribute(attr_key,attr_value)
         }
     }else{
-        return elementArr[0].getAttribute(attr_key)
+        if(elementArr.length > 0){
+            return elementArr[0].getAttribute(attr_key)
+        }else{
+            return ''
+        }
+
     }
 
 }
@@ -433,19 +438,22 @@ function _getIndex(element_str){
         elementArr = _dom(element_str)
     }
     var index = -1;
-    var ch_arr = elementArr[0].parentNode.children;
-    var pur_child = []
-    for(var i = 0;i < ch_arr.length ; i++){
-        if(ch_arr[i].nodeType == 1 ){
-            pur_child.push(ch_arr[i])
+    if(elementArr.length > 0){
+        var ch_arr = elementArr[0].parentNode.children;
+        var pur_child = []
+        for(var i = 0;i < ch_arr.length ; i++){
+            if(ch_arr[i].nodeType == 1 ){
+                pur_child.push(ch_arr[i])
+            }
+        }
+        for(var j=0;j< pur_child.length; j++){
+            if(elementArr[0] == pur_child[j]){
+                index = j
+                break
+            }
         }
     }
-    for(var j=0;j< pur_child.length; j++){
-        if(elementArr[0] == pur_child[j]){
-            index = j
-            break
-        }
-    }
+
     return index
 
 }
