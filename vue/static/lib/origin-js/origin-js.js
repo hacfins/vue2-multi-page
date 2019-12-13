@@ -695,7 +695,12 @@ function _scrollPosition(el,target,duration,fn){
             if(el.nodeType == 1 && (el.tagName == 'BODY' || el.tagName == 'HTML')){
                 scrollT = document.documentElement.scrollTop||document.body.scrollTop
             }else{
-                scrollT = _dom(el)[0].scrollTop;
+                if(_dom(el).length > 0){
+                    scrollT = _dom(el)[0].scrollTop;
+                }else{
+                    clearInterval(_scroll_timer);
+                    return
+                }
             }
 
             if(scrollT <= target || loopCount >= loopAllCount){
@@ -724,7 +729,12 @@ function _scrollPosition(el,target,duration,fn){
             if(el.nodeType == 1 && (el.tagName == 'BODY' || el.tagName == 'HTML')){
                 scrollT = document.documentElement.scrollTop||document.body.scrollTop
             }else{
-                scrollT = _dom(el)[0].scrollTop;
+                if(_dom(el).length > 0){
+                    scrollT = _dom(el)[0].scrollTop;
+                }else{
+                    clearInterval(_scroll_timer);
+                    return
+                }
             }
 
             if(scrollT >= target || loopCount >= loopAllCount){
