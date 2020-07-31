@@ -58,11 +58,37 @@ module.exports = {
             },
             {
                 test   : /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-                loader : 'url-loader',
-                options: {
-                    limit: 1,//（图片分享时转换成base64会太大，导致无法分享，所以limit改为1）
-                    name : utils.assetsPath('images/[name].[hash:7].[ext]')
-                }
+                use: [
+                        {
+                            loader : 'url-loader',
+                            options: {
+                                limit: 1,//（图片分享时转换成base64会太大，导致无法分享，所以limit改为1）
+                                name : utils.assetsPath('images/[name].[hash:7].[ext]')
+                            }
+                        },
+                        {
+                            loader:'image-webpack-loader',
+                            options: {
+                                mozjpeg: {
+                                    progressive: true,
+                                    quality: 65
+                                },
+                                // optipng.enabled: false will disable optipng
+                                optipng: {
+                                    enabled: false,
+                                },
+                                pngquant: {
+                                    quality: [0.65, 0.90],
+                                    speed: 4
+                                },
+                                gifsicle: {
+                                    interlaced: false,
+                                },
+                            }
+                        }
+                ]
+
+
             },
             {
                 test   : /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,

@@ -3,7 +3,7 @@ var gulp         = require('gulp'),
     uglify       = require('gulp-uglify'),		 //- js压缩
     rev          = require('gulp-rev'),          //- 对文件名加MD5后缀
     revcollector = require('gulp-rev-collector'),//- 路径替换
-    runsequence  = require('run-sequence'), //- 依次顺序执行
+    runsequence  = require('gulp4-run-sequence'), //- 依次顺序执行
     del          = require('del');				 //- 删除文件夹里的内容
 
 // “src/a.js”：指定具体文件
