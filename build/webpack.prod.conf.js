@@ -11,8 +11,6 @@ const HtmlWebpackPlugin    = require('html-webpack-plugin');//HTML工具
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSPlugin    = require('optimize-css-assets-webpack-plugin');//CSS去重工具
 const UglifyJsPlugin       = require('uglifyjs-webpack-plugin');
-const ImageminPlugin       = require('imagemin-webpack-plugin').default;//图片压缩工具
-const imageminMozjpeg      = require('imagemin-mozjpeg');//jpg压缩工具
 
 
 //定义环境变量
@@ -295,7 +293,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         //     }
         // }),
 
-        //【10】复制静态资源
+        //【5】复制静态资源
         new CopyWebpackPlugin([
             {
                 from  : path.resolve(__dirname, '../static'),
@@ -307,19 +305,6 @@ const webpackConfig = merge(baseWebpackConfig, {
                 to  : config.build.assetsRoot
             },
         ]),
-
-        //【11】图片压缩
-        new ImageminPlugin({
-            pngquant: {
-                quality: '75-80'
-            },
-            plugins : [
-                imageminMozjpeg({
-                    quality    : 80,
-                    progressive: true
-                })
-            ]
-        }),
     ]
 });
 
